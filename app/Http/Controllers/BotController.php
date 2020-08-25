@@ -25,6 +25,7 @@ class BotController extends Controller
     //
     public function handle(Request $request)
     {
+        Log::info("START HANDLE");
         try {
             $updates = Telegram::getWebhookUpdates();
             $this->bot->handler($updates);

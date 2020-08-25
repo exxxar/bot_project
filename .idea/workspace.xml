@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5a400384-671b-41fb-82e7-fab36ffb0091" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/BotController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/BotController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,18 +134,19 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Clasess" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\projects\BotCashBackPackage\packages\laravel\bot_cash_back\scr" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\projects\BotCashBackPackage" />
       <recent name="D:\projects\BotCashBackPackage\app\Clasess" />
       <recent name="D:\projects\BotCashBackPackage\packages\laravel\bot_cash_back\scr\classes" />
       <recent name="D:\projects\BotCashBackPackage\packages\laravel\bot_cash_back\scr\models" />
       <recent name="D:\projects\BotCashBackPackage\packages\laravel\bot_cash_back\scr\migrations" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\projects\BotCashBackPackage\packages\laravel\bot_cash_back\scr" />
     </key>
   </component>
   <component name="RunManager">
@@ -181,7 +183,7 @@
       <workItem from="1594642252375" duration="2306000" />
       <workItem from="1594648346085" duration="3105000" />
       <workItem from="1595489332319" duration="482000" />
-      <workItem from="1598366114083" duration="9345000" />
+      <workItem from="1598366114083" duration="9767000" />
     </task>
     <servers />
   </component>

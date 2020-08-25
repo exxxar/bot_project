@@ -14,7 +14,7 @@ $this->hears("/start|.*Попробовать снова|.*Главное мен
    // $bot->reply("conversation started");
 });
 
-$this->hears(".*Lotus Model Agency", function ($bot) {
+$this->hears("/.*Lotus Model Agency", function ($bot) {
     $bot->getLMAMenu("Lotus Model Agency меню!");
     // $bot->reply("conversation started");
 });

@@ -30,13 +30,6 @@ class BaseBot extends AbstractBot implements iBaseBot
     }
 
 
-    public function getUser(array $params = [])
-    {
-        return (count($params) == 0 ?
-                BotUserInfo::where("chat_id", $this->telegram_user->id)->first() :
-                BotUserInfo::with($params)->where("chat_id", $this->telegram_user->id)->first()) ?? null;
-
-    }
 
 
     public function reply($message, $keyboard = [], $parseMode = 'Markdown')

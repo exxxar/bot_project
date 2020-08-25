@@ -76,8 +76,9 @@ trait tLotusModelBot
     {
         $tmp_menu = $this->lma_menu_keyboard;
         $user = parent::getUser();
-        if ($user->is_admin)
-            array_push($tmp_menu, ["Админ LMA Panel"]);
+        if (!is_null($user))
+            if ($user->is_admin)
+                array_push($tmp_menu, ["Админ LMA Panel"]);
         parent::sendMenu($message, $tmp_menu);
     }
 
@@ -85,8 +86,9 @@ trait tLotusModelBot
     {
         $tmp_menu = $this->lkc_menu_keyboard;
         $user = parent::getUser();
-        if ($user->is_admin)
-            array_push($tmp_menu, ["Админ LKC Panel"]);
+        if (!is_null($user))
+            if ($user->is_admin)
+                array_push($tmp_menu, ["Админ LKC Panel"]);
         parent::sendMenu($message, $tmp_menu);
     }
 
@@ -94,8 +96,9 @@ trait tLotusModelBot
     {
         $tmp_menu = $this->lc_menu_keyboard;
         $user = parent::getUser();
-        if ($user->is_admin)
-            array_push($tmp_menu, ["Админ LC Panel"]);
+        if (!is_null($user))
+            if ($user->is_admin)
+                array_push($tmp_menu, ["Админ LC Panel"]);
         parent::sendMenu($message, $tmp_menu);
     }
 
@@ -103,8 +106,9 @@ trait tLotusModelBot
     {
         $tmp_menu = $this->lp_menu_keyboard;
         $user = parent::getUser();
-        if ($user->is_admin)
-            array_push($tmp_menu, ["Админ LP Panel"]);
+        if (!is_null($user))
+            if ($user->is_admin)
+                array_push($tmp_menu, ["Админ LP Panel"]);
         parent::sendMenu($message, $tmp_menu);
     }
 
@@ -112,8 +116,9 @@ trait tLotusModelBot
     {
         $tmp_menu = $this->ld_menu_keyboard;
         $user = parent::getUser();
-        if ($user->is_admin)
-            array_push($tmp_menu, ["Админ LD Panel"]);
+        if (!is_null($user))
+            if ($user->is_admin)
+                array_push($tmp_menu, ["Админ LD Panel"]);
         parent::sendMenu($message, $tmp_menu);
     }
 

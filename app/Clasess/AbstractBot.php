@@ -5,6 +5,7 @@ namespace App\Clasess;
 
 
 use Illuminate\Support\Facades\Log;
+use Laravel\BotCashBack\Models\BotUserInfo;
 use Telegram\Bot\Api;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\Update;
@@ -160,6 +161,14 @@ abstract class AbstractBot
                 "message" => "success",
                 "status" => 200
             ]);
+
+    }
+
+    public function getUser(array $params = [])
+    {
+        return (count($params) == 0 ?
+                BotUserInfo::where("chat_id", $this->telegram_user->id)->first() :
+                BotUserInfo::with($params)->where("chat_id", $this->telegram_user->id)->first()) ?? null;
 
     }
 

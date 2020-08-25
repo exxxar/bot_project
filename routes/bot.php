@@ -9,9 +9,14 @@ $this->hears("/test ([0-9]+) ([a-zA-Z]+)", function ($bot, ...$d) {
 });
 
 
-$this->hears("/start|.*Попробовать снова", function ($bot) {
-    $bot->getMainMenu("Добро пожаловать в модельное агенство 'Lotus'!");
-    $bot->reply("conversation started");
+$this->hears("/start|.*Попробовать снова|*.Главное меню", function ($bot) {
+    $bot->getMainMenu("Добро пожаловать в модельное агенство Lotus!");
+   // $bot->reply("conversation started");
+});
+
+$this->hears(".*Lotus Model Agency", function ($bot) {
+    $bot->getLMAMenu("Lotus Model Agency меню!");
+    // $bot->reply("conversation started");
 });
 
 $this->fallback(function ($bot) {

@@ -1,0 +1,14 @@
+{
+    "name": "exxxar/bot_cash_back",
+    "description": "simple start kit for organize cashback system in telegram",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "exxxar",
+            "email": "exxxar@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}

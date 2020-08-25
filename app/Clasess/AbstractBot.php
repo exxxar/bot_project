@@ -167,4 +167,21 @@ abstract class AbstractBot
     {
         return $this->telegram_user->id;
     }
+
+    public function sendMenu($message, $keyboard)
+    {
+        if (is_null($this->bot))
+            return;
+
+        $this->bot->sendMessage([
+            "chat_id" => $this->telegram_user->id,
+            "text" => $message,
+            'parse_mode' => 'Markdown',
+            'reply_markup' => json_encode([
+                'keyboard' => $keyboard,
+                'one_time_keyboard' => false,
+                'resize_keyboard' => true
+            ])
+        ]);
+    }
 }

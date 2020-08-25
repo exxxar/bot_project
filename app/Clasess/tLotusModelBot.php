@@ -69,58 +69,58 @@ trait tLotusModelBot
     {
         $inBasketCount = 0;
         $this->main_menu_keyboard[0][1] = sprintf($this->main_menu_keyboard[0][1], $inBasketCount);
-        $this->sendMenu($message, $this->main_menu_keyboard);
+        parent::sendMenu($message, $this->main_menu_keyboard);
     }
 
     public function getLMAMenu($message)
     {
         $tmp_menu = $this->lma_menu_keyboard;
-        $user = $this->getUser();
+        $user = parent::getUser();
         if ($user->is_admin)
             array_push($tmp_menu, ["Админ LMA Panel"]);
-        $this->sendMenu($message, $tmp_menu);
+        parent::sendMenu($message, $tmp_menu);
     }
 
     public function getLKCMenu($message)
     {
         $tmp_menu = $this->lkc_menu_keyboard;
-        $user = $this->getUser();
+        $user = parent::getUser();
         if ($user->is_admin)
             array_push($tmp_menu, ["Админ LKC Panel"]);
-        $this->sendMenu($message, $tmp_menu);
+        parent::sendMenu($message, $tmp_menu);
     }
 
     public function getLCMenu($message)
     {
         $tmp_menu = $this->lc_menu_keyboard;
-        $user = $this->getUser();
+        $user = parent::getUser();
         if ($user->is_admin)
             array_push($tmp_menu, ["Админ LC Panel"]);
-        $this->sendMenu($message, $tmp_menu);
+        parent::sendMenu($message, $tmp_menu);
     }
 
     public function getLPMenu($message)
     {
         $tmp_menu = $this->lp_menu_keyboard;
-        $user = $this->getUser();
+        $user = parent::getUser();
         if ($user->is_admin)
             array_push($tmp_menu, ["Админ LP Panel"]);
-        $this->sendMenu($message, $tmp_menu);
+        parent::sendMenu($message, $tmp_menu);
     }
 
     public function getLDMenu($message)
     {
         $tmp_menu = $this->ld_menu_keyboard;
-        $user = $this->getUser();
+        $user = parent::getUser();
         if ($user->is_admin)
             array_push($tmp_menu, ["Админ LD Panel"]);
-        $this->sendMenu($message, $tmp_menu);
+        parent::sendMenu($message, $tmp_menu);
     }
 
     public function getAdminMenu($message)
     {
         $tmp_menu = array_merge($this->admin_menu_keyboard,
             $this->admin_lp_menu_keyboard);
-        $this->sendMenu($message, $tmp_menu);
+        parent::sendMenu($message, $tmp_menu);
     }
 }

@@ -13,8 +13,7 @@ class BotCashBackServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
-        $this->loadMigrationsFrom("/migrations");
+
     }
 
     /**
@@ -24,6 +23,7 @@ class BotCashBackServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
+        $this->loadMigrationsFrom(__DIR__ .
+            '/migrations');
     }
 }

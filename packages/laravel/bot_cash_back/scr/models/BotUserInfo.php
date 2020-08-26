@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class BotUserInfo extends Model
 {
-    protected $table="bot_user_infos";
+    protected $table="bot_user_info";
 
     protected $fillable = [
         'chat_id',

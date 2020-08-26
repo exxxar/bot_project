@@ -121,6 +121,7 @@ abstract class AbstractBot
             if (is_null($item["path"]))
                 continue;
 
+            Log::info($item["path"] );
             if (preg_match($item["path"] . "$/i", $this->query, $matches) != false) {
                 foreach ($matches as $match)
                     array_push($arguments, $match);

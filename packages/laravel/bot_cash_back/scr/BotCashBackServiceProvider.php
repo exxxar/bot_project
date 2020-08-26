@@ -14,6 +14,7 @@ class BotCashBackServiceProvider extends ServiceProvider
     public function register()
     {
         //
+        $this->loadMigrationsFrom("/migrations");
     }
 
     /**

@@ -4,128 +4,174 @@
 namespace App\Clasess;
 
 
+use App\Order;
+
 trait tLotusModelBot
 {
     protected $main_menu_keyboard = [
-        ["Мой профиль", "Корзина(%s)"],
-        ["Фирменная продукция"],
-        ["Lotus Model Agency", "Lotus Kids"],
-        ["Lotus Photostudio", "Combo Photoprojekt"],
-        ["Lotus Camp", "Lotus Dance"],
+        ["\xE2\xAD\x90Мой профиль", "\xF0\x9F\x92\xB0Корзина(%s)"],
+        ["\xF0\x9F\x91\x95Фирменная продукция"],
+        ["\xF0\x9F\x91\xB8Lotus Model Agency", "\xF0\x9F\x8C\x9FLotus Kids"],
+        ["\xF0\x9F\x93\xB7Lotus Photostudio", "\xF0\x9F\x8E\xADCombo Photoprojekt"],
+        ["\xF0\x9F\x8E\xAALotus Camp", "\xF0\x9F\x91\xABLotus Dance"],
     ];
 
     protected $lma_menu_keyboard = [
-        ["Перейти в канал LMA"],
-        ["Анкета модели"],
-        ["Курсы LMA"],
-        ["Найти модель"],
-        ["Задать вопрос"],
-        ["Главное меню"],
+        ["\xF0\x9F\x92\xACПерейти в канал LMA"],
+        ["\xF0\x9F\x93\x83Анкета модели"],
+        ["\xF0\x9F\x8E\x93Курсы LMA"],
+        ["\xF0\x9F\x94\x8DНайти модель"],
+        ["\xF0\x9F\x91\x89Задать вопрос"],
+        ["\xF0\x9F\x94\x99Главное меню"],
     ];
 
     protected $lkc_menu_keyboard = [
-        ["Курсы"],
-        ["Перейти в канал LKC"],
-        ["Задать вопросы"],
-        ["Главное меню"],
+        ["\xF0\x9F\x8E\x93Курсы LKC"],
+        ["\xF0\x9F\x92\xACПерейти в канал LKC"],
+        ["\xF0\x9F\x91\x89Задать вопрос"],
+        ["\xF0\x9F\x94\x99Главное меню"],
     ];
 
     protected $lc_menu_keyboard = [
-        ["Записаться"],
-        ["Канал Lotus Camp"],
-        ["Задать вопросы"],
-        ["Главное меню"],
+        ["\xF0\x9F\x93\x9DЗаписаться"],
+        ["\xF0\x9F\x92\xACПерейти в канал Lotus Camp"],
+        ["\xF0\x9F\x91\x89Задать вопрос"],
+        ["\xF0\x9F\x94\x99Главное меню"],
     ];
 
     protected $lp_menu_keyboard = [
-        ["Аренда помещений \ оборудования"],
-        ["Фотопроекты на месяц"],
-        ["Канал фотостудии"],
-        ["Задать вопросы"],
-        ["Главное меню"],
+        ["\xE2\x9A\xA1Аренда помещений \ оборудования"],
+        ["\xE2\x8F\xB3Фотопроекты на месяц"],
+        ["\xF0\x9F\x92\xACПерейти в канал Lotus Photostudio"],
+        ["\xF0\x9F\x91\x89Задать вопрос"],
+        ["\xF0\x9F\x94\x99Главное меню"],
     ];
 
     protected $ld_menu_keyboard = [
-        ["Канал Lotus Dance"],
-        ["Задать вопросы"],
-        ["Главное меню"],
+        ["\xF0\x9F\x92\xACПерейти в канал Lotus Dance"],
+        ["\xF0\x9F\x91\x89Задать вопрос"],
+        ["\xF0\x9F\x94\x99Главное меню"],
     ];
 
     protected $admin_menu_keyboard = [
         ["Управление товарами"],
         ["Управление анкетами"],
         ["Управление опросами"],
+        ["Управление заказами"],
+        ["Управление фотопроектами"],
         ["Каналы администраторов"],
-        ["Главное меню"]
+        ["\xF0\x9F\x94\x99Главное меню"],
     ];
 
     protected $admin_lp_menu_keyboard = [
-        ["Управление фотопроектами"],
+        ["Добавить фотопроект"],
         ["Массовое обнуление скидок"],
+        ["\xF0\x9F\x94\x99Главное меню"],
 
     ];
 
+    protected $keyboard_fallback = [
+        [
+            "Продолжить позже"
+        ],
+    ];
+
+    protected $keyboard_fallback_2 = [
+        [
+            "Попробовать опять"
+        ],
+    ];
+
+    protected $keyboard_basket = [
+        ["\xF0\x9F\x93\xA6Посмотреть мои товары"],
+        ["\xF0\x9F\x92\xB3Оформить заказ"],
+        ["\xE2\x9D\x8CОчистить корзину"],
+        ["\xF0\x9F\x91\x95Фирменная продукция"],
+        ["\xF0\x9F\x94\x99Главное меню"],
+    ];
+
+
+    public function getBasketMenu($message)
+    {
+        $this->sendMenu($message, $this->keyboard_basket);
+    }
+
     public function getMainMenu($message)
     {
-        $inBasketCount = 0;
+        $user = $this->getUser();
+        $inBasketCount = Order::where("user_id",$user->user_id)
+            ->where("is_confirmed",false)
+            ->count();
         $this->main_menu_keyboard[0][1] = sprintf($this->main_menu_keyboard[0][1], $inBasketCount);
-        parent::sendMenu($message, $this->main_menu_keyboard);
+        $this->sendMenu($message, $this->main_menu_keyboard);
     }
+
+    public function getAdminMenu($message)
+    {
+        $tmp_menu = $this->admin_menu_keyboard;
+        $user = $this->getUser();
+        if (!is_null($user))
+            if ($user->is_admin) {
+                $this->sendMenu($message, $tmp_menu);
+                return;
+            }
+        $this->getMainMenu($message);
+    }
+
 
     public function getLMAMenu($message)
     {
         $tmp_menu = $this->lma_menu_keyboard;
-        $user = parent::getUser();
+        $user = $this->getUser();
         if (!is_null($user))
             if ($user->is_admin)
                 array_push($tmp_menu, ["Админ LMA Panel"]);
-        parent::sendMenu($message, $tmp_menu);
+        $this->sendMenu($message, $tmp_menu);
     }
 
     public function getLKCMenu($message)
     {
         $tmp_menu = $this->lkc_menu_keyboard;
-        $user = parent::getUser();
+        $user = $this->getUser();
         if (!is_null($user))
             if ($user->is_admin)
                 array_push($tmp_menu, ["Админ LKC Panel"]);
-        parent::sendMenu($message, $tmp_menu);
+        $this->sendMenu($message, $tmp_menu);
     }
 
     public function getLCMenu($message)
     {
         $tmp_menu = $this->lc_menu_keyboard;
-        $user = parent::getUser();
+        $user = $this->getUser();
         if (!is_null($user))
             if ($user->is_admin)
                 array_push($tmp_menu, ["Админ LC Panel"]);
-        parent::sendMenu($message, $tmp_menu);
+        $this->sendMenu($message, $tmp_menu);
     }
 
     public function getLPMenu($message)
     {
         $tmp_menu = $this->lp_menu_keyboard;
-        $user = parent::getUser();
+        $user = $this->getUser();
         if (!is_null($user))
             if ($user->is_admin)
                 array_push($tmp_menu, ["Админ LP Panel"]);
-        parent::sendMenu($message, $tmp_menu);
+        $this->sendMenu($message, $tmp_menu);
     }
 
     public function getLDMenu($message)
     {
         $tmp_menu = $this->ld_menu_keyboard;
-        $user = parent::getUser();
+        $user = $this->getUser();
         if (!is_null($user))
             if ($user->is_admin)
                 array_push($tmp_menu, ["Админ LD Panel"]);
-        parent::sendMenu($message, $tmp_menu);
+        $this->sendMenu($message, $tmp_menu);
     }
 
-    public function getAdminMenu($message)
+    public function getFallbackMenu($message)
     {
-        $tmp_menu = array_merge($this->admin_menu_keyboard,
-            $this->admin_lp_menu_keyboard);
-        parent::sendMenu($message, $tmp_menu);
+        $this->sendMenu($message, $this->keyboard_fallback);
     }
+
 }

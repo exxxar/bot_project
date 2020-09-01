@@ -28,6 +28,7 @@ class CreateBotUserInfoTable extends Migration
             $table->double('cash_back')->default(0.0);
 
             $table->unsignedInteger('parent_id')->nullable();
+            $table->unsignedInteger('user_id')->nullable();
             $table->timestamps();
         });
     }

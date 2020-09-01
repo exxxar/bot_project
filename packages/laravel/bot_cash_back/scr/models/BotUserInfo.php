@@ -2,14 +2,16 @@
 
 namespace Laravel\BotCashBack\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Log;
 
 class BotUserInfo extends Model
 {
-    protected $table="bot_user_info";
+    protected $table = "bot_user_info";
 
     protected $fillable = [
         'chat_id',
@@ -21,13 +23,32 @@ class BotUserInfo extends Model
         'is_admin',
         'is_developer',
         'is_working',
-        'parent_id'
+        'parent_id',
+        'user_id'
     ];
 
+    protected $appends = [
+        'discount', 'photo_count'
+    ];
+
+    public function getPhotoCountAttribute()
+    {
+        return $this->self()->first()->ps_photo_count ?? 0;
+    }
+
+    public function getDiscountAttribute()
+    {
+        return $this->self()->first()->ps_discount ?? 0;
+    }
+
+    public function self()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 
 
     public function parent()
     {
-        return $this->hasOne(BotUserInfo::class,'id','parent_id');
+        return $this->hasOne(BotUserInfo::class, 'id', 'parent_id');
     }
 }

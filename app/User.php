@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\BotCashBack\Models\BotUserInfo;
 
 class User extends Authenticatable
 {
@@ -16,7 +17,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
+        'ps_discount',
+        'ps_photo_count'
     ];
 
     /**
@@ -36,4 +41,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $appends = [
+        'is_admin'
+    ];
+
+    public function profile(){
+        return $this->hasOne(Profile::class,'user_id','id');
+    }
+
+    public function info(){
+        return $this->hasOne(BotUserInfo::class,'user_id','id');
+    }
+
+    public function getIsAdminAttribute(){
+        return $this->info()->first()->is_admin;
+    }
 }

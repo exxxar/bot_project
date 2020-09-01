@@ -2,7 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a400384-671b-41fb-82e7-fab36ffb0091" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/BotCashBackPackage.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/BotCashBackPackage.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Clasess/AbstractBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/AbstractBot.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Clasess/BaseBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/BaseBot.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Clasess/iBaseBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/iBaseBot.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Clasess/tBotConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/tBotConversation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Clasess/tBotStorage.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/tBotStorage.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Clasess/tLotusModelBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/tLotusModelBot.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/laravel/bot_cash_back/scr/migrations/2020_10_12_000000_create_bot_user_info_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/packages/laravel/bot_cash_back/scr/migrations/2020_10_12_000000_create_bot_user_info_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/laravel/bot_cash_back/scr/models/BotUserInfo.php" beforeDir="false" afterPath="$PROJECT_DIR$/packages/laravel/bot_cash_back/scr/models/BotUserInfo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/bot.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/bot.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,6 +137,11 @@
       <path value="$PROJECT_DIR$/vendor/nikic/php-parser" />
       <path value="$PROJECT_DIR$/vendor/irazasyed/telegram-bot-sdk" />
       <path value="$PROJECT_DIR$/vendor/league/event" />
+      <path value="$PROJECT_DIR$/vendor/laminas/laminas-zendframework-bridge" />
+      <path value="$PROJECT_DIR$/vendor/laminas/laminas-eventmanager" />
+      <path value="$PROJECT_DIR$/vendor/laminas/laminas-code" />
+      <path value="$PROJECT_DIR$/vendor/bensampo/laravel-enum" />
+      <path value="$PROJECT_DIR$/vendor/hanneskod/classtools" />
     </include_path>
   </component>
   <component name="ProjectId" id="1eV0ydwGGaFDHbXhWodDUvmdJdh" />
@@ -133,16 +155,16 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Conversations" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\projects\BotCashBackPackage\app\Conversations" />
       <recent name="D:\projects\BotCashBackPackage" />
       <recent name="D:\projects\BotCashBackPackage\app\Clasess" />
       <recent name="D:\projects\BotCashBackPackage\packages\laravel\bot_cash_back\scr\classes" />
       <recent name="D:\projects\BotCashBackPackage\packages\laravel\bot_cash_back\scr\models" />
-      <recent name="D:\projects\BotCashBackPackage\packages\laravel\bot_cash_back\scr\migrations" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\projects\BotCashBackPackage\packages\laravel\bot_cash_back\scr" />
@@ -182,7 +204,14 @@
       <workItem from="1594642252375" duration="2306000" />
       <workItem from="1594648346085" duration="3105000" />
       <workItem from="1595489332319" duration="482000" />
-      <workItem from="1598366114083" duration="14279000" />
+      <workItem from="1598366114083" duration="14368000" />
+      <workItem from="1598458345836" duration="14689000" />
+      <workItem from="1598509130655" duration="2067000" />
+      <workItem from="1598520071372" duration="1497000" />
+      <workItem from="1598547928752" duration="3217000" />
+      <workItem from="1598675316627" duration="3854000" />
+      <workItem from="1598686563368" duration="2457000" />
+      <workItem from="1598703024651" duration="82642000" />
     </task>
     <servers />
   </component>
@@ -190,10 +219,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="499" y="191" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1598389275595">
+    <state x="499" y="191" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1598724680840">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="499" y="191" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.864@0.0.1536.864" timestamp="1598389275595" />
+    <state x="499" y="191" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.864@0.0.1536.864" timestamp="1598724680840" />
     <state x="558" y="267" key="NewPhpClassDialog" timestamp="1598371592315">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -202,13 +231,13 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="604" y="364" key="NewPhpFileDialog/0.0.1536.864@0.0.1536.864" timestamp="1594473193566" />
-    <state x="477" y="261" key="com.intellij.ide.util.TipDialog" timestamp="1594648396063">
+    <state x="477" y="261" key="com.intellij.ide.util.TipDialog" timestamp="1598703148937">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="477" y="261" key="com.intellij.ide.util.TipDialog/0.0.1536.864@0.0.1536.864" timestamp="1594648396063" />
-    <state x="425" y="197" key="run.anything.popup" timestamp="1598388623763">
+    <state x="477" y="261" key="com.intellij.ide.util.TipDialog/0.0.1536.864@0.0.1536.864" timestamp="1598703148937" />
+    <state x="425" y="197" key="run.anything.popup" timestamp="1598903793023">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="425" y="197" key="run.anything.popup/0.0.1536.864@0.0.1536.864" timestamp="1598388623763" />
+    <state x="425" y="197" key="run.anything.popup/0.0.1536.864@0.0.1536.864" timestamp="1598903793023" />
   </component>
 </project>

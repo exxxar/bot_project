@@ -4,25 +4,55 @@
 namespace App\Classes;
 
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
 trait tBotConversation
 {
     use tBotStorage;
 
-    public function currentActiveConversation(){
+    public function currentActiveConversation()
+    {
         return (object)json_decode($this->getFromStorage("is_conversation_active"));
     }
 
-    public function next($name,$params = []){
+    public function storeGet($key, $default = '')
+    {
+        return json_decode($this->getFromStorage("is_conversation_active"), true)["params"][$key] ?? $default;
+    }
+
+    public function next($name, $params = [])
+    {
+
+        $tmp_params = json_decode($this->getFromStorage("is_conversation_active"), true)["params"] ?? [];
+
+        foreach ($params as $key => $value) {
+            $tmp_params[$key] = $value;
+        }
+
         $this->addToStorage("is_conversation_active", json_encode([
-            "name"=>$name,
+            "name" => $name,
+            "params" => $tmp_params
         ]));
     }
 
-    public function startConversation($name)
+    public function setParams($params = [])
     {
-        $this->next($name);
+        $tmp_params = json_decode($this->getFromStorage("is_conversation_active"), true)["params"] ?? [];
+        $tmp_name = json_decode($this->getFromStorage("is_conversation_active"), true)["name"] ?? '';
+
+        foreach ($params as $key => $value) {
+            $tmp_params[$key] = $value;
+        }
+        $this->addToStorage("is_conversation_active", json_encode([
+            "name" => $tmp_name,
+            "params" => $tmp_params
+        ]));
+    }
+
+    public function startConversation($name, $data = [])
+    {
+        $this->next($name, $data);
     }
 
     public function stopConversation()

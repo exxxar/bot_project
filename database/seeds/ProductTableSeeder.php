@@ -212,7 +212,7 @@ class ProductTableSeeder extends Seeder
 
         Product::create([
             "title" => "Фирменная ручка",
-            "image" => "https://psv4.userapi.com/c856332/u88945061/docs/d10/2084a64c7bc4/vgSIYey5sEc.jpg?extra=C2f_iuWjS7l10cDTxoH-EVtcwXmbBke0m6RoiFT9delY9__1HKlujNwGhAeU_wIo4T-xqKaBXgVaYDqBpfqOpYRwuUUp_F7S_MtbDEMpE3jm8KRE33YipfyjuEmwbjmjzyRAtNokpb2mRI2M0ZiogOHH",
+            "image" => "https://sun1.48276.userapi.com/FXgEOLXCW9BA981QZ_tcJitlVpXMLgaLlEQ2vg/vgSIYey5sEc.jpg",
             "price" => 50.0,
             "position" => 1,
             "description" => "
@@ -226,7 +226,7 @@ class ProductTableSeeder extends Seeder
 
         Product::create([
             "title" => "Фирменная чашка (черная)",
-            "image" => "https://psv4.userapi.com/c856332/u88945061/docs/d9/3e29b8ca84f8/chashka_chernaya.png?extra=T3V4FldLhVhPX_T0m-8JP5K_kZYGO6rlpttzz894yL4IMusapjX0GXsNo0U7iDTM1zOaaPN9jb58GpSm97preenf9kZ3gsz49JX4BoA9XmaLxubEW6feDvQjSj4VMvXm7XR7wQURIJc9dXnj8XBiCStH",
+            "image" => "https://sun9-6.userapi.com/rGCN57LCS5NCfMLz9MctqSfmo9-59e0qTZZX3w/q95Pwcdy4DY.jpg",
             "price" => 350,
             "position" => 2,
             "description" => "
@@ -240,7 +240,7 @@ class ProductTableSeeder extends Seeder
 
         Product::create([
             "title" => "Фирменная чашка (белая)",
-            "image" => "https://psv4.userapi.com/c856332/u88945061/docs/d13/6aee68d8483c/chashka_kids_tknsq.png?extra=R78w-KV0eMk9FdMzrb0LulmXQgxXymfKQ-8QgobwIRuWDw2kYXXC7gZYW2nNHIRpVYSE6uKHh7ZLwbuHSC_o0uE0wmficEfgo_6V4kvYCO6R18iFVJZLGFHdK7KSXr4oGVBrovoDo_KAOFU2li8iDzSW",
+            "image" => "https://sun1.48276.userapi.com/3-jr5spyWfAq9PBosHR-GJRK-u0Al9dn9mtstg/aBn4Rh-wmE8.jpg",
             "price" => 350,
             "position" => 2,
             "description" => "
@@ -254,7 +254,7 @@ class ProductTableSeeder extends Seeder
 
         Product::create([
             "title" => "Фирменная футболка (белая)",
-            "image" => "https://psv4.userapi.com/c856332/u88945061/docs/d18/d0db3fc58a8f/deti_gotovo.jpg?extra=GIoOChFzDtZQIL-dLpeYMqI-2G4fzEp-sM7yANGTesebS5mKYdND11GrgRAv9aoc3KtEt5DnVS3dzUkwqkNFDgdI3iukW4qrbVAqxIlU31rEw8IAIqUBgBYI75gTJu6-abucoU9lLXV3Q-cSL-kavpRa",
+            "image" => "https://sun1.48276.userapi.com/ybwamLlL2xJdnQOyiIry-DmrqnB1IIYNv3Th5g/r0VMLUnCOD0.jpg",
             "price" => 700,
             "position" => 2,
             "description" => "
@@ -272,7 +272,7 @@ class ProductTableSeeder extends Seeder
 
         Product::create([
             "title" => "Фирменная футболка (черная)",
-            "image" => "https://psv4.userapi.com/c856332/u88945061/docs/d17/31e3fcab82a7/deti_chernaya.jpg?extra=iAQYJts06Qdp1SSHIEaJItBvW1bEUMI_lLPgakWsDQ4Y22bObUrU-DRZJkm2QmPyPgxmvKFAdGt8CpmR5ensMNew0bhtBDdP0qR8Q5O1Lt6Csh9RfeKsKS2Xps8TaViQM2Yid0OXBhgip1NxRU341RSX",
+            "image" => "https://sun2.48276.userapi.com/Mlt1LVmdfuybItAcH6VS_0VFQWBN4uFn7ViCpA/zoJ3dkC1mFE.jpg",
             "price" => 700,
             "position" => 2,
             "description" => "

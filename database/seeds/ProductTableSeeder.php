@@ -287,6 +287,41 @@ class ProductTableSeeder extends Seeder
             "type" => ProductTypeEnum::Items,
         ]);
 
+        Product::create([
+            "title" => "Аренда фотостудии",
+            "image" => "https://sun1.48276.userapi.com/impg/GBNMOUQTWnfzD-p1QP07OQwx58125K7VfZAm8w/3JIG3oBL-Fs.jpg?size=520x0&quality=90&sign=f77b4f5e53bab423b82be43a2c64f4db",
+            "price" => 300,
+            "position" => 2,
+            "description" => "
+Цена аренды 300 руб.\час
+#лучшиеснами
+            ",
+            "type" => ProductTypeEnum::Services,
+        ]);
+
+        Product::create([
+            "title" => "Аренда визажной комнаты",
+            "image" => "https://sun1.48276.userapi.com/impg/GBNMOUQTWnfzD-p1QP07OQwx58125K7VfZAm8w/3JIG3oBL-Fs.jpg?size=520x0&quality=90&sign=f77b4f5e53bab423b82be43a2c64f4db",
+            "price" => 150,
+            "position" => 2,
+            "description" => "
+Цена аренды 150 руб.\час
+#лучшиеснами
+            ",
+            "type" => ProductTypeEnum::Services,
+        ]);
+
+        Product::create([
+            "title" => "Аренда хореографического зала",
+            "image" => "https://sun1.48276.userapi.com/impg/GBNMOUQTWnfzD-p1QP07OQwx58125K7VfZAm8w/3JIG3oBL-Fs.jpg?size=520x0&quality=90&sign=f77b4f5e53bab423b82be43a2c64f4db",
+            "price" => 250,
+            "position" => 2,
+            "description" => "
+Цена аренды 250 руб.\час
+#лучшиеснами
+            ",
+            "type" => ProductTypeEnum::Services,
+        ]);
 
         foreach ($this->courses as $item) {
             Product::create([

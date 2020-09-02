@@ -85,11 +85,11 @@ class MainConversation
         $bot->reply("Панель администратора");
     }
 
-    public static function products($bot, ...$d)
+    public function products($bot, $type, $page,$link)
     {
-        $page = isset($d[1]) ? intval($d[1]) : 0;
 
-        $products = Product::where("type", ProductTypeEnum::Items)
+
+        $products = Product::where("type", $type)
             ->take(env("PAGINATION_PER_PAGE"))
             ->skip($page * env("PAGINATION_PER_PAGE"))
             ->get();
@@ -110,8 +110,30 @@ class MainConversation
                 $product->description),
                 $product->image, $keyboard);
         }
-        $bot->pagination("/product_list", $products, $page, "Наша продукция");
+        $bot->pagination($link, $products, $page, "Наша продукция");
     }
+
+    public static function brandedGoods($bot,...$d){
+        $page = isset($d[1]) ? intval($d[1]) : 0;
+        (new self())->products($bot,ProductTypeEnum::Items,$page,"/product_list");
+    }
+
+    public static function lmaCourses($bot, ...$d){
+        $page = isset($d[1]) ? intval($d[1]) : 0;
+        (new self())->products($bot,ProductTypeEnum::LMACourses,$page,"/lma_courses_list");
+    }
+
+    public static function lkcCourses($bot, ...$d){
+        $page = isset($d[1]) ? intval($d[1]) : 0;
+        (new self())->products($bot,ProductTypeEnum::LKCCourses,$page,"/lkc_courses_list");
+    }
+
+    public static function equipmentRent($bot, ...$d)
+    {
+        $page = isset($d[1]) ? intval($d[1]) : 0;
+        (new self())->products($bot,ProductTypeEnum::Services,$page,"/equipment_rent_list");
+    }
+
 
     public static function addProductToCart($bot, ...$d)
     {
@@ -286,5 +308,9 @@ class MainConversation
         ];
 
         $bot->sendMessage("Вопросы и ответы!", $keyboard);
+    }
+
+    public static function monthPhotoprojects($bot){
+        $bot->reply("Фотопроекты скоро будут доступны!");
     }
 }

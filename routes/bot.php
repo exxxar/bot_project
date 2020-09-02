@@ -18,9 +18,13 @@ $this->hears("/test ([0-9]+) ([a-zA-Z]+)", function ($bot, ...$d) {
 $this->hears("/start|.*Продолжить позже|.*Главное меню|.*Попробовать опять", MainConversation::class . "::start");
 $this->hears("/current_profile", MainConversation::class . "::currentProfile");
 
-$this->hears("/product_list ([0-9]+)|.*Фирменная продукция", MainConversation::class . "::products");
+$this->hears("/product_list ([0-9]+)|.*Фирменная продукция", MainConversation::class . "::brandedGoods");
+$this->hears("/lma_courses_list ([0-9]+)|.*Курсы LMA", MainConversation::class . "::lmaCourses");
+$this->hears("/lkc_courses_list ([0-9]+)|.*Курсы LKC", MainConversation::class . "::lkcCourses");
+$this->hears("/equipment_rent_list ([0-9]+)|.*Аренда помещений \ оборудования", MainConversation::class . "::lkcCourses");
 $this->hears("/add_to_cart ([0-9]+)", MainConversation::class . "::addProductToCart");
 $this->hears("/.Посмотреть мои товары", MainConversation::class . "::showProductInCart");
+$this->hears("/.Фотопроекты на месяц", MainConversation::class . "::monthPhotoprojects");
 $this->hears("/.*Корзина.([0-9]+).", MainConversation::class . "::cart");
 $this->hears("/.*Очистить корзину", MainConversation::class . "::clearCart");
 $this->hears("/remove_product_from_cart ([0-9]+)", MainConversation::class . "::removeFromCart");

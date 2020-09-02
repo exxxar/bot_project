@@ -2,22 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a400384-671b-41fb-82e7-fab36ffb0091" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/BotCashBackPackage.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/BotCashBackPackage.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/noimage.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Clasess/AbstractBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/AbstractBot.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Clasess/BaseBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/BaseBot.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Clasess/iBaseBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/iBaseBot.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Clasess/tBotConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/tBotConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Clasess/tBotStorage.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/tBotStorage.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Clasess/tLotusModelBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/tLotusModelBot.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/laravel/bot_cash_back/scr/migrations/2020_10_12_000000_create_bot_user_info_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/packages/laravel/bot_cash_back/scr/migrations/2020_10_12_000000_create_bot_user_info_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/laravel/bot_cash_back/scr/models/BotUserInfo.php" beforeDir="false" afterPath="$PROJECT_DIR$/packages/laravel/bot_cash_back/scr/models/BotUserInfo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Conversations/MainConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/MainConversation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Conversations/QuestionConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/QuestionConversation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/bot.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/bot.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
@@ -155,16 +145,16 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Conversations" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/img" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\projects\BotCashBackPackage\public\img" />
       <recent name="D:\projects\BotCashBackPackage\app\Conversations" />
       <recent name="D:\projects\BotCashBackPackage" />
       <recent name="D:\projects\BotCashBackPackage\app\Clasess" />
       <recent name="D:\projects\BotCashBackPackage\packages\laravel\bot_cash_back\scr\classes" />
-      <recent name="D:\projects\BotCashBackPackage\packages\laravel\bot_cash_back\scr\models" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\projects\BotCashBackPackage\packages\laravel\bot_cash_back\scr" />
@@ -211,7 +201,7 @@
       <workItem from="1598547928752" duration="3217000" />
       <workItem from="1598675316627" duration="3854000" />
       <workItem from="1598686563368" duration="2457000" />
-      <workItem from="1598703024651" duration="82642000" />
+      <workItem from="1598703024651" duration="87892000" />
     </task>
     <servers />
   </component>

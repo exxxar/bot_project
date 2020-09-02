@@ -292,7 +292,7 @@ abstract class AbstractBot
         return false;
     }
 
-    public function sendMessageToChat($chatId,$message, $keyboard = [], $parseMode = 'Markdown')
+    public function sendMessageToChat($chatId, $message, $keyboard = [], $parseMode = 'Markdown')
     {
 
         if (is_null($this->bot))
@@ -308,7 +308,6 @@ abstract class AbstractBot
         ]);
 
     }
-
 
 
     public function sendMessage($message, $keyboard = [], $parseMode = 'Markdown')
@@ -327,7 +326,6 @@ abstract class AbstractBot
         ]);
 
     }
-
 
 
     public function deleteMessage()
@@ -446,16 +444,22 @@ abstract class AbstractBot
         if (is_null($this->bot))
             return;
 
-        $this->bot->sendPhoto([
-            'chat_id' => $this->telegram_user->id,
-            'parse_mode' => $parseMode,
-            'caption' => $message,
-            'photo' => InputFile::create($photoUrl),
-            'disable_notification' => 'true',
-            'reply_markup' => json_encode([
-                'inline_keyboard' => $keyboard
-            ])
-        ]);
+        try {
+            $this->bot->sendPhoto([
+                'chat_id' => $this->telegram_user->id,
+                'parse_mode' => $parseMode,
+                'caption' => $message,
+                'photo' => InputFile::create($photoUrl),
+                'disable_notification' => 'true',
+                'reply_markup' => json_encode([
+                    'inline_keyboard' => $keyboard
+                ])
+            ]);
+        } catch (\Exception $e) {
+            $tmp = mb_strlen($message) === 0 ? "Нет текста!" : $message;
+            //$this->sendMessage($tmp, $keyboard, $parseMode);
+             $this->sendPhoto($tmp, base_path()."/public/img/noimage.jpg", $keyboard, $parseMode);
+        }
     }
 
     public function sendAction($action = 'typing')

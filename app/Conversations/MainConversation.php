@@ -199,7 +199,7 @@ class MainConversation
                 $order->product->title,
                 $order->product->price
             );
-            $price +=  $order->product->price;
+            $price += $order->product->price;
         }
 
         $tmp .= "Суммарно к оплате: *$price руб.*";
@@ -273,8 +273,18 @@ class MainConversation
         $bot->reply("Lotus Combo projekt меню!");
     }
 
+
     public static function askQuestion($bot)
     {
-        $bot->reply("Lotus Combo projekt меню!");
+        $keyboard = [
+            [
+                ["text" => "\xF0\x9F\x93\x9DЗадать вопрос", "callback_data" => "/ask_question"]
+            ],
+            [
+                ["text" => "\xF0\x9F\x93\x96Частые вопросы", "url" => "https://telegra.ph/Uslugi-01-06"]
+            ]
+        ];
+
+        $bot->sendMessage("Вопросы и ответы!", $keyboard);
     }
 }

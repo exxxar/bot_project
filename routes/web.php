@@ -22,5 +22,5 @@ Route::get('/test','BotController@test');
 Route::any('/bot','BotController@handle');
 
 Route::get("/setw",function (){
-    Telegram::setWebhook(['url' => 'https://1d265596032d.ngrok.io/bot']);
+    Telegram::setWebhook(['url' => env("APP_URL").'/bot']);
 });

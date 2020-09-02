@@ -14,6 +14,7 @@ trait tLotusModelBot
         ["\xF0\x9F\x91\xB8Lotus Model Agency", "\xF0\x9F\x8C\x9FLotus Kids"],
         ["\xF0\x9F\x93\xB7Lotus Photostudio", "\xF0\x9F\x8E\xADCombo Photoprojekt"],
         ["\xF0\x9F\x8E\xAALotus Camp", "\xF0\x9F\x91\xABLotus Dance"],
+        ["\xF0\x9F\x91\x89F.A.Q."],
     ];
 
     protected $lma_menu_keyboard = [
@@ -59,7 +60,8 @@ trait tLotusModelBot
         ["Управление опросами"],
         ["Управление заказами"],
         ["Управление фотопроектами"],
-        ["Каналы администраторов"],
+        ["\xF0\x9F\x93\xA3Каналы администраторов"],
+        ["\xF0\x9F\x93\xA9СМС Рассылки"],
         ["\xF0\x9F\x94\x99Главное меню"],
     ];
 

@@ -58,6 +58,11 @@ class QuestionConversation
             'answered_by_id'=>null
         ]);
 
+        $bot->sendMessageToChat(
+            env("LOTUS_BASE_CHANEL_ID"),
+            sprintf("*Новый вопрос*:\nОт:_ $name _\nВопрос: _ $message _\n*Для ответа перейдите в раздел администратора*")
+        );
+
 
     }
 

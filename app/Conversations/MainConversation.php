@@ -25,7 +25,7 @@ class MainConversation
 
         $keyboard = [
             [
-                ["text" => "\xF0\x9F\x8E\xB4Моя анкета", "callback_data" => "/user_profile"]
+                ["text" => "\xF0\x9F\x8E\xB4Моя анкета", "callback_data" => "/current_profile"]
             ]
         ];
 

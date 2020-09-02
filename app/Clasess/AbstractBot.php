@@ -78,13 +78,19 @@ abstract class AbstractBot
     {
         $update = json_decode($data);
 
-        Log::info(print_r($update, true));
+        Log::info("handler");
 
         if (isset($update->channel_post))
             return;
 
 
-        $this->message_id = $update->message->message_id ?? $update->callback_query->message->message_id;
+        $this->message_id = $update->message->message_id ?? $update->callback_query->message->message_id ?? null;
+
+        if (is_null($this->message_id)) {
+            Log::info("Ошибочка");
+            return "Только для запросов бота";
+        }
+
         $this->updated_message_id = $update->callback_query->message->message_id ?? null;
         $this->telegram_user = (object)[
             "id" => $update->message->from->id ?? $update->callback_query->from->id,
@@ -458,7 +464,7 @@ abstract class AbstractBot
         } catch (\Exception $e) {
             $tmp = mb_strlen($message) === 0 ? "Нет текста!" : $message;
             //$this->sendMessage($tmp, $keyboard, $parseMode);
-             $this->sendPhoto($tmp, base_path()."/public/img/noimage.jpg", $keyboard, $parseMode);
+            $this->sendPhoto($tmp, base_path() . "/public/img/noimage.jpg", $keyboard, $parseMode);
         }
     }
 

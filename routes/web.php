@@ -18,9 +18,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test','BotController@test');
-Route::any('/bot','BotController@handle');
+Route::get('/test', 'BotController@test');
+Route::any('/bot', 'BotController@handle');
 
-Route::get("/setw",function (){
-    Telegram::setWebhook(['url' => env("APP_URL").'/bot']);
+Route::get("/setw", function () {
+    Telegram::setWebhook(['url' => env("APP_URL") . '/bot']);
+    return "URL=" . env("APP_URL") . '/bot';
 });

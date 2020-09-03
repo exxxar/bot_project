@@ -10,15 +10,9 @@ use App\Conversations\PollsFormConversation;
 use App\Conversations\QuestionConversation;
 use Illuminate\Support\Facades\Log;
 
-$this->hears("/test ([0-9]+) ([a-zA-Z]+)", function ($bot, ...$d) {
-    $bot->test();
-    Log::info("test " . ($d[2] ?? 'empty'));
-});
-
 
 $this->hears("/start|.*Продолжить позже|.*Главное меню|.*Попробовать опять", MainConversation::class . "::start");
 $this->hears("/current_profile", MainConversation::class . "::currentProfile");
-
 $this->hears("/product_list ([0-9]+)|.*Фирменная продукция", MainConversation::class . "::brandedGoods");
 $this->hears("/lma_courses_list ([0-9]+)|.*Курсы LMA", MainConversation::class . "::lmaCourses");
 $this->hears("/lkc_courses_list ([0-9]+)|.*Курсы LKC", MainConversation::class . "::lkcCourses");
@@ -57,30 +51,14 @@ $this->fallback(function ($bot) {
     $bot->reply("Fallback");
 });
 
-$this->hears("/std", function ($bot, ...$d) {
-    $message = "TEST!!!";
-    $keyboard = [
-        [
-            ["text" => "test", "callback_data" => "arka"]
-        ]
-    ];
-
-    $bot->reply($message, $keyboard);
-    $this->startConversation("order_name");
-
-
-});
 
 
 $this->ask("question_name", QuestionConversation::class . "::name");
 $this->ask("question_text", QuestionConversation::class . "::text");
-
 $this->ask("answer_response", AnswerQuestionConversation::class . "::response");
-
 $this->ask("confirm_order_name", ConfirmOrderConversation::class . "::name");
 $this->ask("confirm_order_phone", ConfirmOrderConversation::class . "::phone");
 $this->ask("confirm_order_comment", ConfirmOrderConversation::class . "::comment");
-
 $this->ask("mf_full_name", ModelFormConversation::class . "::name");
 $this->ask("mf_phone", ModelFormConversation::class . "::phone");
 $this->ask("mf_select_city", ModelFormConversation::class . "::selectCity");
@@ -89,50 +67,9 @@ $this->ask("mf_age", ModelFormConversation::class . "::age");
 $this->ask("mf_height", ModelFormConversation::class . "::height");
 $this->ask("mf_question_1", ModelFormConversation::class . "::question1");
 $this->ask("mf_question_2", ModelFormConversation::class . "::question2");
-
 $this->ask("poll_question", PollsFormConversation::class . "::question");
 $this->ask("poll_is_anonymous", PollsFormConversation::class . "::changeAnonymous");
 $this->ask("poll_allows_multiple_answers", PollsFormConversation::class . "::changeAllowsMultipleAnswers");
 $this->ask("poll_option", PollsFormConversation::class . "::option");
 $this->ask("poll_remove", PollsFormConversation::class . "::removeAccept");
 
-//объявляем какие мы хотим диалоги
-$this->ask("order_phone", \App\Conversations\OrderConversation::class . "::phone");
-$this->ask("order_name", \App\Conversations\OrderConversation::class . "::name");
-
-$this->ask("test", function ($bot, $message) {
-    Log::info("ASK 2 MESSAGE $message");
-    $bot->reply("ASK 2 MESSAGE $message");
-    $this->stopConversation();
-
-});
-
-$this->ask("dddd", function ($bot, $message) {
-    Log::info("dddd 1 MESSAGE $message");
-    $bot->reply("dddd 1 MESSAGE $message");
-    $bot->reply("Напишите свой следующий вопрос");
-});
-
-$this->ask("dddd", function ($bot, $message) {
-    Log::info("dddd 2 MESSAGE $message");
-    $bot->reply("dddd 2 MESSAGE $message");
-    $bot->reply("Спасибо за ответы!");
-    $this->stopConversation();
-});
-
-/*$this->conversation("order_conversation","/test",function ($bot,... $d){
-    //начали конверсейшен
-    //далее добавляем вопрос
-    $message = "TEST!!!";
-    $keyboard = [
-        [
-            ["text"=>"test","callback_data"=>"/dddd"]
-        ]
-    ];
-
-    $bot->ask($message,$keyboard,function ($bot, ...$d){
-
-       $bot->reply("ASK MESSAGE");
-
-    });
-});*/

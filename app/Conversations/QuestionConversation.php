@@ -48,7 +48,7 @@ class QuestionConversation
         }
 
         $user = $bot->getUser();
-
+        $type = $bot->storeGet("type");
         $name = $bot->storeGet("name");
 
         $bot->getMainMenu("Текст вашего вопроса: *$message*\xE2\x9C\x85\nСпасибо! Ваш вопрос принят в обработку.");
@@ -62,7 +62,7 @@ class QuestionConversation
             'answered_by_id'=>null
         ]);
 
-        $type = $bot->storeGet("type");
+
 
         $bot->sendMessageToChat(
             env("LOTUS_BASE_CHANEL_ID"),

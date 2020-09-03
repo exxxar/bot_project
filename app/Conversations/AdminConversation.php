@@ -143,7 +143,7 @@ class AdminConversation
     {
         $page = isset($d[1]) ? intval($d[1]) : 0;
 
-        $questions = Ticket::where("answered_by_id",null)
+        $questions = Ticket::whereNull("answered_by_id")
             ->skip($page * env("PAGINATION_PER_PAGE"))
             ->take(env("PAGINATION_PER_PAGE"))
             ->get();

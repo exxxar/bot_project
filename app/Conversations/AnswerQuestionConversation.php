@@ -46,9 +46,11 @@ class AnswerQuestionConversation
         $bot->getMainMenu("Текст ответа: *$message*\xE2\x9C\x85\nСпасибо! Ответ отправлен пользователю");
         $bot->stopConversation();
 
+        $question_type_ids = ["LMC", "LKC" , "LP" , "LC" , "LD" ];
+
         $keyboard = [
             [
-                ["text" => "Задать еще вопрос", "callback_data" => "/ask_question"]
+                ["text" => "Задать еще вопрос", "callback_data" => "/ask_question ".$question_type_ids[$ticket->question_type]]
             ]
         ];
 

@@ -148,6 +148,8 @@ class AdminConversation
             ->take(env("PAGINATION_PER_PAGE"))
             ->get();
 
+        $bot->reply("count=" . count($questions));
+
         if (count($questions) === 0) {
             $bot->sendMessage("К сожалению, вопросов еще нет, но они появятся в скором времени!");
             return;
@@ -167,8 +169,8 @@ class AdminConversation
                     . "Текст вопроса: \n_%s_\n",
                     $question->id,
                     $question->name,
-                    $question->message,
-                    $question->chat_id
+                    $question->chat_id,
+                    $question->message
                 ), $keyboard);
         }
         $bot->pagination("/all_question_list", $questions, $page, "Список вопросов от пользователей");

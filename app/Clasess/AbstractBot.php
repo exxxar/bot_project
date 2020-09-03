@@ -150,7 +150,9 @@ abstract class AbstractBot
             return;
         }
 
+        Log::info("before user create");
         $this->createNewBotUser();
+        Log::info("after user create");
 
         if (is_null($this->query))
             return;
@@ -161,6 +163,7 @@ abstract class AbstractBot
         $arguments = [];
 
         if ($this->isConversationActive()) {
+            Log::info("conversation is active");
             $object = $this->currentActiveConversation();
             $is_conversation_find = false;
 
@@ -185,6 +188,7 @@ abstract class AbstractBot
 
         foreach ($this->list as $item) {
 
+            Log::info("try handle action");
             if (is_null($item["path"]))
                 continue;
 
@@ -207,6 +211,7 @@ abstract class AbstractBot
 
 
         if (!$find) {
+            Log::info("NOT FOUND ACTION");
             foreach ($this->list as $item) {
                 if (!is_null($item["path"]))
                     continue;

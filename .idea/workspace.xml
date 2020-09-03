@@ -3,7 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="5a400384-671b-41fb-82e7-fab36ffb0091" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/MainConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/MainConversation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Clasess/tLotusModelBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/tLotusModelBot.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Conversations/AdminConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/AdminConversation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Conversations/QuestionConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/QuestionConversation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/bot.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/bot.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,13 +142,13 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/img" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Conversations" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\projects\BotCashBackPackage\public\img" />
       <recent name="D:\projects\BotCashBackPackage\app\Conversations" />
+      <recent name="D:\projects\BotCashBackPackage\public\img" />
       <recent name="D:\projects\BotCashBackPackage" />
       <recent name="D:\projects\BotCashBackPackage\app\Clasess" />
       <recent name="D:\projects\BotCashBackPackage\packages\laravel\bot_cash_back\scr\classes" />
@@ -195,7 +198,7 @@
       <workItem from="1598547928752" duration="3217000" />
       <workItem from="1598675316627" duration="3854000" />
       <workItem from="1598686563368" duration="2457000" />
-      <workItem from="1598703024651" duration="95198000" />
+      <workItem from="1598703024651" duration="98832000" />
     </task>
     <servers />
   </component>
@@ -223,5 +226,20 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="426" y="197" key="run.anything.popup/0.0.1536.864@0.0.1536.864" timestamp="1599069276217" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php-line-method">
+          <url>file://$PROJECT_DIR$/app/Conversations/AdminConversation.php</url>
+          <line>141</line>
+          <properties>
+            <option name="className" value="\App\Conversations\AdminConversation" />
+            <option name="methodName" value="questions" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

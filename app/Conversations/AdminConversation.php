@@ -8,6 +8,7 @@ use App\Enums\ProductTypeEnum;
 use App\Poll;
 use App\Product;
 use App\Profile;
+use App\Ticket;
 use Illuminate\Support\Facades\Log;
 
 class AdminConversation
@@ -135,8 +136,41 @@ class AdminConversation
         }
         $bot->pagination("/all_polls_list", $polls, $page, "Список опросов для пользователей");
 
-        $bot->sendMessage("Список опросов пользователей. Текущая страница " . ($page + 1),$main_keyboard);
+        $bot->sendMessage("Список опросов пользователей. Текущая страница " . ($page + 1), $main_keyboard);
     }
 
+    public static function questions($bot, ...$d)
+    {
+        $page = isset($d[1]) ? intval($d[1]) : 0;
+
+        $questions = Ticket::where("answered_by_id",null)
+            ->skip($page * env("PAGINATION_PER_PAGE"))->take(env("PAGINATION_PER_PAGE"))->get();
+
+        if (count($questions) === 0) {
+            $bot->sendMessage("К сожалению, вопросов еще нет, но они появятся в скором времени!");
+            return;
+        }
+
+
+        foreach ($questions as $question) {
+
+            $keyboard = [
+                [
+                    ["text" => "Ответить на вопрос", "callback_data" => "/answer_this_questions $question->id"],
+                ]
+            ];
+            $bot->sendMessage(
+                sprintf("*Вопрос #%s:*\n"
+                    . "Имя пользователя: %s (chat_id: %s )"
+                    . "Текст вопроса: \n_%s_\n",
+                    $question->id,
+                    $question->name,
+                    $question->chat_id
+                ), $keyboard);
+        }
+        $bot->pagination("/all_question_list", $questions, $page, "Список вопросов от пользователей");
+
+        $bot->sendMessage("Список вопросов пользователей. Текущая страница " . ($page + 1));
+    }
 
 }

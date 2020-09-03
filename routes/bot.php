@@ -2,6 +2,7 @@
 
 
 use App\Conversations\AdminConversation;
+use App\Conversations\AnswerQuestionConversation;
 use App\Conversations\ConfirmOrderConversation;
 use App\Conversations\MainConversation;
 use App\Conversations\ModelFormConversation;
@@ -35,6 +36,8 @@ $this->hears("/send_poll ([0-9]+) ([0-9]+)", PollsFormConversation::class . "::s
 $this->hears("/admin|.*Панель администратора", AdminConversation::class . "::start");
 $this->hears("/all_profile_list ([0-9]+)|.*Управление анкетами", AdminConversation::class . "::profiles");
 $this->hears("/all_polls_list ([0-9]+)|.*Управление опросами", AdminConversation::class . "::polls");
+$this->hears("/all_question_list ([0-9]+)|.*Управление вопросами", AdminConversation::class . "::questions");
+$this->hears("/answer_this_questions ([0-9]+)", AnswerQuestionConversation::class . "::start");
 //$this->hears("/all_profile_list ([0-9]+)", AdminConversation::class."::profilesPerPage");
 $this->hears("/.*Каналы администраторов", AdminConversation::class . "::channels");
 $this->hears("/.*Lotus Model Agency", MainConversation::class . "::lmaMenu");
@@ -43,7 +46,7 @@ $this->hears("/.*Lotus Camp", MainConversation::class . "::lcMenu");
 $this->hears("/.*Lotus Dance", MainConversation::class . "::ldMenu");
 $this->hears("/.*Lotus Kids", MainConversation::class . "::lkMenu");
 $this->hears("/.*Combo Photoprojekt", MainConversation::class . "::cpMenu");
-$this->hears("/ask_question|.*Задать вопрос", QuestionConversation::class . "::start");
+$this->hears("/ask_question ([a-zA-Z]+)|.*Задать вопрос ([a-zA-Z]+)", QuestionConversation::class . "::start");
 $this->hears("/.*F.A.Q.", MainConversation::class . "::askQuestion");
 $this->hears("/.*Оформить заказ", ConfirmOrderConversation::class . "::start");
 $this->hears("/edit_current_prof|.*Анкета модели", ModelFormConversation::class . "::start");
@@ -71,6 +74,8 @@ $this->hears("/std", function ($bot, ...$d) {
 
 $this->ask("question_name", QuestionConversation::class . "::name");
 $this->ask("question_text", QuestionConversation::class . "::text");
+
+$this->ask("answer_response", AnswerQuestionConversation::class . "::response");
 
 $this->ask("confirm_order_name", ConfirmOrderConversation::class . "::name");
 $this->ask("confirm_order_phone", ConfirmOrderConversation::class . "::phone");

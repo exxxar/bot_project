@@ -10,9 +10,11 @@ use Illuminate\Support\Facades\Log;
 class QuestionConversation
 {
 
-    public static function start($bot)
+    public static function start($bot, ...$d)
     {
-        $bot->getFallbackMenu("Диалог с администратором.\n\xF0\x9F\x94\xB8Введите ваше имя:");
+        $type = isset($d[1]) ? intval($d[1]) : 'LMA';
+
+        $bot->getFallbackMenu("Диалог с администратором $type.\n\xF0\x9F\x94\xB8Введите ваше имя:");
         $bot->startConversation("question_name");
     }
 

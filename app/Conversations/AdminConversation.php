@@ -156,19 +156,15 @@ class AdminConversation
 
 
         foreach ($questions as $question) {
-            $bot->reply("test ".$question->id);
             $keyboard = [
                 [
                     ["text" => "Ответить на вопрос", "callback_data" => "/answer_this_questions $question->id"],
                 ]
             ];
             $bot->sendMessage(
-                sprintf("*Вопрос #%s:*\n"
-                    . "Имя пользователя: %s (chat_id: %s )\n"
-                    . "Текст вопроса: \n_%s_\n",
+                sprintf("*Вопрос #%s:*\nИмя пользователя: %s\nТекст вопроса: \n_%s_\n",
                     $question->id,
                     $question->name,
-                    $question->chat_id,
                     $question->message
                 ), $keyboard);
         }

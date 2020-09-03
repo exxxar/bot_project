@@ -249,17 +249,25 @@ abstract class AbstractBot
     {
         if (is_null($this->bot))
             return;
+        try {
+            $this->bot->sendMessage([
+                "chat_id" => $this->telegram_user->id,
+                "text" => $message,
+                'parse_mode' => 'Markdown',
+                'reply_markup' => json_encode([
+                    'keyboard' => $keyboard,
+                    'one_time_keyboard' => false,
+                    'resize_keyboard' => true
+                ])
+            ]);
 
-        $this->bot->sendMessage([
-            "chat_id" => $this->telegram_user->id,
-            "text" => $message,
-            'parse_mode' => 'Markdown',
-            'reply_markup' => json_encode([
-                'keyboard' => $keyboard,
-                'one_time_keyboard' => false,
-                'resize_keyboard' => true
-            ])
-        ]);
+        } catch (\Exception $e) {
+            Log::info(sprintf("%s %s %s",
+                $e->getMessage(),
+                $e->getFile(),
+                $e->getLine()
+            ));
+        }
     }
 
     public function createNewBotUser($parent_id = null)
@@ -303,15 +311,22 @@ abstract class AbstractBot
 
         if (is_null($this->bot))
             return;
-
-        $this->bot->sendMessage([
-            "chat_id" => $chatId,
-            "text" => $message,
-            'parse_mode' => $parseMode,
-            'reply_markup' => json_encode([
-                'inline_keyboard' => $keyboard
-            ])
-        ]);
+        try {
+            $this->bot->sendMessage([
+                "chat_id" => $chatId,
+                "text" => $message,
+                'parse_mode' => $parseMode,
+                'reply_markup' => json_encode([
+                    'inline_keyboard' => $keyboard
+                ])
+            ]);
+        } catch (\Exception $e) {
+            Log::info(sprintf("%s %s %s",
+                $e->getMessage(),
+                $e->getFile(),
+                $e->getLine()
+            ));
+        }
 
     }
 
@@ -322,14 +337,22 @@ abstract class AbstractBot
         if (is_null($this->bot))
             return;
 
-        $this->bot->sendMessage([
-            "chat_id" => $this->telegram_user->id,
-            "text" => $message,
-            'parse_mode' => $parseMode,
-            'reply_markup' => json_encode([
-                'inline_keyboard' => $keyboard
-            ])
-        ]);
+        try {
+            $this->bot->sendMessage([
+                "chat_id" => $this->telegram_user->id,
+                "text" => $message,
+                'parse_mode' => $parseMode,
+                'reply_markup' => json_encode([
+                    'inline_keyboard' => $keyboard
+                ])
+            ]);
+        } catch (\Exception $e) {
+            Log::info(sprintf("%s %s %s",
+                $e->getMessage(),
+                $e->getFile(),
+                $e->getLine()
+            ));
+        }
 
     }
 

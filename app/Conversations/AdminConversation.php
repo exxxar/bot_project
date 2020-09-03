@@ -144,7 +144,9 @@ class AdminConversation
         $page = isset($d[1]) ? intval($d[1]) : 0;
 
         $questions = Ticket::where("answered_by_id",null)
-            ->skip($page * env("PAGINATION_PER_PAGE"))->take(env("PAGINATION_PER_PAGE"))->get();
+            ->skip($page * env("PAGINATION_PER_PAGE"))
+            ->take(env("PAGINATION_PER_PAGE"))
+            ->get();
 
         if (count($questions) === 0) {
             $bot->sendMessage("К сожалению, вопросов еще нет, но они появятся в скором времени!");
@@ -165,6 +167,7 @@ class AdminConversation
                     . "Текст вопроса: \n_%s_\n",
                     $question->id,
                     $question->name,
+                    $question->message,
                     $question->chat_id
                 ), $keyboard);
         }

@@ -12,7 +12,7 @@ class QuestionConversation
 
     public static function start($bot, ...$d)
     {
-        $type = isset($d[1]) ? intval($d[1]) : 'LMA';
+        $type = isset($d[1]) ? $d[1] : 'LMA';
 
         $bot->getFallbackMenu("Диалог с администратором $type.\n\xF0\x9F\x94\xB8Введите ваше имя:");
         $bot->startConversation("question_name");

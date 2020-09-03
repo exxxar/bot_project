@@ -18,10 +18,8 @@ trait tLotusModelBot
     ];
 
     protected $lma_menu_keyboard = [
-        ["\xF0\x9F\x92\xACПерейти в канал LMA"],
-        ["\xF0\x9F\x93\x83Анкета модели"],
-        ["\xF0\x9F\x8E\x93Курсы LMA"],
-        ["\xF0\x9F\x94\x8DНайти модель"],
+        ["\xF0\x9F\x92\xACПерейти в канал LMA","\xF0\x9F\x93\x83Анкета модели"],
+        ["\xF0\x9F\x8E\x93Курсы LMA","\xF0\x9F\x94\x8DНайти модель"],
         ["\xF0\x9F\x91\x89Задать вопрос LMA"],
         ["\xF0\x9F\x94\x99Главное меню"],
     ];

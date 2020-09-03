@@ -148,7 +148,6 @@ class AdminConversation
             ->take(env("PAGINATION_PER_PAGE"))
             ->get();
 
-        $bot->reply("count=" . count($questions));
 
         if (count($questions) === 0) {
             $bot->sendMessage("К сожалению, вопросов еще нет, но они появятся в скором времени!");
@@ -157,7 +156,7 @@ class AdminConversation
 
 
         foreach ($questions as $question) {
-
+            $bot->reply("test ".$question->id);
             $keyboard = [
                 [
                     ["text" => "Ответить на вопрос", "callback_data" => "/answer_this_questions $question->id"],
@@ -165,7 +164,7 @@ class AdminConversation
             ];
             $bot->sendMessage(
                 sprintf("*Вопрос #%s:*\n"
-                    . "Имя пользователя: %s (chat_id: %s )"
+                    . "Имя пользователя: %s (chat_id: %s )\n"
                     . "Текст вопроса: \n_%s_\n",
                     $question->id,
                     $question->name,

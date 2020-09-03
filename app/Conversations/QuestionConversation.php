@@ -12,12 +12,12 @@ class QuestionConversation
 
     public static function start($bot, ...$d)
     {
-        $type = isset($d[1]) ? $d[1] : 'LMA';
-
-        $bot->reply(print_r($d,true));
+        $type = isset($d[2]) ? $d[2] : 'LMA';
 
         $bot->getFallbackMenu("Диалог с администратором $type.\n\xF0\x9F\x94\xB8Введите ваше имя:");
-        $bot->startConversation("question_name");
+        $bot->startConversation("question_name",[
+            "type"=>$type
+        ]);
     }
 
     public static function name($bot, $message)
@@ -62,9 +62,11 @@ class QuestionConversation
             'answered_by_id'=>null
         ]);
 
+        $type = $bot->storeGet("type");
+
         $bot->sendMessageToChat(
             env("LOTUS_BASE_CHANEL_ID"),
-            sprintf("*Новый вопрос*:\nОт:_ $name _\nВопрос: _ $message _\n*Для ответа перейдите в раздел администратора*")
+            "*Новый вопрос ($type)*:\nОт:_ $name _\nВопрос: _ $message _\n*Для ответа перейдите в раздел администратора*"
         );
 
 

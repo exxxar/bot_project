@@ -14,6 +14,8 @@ class QuestionConversation
     {
         $type = isset($d[1]) ? $d[1] : 'LMA';
 
+        $bot->reply(print_r($d,true));
+
         $bot->getFallbackMenu("Диалог с администратором $type.\n\xF0\x9F\x94\xB8Введите ваше имя:");
         $bot->startConversation("question_name");
     }

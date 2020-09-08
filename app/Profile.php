@@ -13,6 +13,8 @@ class Profile extends Model
         'phone',
         'height',
         'age',
+        'birth_month',
+        'birth_day',
         'sex',
         'model_school_education',
         'wish_learn',

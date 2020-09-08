@@ -33,15 +33,15 @@ class BotUserInfo extends Model
 
     public function getPhotoCountAttribute()
     {
-        return $this->self()->first()->ps_photo_count ?? 0;
+        return $this->user()->first()->ps_photo_count ?? 0;
     }
 
     public function getDiscountAttribute()
     {
-        return $this->self()->first()->ps_discount ?? 0;
+        return $this->user()->first()->ps_discount ?? 0;
     }
 
-    public function self()
+    public function user()
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }

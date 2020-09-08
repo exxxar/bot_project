@@ -5,10 +5,12 @@ namespace App\Conversations;
 
 
 use App\Enums\ProductTypeEnum;
+use App\Order;
 use App\Poll;
 use App\Product;
 use App\Profile;
 use App\Ticket;
+use App\User;
 use Illuminate\Support\Facades\Log;
 
 class AdminConversation
@@ -19,6 +21,7 @@ class AdminConversation
         $bot->stopConversation();
         $bot->getAdminMenu("Добро пожаловать в админ. панель");
     }
+
 
     public static function channels($bot)
     {
@@ -171,6 +174,76 @@ class AdminConversation
         $bot->pagination("/all_question_list", $questions, $page, "Список вопросов от пользователей");
 
         $bot->sendMessage("Список вопросов пользователей. Текущая страница " . ($page + 1));
+    }
+
+    public static function products($bot, ...$d)
+    {
+
+        $page = isset($d[1]) ? intval($d[1]) : 0;
+
+        $products = Product::skip($page * env("PAGINATION_PER_PAGE"))
+            ->take(env("PAGINATION_PER_PAGE"))
+            ->get();
+
+        if (count($products) === 0) {
+            $bot->sendMessage("К сожалению, товаров еще нет, но они появятся в скором времени!");
+            return;
+        }
+
+
+        foreach ($products as $product) {
+            $keyboard = [
+                [
+                    ["text" => "Удалить товар", "callback_data" => "/remove_product $product->id"],
+                ]
+            ];
+
+            $type_array = [
+                "Продукция",
+                "LKC",
+                "LMA",
+                "LC",
+                "Сервис"
+            ];
+
+            $bot->sendMessage(
+                sprintf("*#%s:*\nНазвание: %s\nЦена: _%s_ руб.\nОписание: _%s_\nСсылка на изображение: %s\nКатегория товара: %s",
+                    $product->id,
+                    $product->title,
+                    $product->price,
+                    $product->description,
+                    $product->image,
+                    $type_array[ProductTypeEnum::getInstance($product->type)->value]
+                ), $keyboard);
+        }
+        $bot->pagination("/all_products_list", $products, $page, "Список товаров");
+
+        $keyboard = [
+          [
+              ["text"=>"Добавить товар","callback_data"=>"/add_new_product"]
+          ]
+        ];
+        $bot->sendMessage("Список товаров. Текущая страница " . ($page + 1),$keyboard);
+    }
+
+    public static function statistic($bot)
+    {
+        $user = $bot->getUser();
+        if (!$user->is_admin) {
+            $bot->reply("Вы не администратор!");
+            return;
+        }
+
+        $userCount = User::all()->count();
+        $ordersCount = Order::where("is_confirmed", true)->count();
+
+        $bot->reply(
+            sprintf(
+                "Всего пользователей в системе: *%s*\nВсего заказов: *%s*"
+                ,
+                $userCount,
+                $ordersCount
+            ));
     }
 
 }

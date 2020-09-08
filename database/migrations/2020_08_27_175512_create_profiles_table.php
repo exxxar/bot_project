@@ -21,6 +21,8 @@ class CreateProfilesTable extends Migration
 
             $table->string('height')->default('');
             $table->string('age')->default('');
+            $table->string('birth_month')->default('');
+            $table->string('birth_day')->default('');
             $table->string('sex')->default('');
 
             $table->string('model_school_education')->default('');

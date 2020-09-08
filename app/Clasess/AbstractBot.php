@@ -61,7 +61,7 @@ abstract class AbstractBot
             $this->bot = new Api(config("app.debug") ?
                 env("TELEGRAM_DEBUG_BOT") :
                 env("TELEGRAM_PRODUCTION_BOT")
-                , true);
+                , false);
 
 
         } catch (TelegramSDKException $e) {
@@ -74,11 +74,74 @@ abstract class AbstractBot
         return $this;
     }
 
+    public function setTelegramUser($data)
+    {
+        $this->telegram_user = (object)[
+            "id" => $data->id,
+            "first_name" => $data->first_name ?? '',
+            "last_name" => $data->last_name ?? '',
+            "username" => $data->username ?? '',
+        ];
+    }
+
     public function handler(Update $data)
     {
         $update = json_decode($data);
 
-        Log::info("handler");
+        if (isset($update->inline_query)) {
+            $messageId = $update->inline_query->id;
+
+            $this->setTelegramUser($update->inline_query->from);
+
+            $users =
+                BotUserInfo::where("is_admin", true)
+                    ->where("is_working", true)
+                    ->orderBy("id", "DESC")
+                    ->take(8)
+                    ->skip(0)
+                    ->get();
+            $button_list = [];
+
+            $this->reply("Ищем активных администраторов....");
+            if (count($users) > 0) {
+                foreach ($users as $user) {
+
+                    $tmp_user_id = (string)$user->chat_id;
+                    while (strlen($tmp_user_id) < 10)
+                        $tmp_user_id = "0" . $tmp_user_id;
+
+                    $code = base64_encode("005" . $tmp_user_id);
+                    $url_link = "https://t.me/" . env("APP_BOT_NAME") . "?start=$code";
+
+                    $tmp_button = [
+                        'type' => 'article',
+                        'id' => uniqid(),
+                        'title' => "Запрос к Администратору",
+                        'input_message_content' => [
+                            'message_text' => sprintf("Администратор #%s %s (%s)", $user->id, ($user->fio ?? $user->account_name ?? $user->chat_id), ($user->phone ?? 'Без телефона')),
+                        ],
+                        'reply_markup' => [
+                            'inline_keyboard' => [
+                                [
+                                    ['text' => "\xF0\x9F\x91\x89Послать запрос Администратору", "url" => "$url_link"],
+                                ],
+
+                            ]
+                        ],
+                        'thumb_url' => "https://sun2.48276.userapi.com/c848536/v848536665/177130/tzf1fK-6aio.jpg",
+                        'url' => env("APP_URL"),
+                        'description' => sprintf("Администратор #%s %s (%s)", $user->id, ($user->fio ?? $user->account_name ?? $user->chat_id), ($user->phone ?? 'Без телефона')),
+                        'hide_url' => true
+                    ];
+
+                    array_push($button_list, $tmp_button);
+                }
+                $this->sendAnswerInlineQuery($messageId, $button_list);
+            } else
+                $this->reply("К сожалению активных администраторов не найдено...");
+
+            return;
+        }
 
         if (isset($update->channel_post))
             return;
@@ -92,12 +155,7 @@ abstract class AbstractBot
         }
 
         $this->updated_message_id = $update->callback_query->message->message_id ?? null;
-        $this->telegram_user = (object)[
-            "id" => $update->message->from->id ?? $update->callback_query->from->id,
-            "first_name" => $update->message->from->first_name ?? $update->callback_query->from->first_name ?? '',
-            "last_name" => $update->message->from->last_name ?? $update->callback_query->from->last_name ?? '',
-            "username" => $update->message->from->username ?? $update->callback_query->from->username ?? '',
-        ];
+        $this->setTelegramUser($update->message->from ?? $update->callback_query->from);
         $this->query = $update->message->text ?? $update->callback_query->data ?? '';
 
         if (isset($update->message->photo)) {
@@ -141,7 +199,7 @@ abstract class AbstractBot
         if (env("APP_MAINTENANCE_MODE")) {
             $keyboard = [
                 [
-                    ["text" => "Перейти в канал", "url" => "https://t.me/diner_dn"]
+                    ["text" => "Перейти в канал", "url" => "https://t.me/" . env("LMA_CHANNEL_LINK")]
                 ]
             ];
             $this->sendPhoto("",
@@ -150,9 +208,8 @@ abstract class AbstractBot
             return;
         }
 
-        Log::info("before user create");
         $this->createNewBotUser();
-        Log::info("after user create");
+
 
         if (is_null($this->query))
             return;
@@ -163,7 +220,6 @@ abstract class AbstractBot
         $arguments = [];
 
         if ($this->isConversationActive()) {
-            Log::info("conversation is active");
             $object = $this->currentActiveConversation();
             $is_conversation_find = false;
 
@@ -186,11 +242,20 @@ abstract class AbstractBot
                 $this->stopConversation();
         }
 
+
+        $maxErrorIteration = count($this->list);
+
         foreach ($this->list as $item) {
 
-            Log::info("try handle action");
+            if ($maxErrorIteration === 0)
+                break;
+
+            $maxErrorIteration--;
+
             if (is_null($item["path"]))
                 continue;
+
+            $maxErrorIteration = count($this->list);
 
             if (preg_match($item["path"] . "$/i", $this->query, $matches) != false) {
                 foreach ($matches as $match)
@@ -211,7 +276,6 @@ abstract class AbstractBot
 
 
         if (!$find) {
-            Log::info("NOT FOUND ACTION");
             foreach ($this->list as $item) {
                 if (!is_null($item["path"]))
                     continue;
@@ -361,15 +425,40 @@ abstract class AbstractBot
 
     }
 
+    public function sendAnswerInlineQuery($id, $result)
+    {
 
-    public function deleteMessage()
+        if (is_null($this->bot))
+            return;
+
+        try {
+            $this->bot->answerInlineQuery([
+                'cache_time' => 300,
+                "inline_query_id" => $id,
+                "results" => json_encode($result)
+            ]);
+        } catch (\Exception $e) {
+            Log::info(sprintf("%s %s %s",
+                $e->getMessage(),
+                $e->getFile(),
+                $e->getLine()
+            ));
+        }
+
+    }
+
+    public function getMessageId(){
+        return $this->message_id;
+    }
+
+    public function deleteMessage($id = null)
     {
         if (is_null($this->bot))
             return;
 
         try {
             $this->bot->deleteMessage([
-                'chat_id' => $this->getChatId(),
+                'chat_id' => $id ?? $this->getChatId(),
                 "message_id" => $this->message_id
             ]);
         } catch (\Exception $e) {

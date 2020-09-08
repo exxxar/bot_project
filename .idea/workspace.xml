@@ -2,7 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a400384-671b-41fb-82e7-fab36ffb0091" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Clasess/AbstractBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/AbstractBot.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Clasess/tLotusModelBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/tLotusModelBot.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Conversations/AdminConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/AdminConversation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Conversations/MainConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/MainConversation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Conversations/ModelFormConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/ModelFormConversation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Profile.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_27_175512_create_profiles_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_08_27_175512_create_profiles_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeds/ProductTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/ProductTableSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/laravel/bot_cash_back/scr/models/BotUserInfo.php" beforeDir="false" afterPath="$PROJECT_DIR$/packages/laravel/bot_cash_back/scr/models/BotUserInfo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/bot.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/bot.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,17 +151,18 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Conversations" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\projects\BotCashBackPackage\packages\laravel\bot_cash_back\scr" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\projects\BotCashBackPackage\app\Conversations" />
       <recent name="D:\projects\BotCashBackPackage\public\img" />
       <recent name="D:\projects\BotCashBackPackage" />
       <recent name="D:\projects\BotCashBackPackage\app\Clasess" />
       <recent name="D:\projects\BotCashBackPackage\packages\laravel\bot_cash_back\scr\classes" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\projects\BotCashBackPackage\packages\laravel\bot_cash_back\scr" />
     </key>
   </component>
   <component name="RunManager">
@@ -194,7 +206,9 @@
       <workItem from="1598547928752" duration="3217000" />
       <workItem from="1598675316627" duration="3854000" />
       <workItem from="1598686563368" duration="2457000" />
-      <workItem from="1598703024651" duration="103813000" />
+      <workItem from="1598703024651" duration="118874000" />
+      <workItem from="1599231845490" duration="20000" />
+      <workItem from="1599314972185" duration="46298000" />
     </task>
     <servers />
   </component>
@@ -202,10 +216,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="499" y="191" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1598724680840">
+    <state x="499" y="191" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1599510362342">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="499" y="191" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.864@0.0.1536.864" timestamp="1598724680840" />
+    <state x="499" y="191" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.864@0.0.1536.864" timestamp="1599510362342" />
     <state x="558" y="267" key="NewPhpClassDialog" timestamp="1598371592315">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -214,13 +228,21 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="604" y="364" key="NewPhpFileDialog/0.0.1536.864@0.0.1536.864" timestamp="1594473193566" />
-    <state x="477" y="261" key="com.intellij.ide.util.TipDialog" timestamp="1598703148937">
+    <state x="0" y="0" key="SettingsEditor" timestamp="1599121342022">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="477" y="261" key="com.intellij.ide.util.TipDialog/0.0.1536.864@0.0.1536.864" timestamp="1598703148937" />
-    <state x="426" y="197" key="run.anything.popup" timestamp="1599069276217">
+    <state x="0" y="0" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1599121342022" />
+    <state x="477" y="261" key="com.intellij.ide.util.TipDialog" timestamp="1599231856642">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="426" y="197" key="run.anything.popup/0.0.1536.864@0.0.1536.864" timestamp="1599069276217" />
+    <state x="477" y="261" key="com.intellij.ide.util.TipDialog/0.0.1536.864@0.0.1536.864" timestamp="1599231856642" />
+    <state x="426" y="197" key="run.anything.popup" timestamp="1599131261899">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="426" y="197" key="run.anything.popup/0.0.1536.864@0.0.1536.864" timestamp="1599131261899" />
+    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup" timestamp="1599512692665">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup/0.0.1536.864@0.0.1536.864" timestamp="1599512692665" />
   </component>
 </project>

@@ -25,12 +25,30 @@ class ModelFormConversation
             $bot->next("mf_full_name");
             return;
         }
-        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш номер телефона:");
-        $bot->next("mf_phone", [
+
+        $keyboard = [
+            [
+                ["text" => "Парень", "callback_data" => "муж"],
+                ["text" => "Девушка", "callback_data" => "жен"],
+            ]
+        ];
+        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Выберите ваш пол:", $keyboard);
+        $bot->next("mf_sex", [
             "full_name" => $message
         ]);
     }
 
+
+    public static function sex($bot, $message)
+    {
+        if (ModelFormConversation::fallback($bot, $message))
+            return;
+
+        $bot->reply("Вы выбрал: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш номер телефона:");
+        $bot->next("mf_phone", [
+            "sex" => $message
+        ]);
+    }
 
     public static function phone($bot, $message)
     {
@@ -109,9 +127,83 @@ class ModelFormConversation
             return;
         }
 
+        $keyboard = [];
+        $tmp_keyboard_row = [];
+        for ($i = 1; $i <= 31; $i++) {
+
+            array_push($tmp_keyboard_row, ["text" => $i, "callback_data" => $i]);
+            if ($i % 7 === 0) {
+                array_push($keyboard, $tmp_keyboard_row);
+                $tmp_keyboard_row = [];
+            }
+        }
+        array_push($keyboard, $tmp_keyboard_row);
+
+        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Выберите день вашего рождения:", $keyboard);
+        $bot->next("mf_birth_day", [
+            "age" => $message
+        ]);
+    }
+
+    public static function birthDay($bot, $message)
+    {
+        if (ModelFormConversation::fallback($bot, $message))
+            return;
+
+        if (intval($message) < 1 || intval($message) > 31) {
+            $bot->reply("Попробуйте выбрать день из предложенных вариантов");
+            $bot->next("mf_birth_day");
+            return;
+        }
+
+        $months = [
+            "Январь",
+            "Февраль",
+            "Март",
+            "Апрель",
+            "Май",
+            "Июнь",
+            "Июль",
+            "Август",
+            "Сентябрь",
+            "Октябрь",
+            "Ноябрь",
+            "Декабрь",
+        ];
+
+        $keyboard = [];
+        $tmp_keyboard_row = [];
+        for ($i = 0; $i < 12; $i++) {
+            array_push($tmp_keyboard_row, ["text" => $months[$i], "callback_data" => $i + 1]);
+            if ($i % 3 === 0) {
+                array_push($keyboard, $tmp_keyboard_row);
+                $tmp_keyboard_row = [];
+            }
+
+        }
+        array_push($keyboard, $tmp_keyboard_row);
+
+        $birth_day = mb_strlen($message) === 1 ? "0$message" : $message;
+        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Выберите ваш месяц рождения:", $keyboard);
+        $bot->next("mf_birth_month", [
+            "birth_day" => $birth_day
+        ]);
+    }
+
+    public static function birthMonth($bot, $message)
+    {
+        if (ModelFormConversation::fallback($bot, $message))
+            return;
+
+        if (intval($message) < 0 || intval($message) > 12) {
+            $bot->reply("Попробуйте выбрать месяц из предложенных вариантов");
+            $bot->next("mf_birth_day");
+            return;
+        }
+        $birth_month = mb_strlen($message) === 1 ? "0$message" : $message;
         $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш рост:");
         $bot->next("mf_height", [
-            "age" => $message
+            "birth_month" => $birth_month
         ]);
     }
 
@@ -162,7 +254,7 @@ class ModelFormConversation
 
         $profile = Profile::where("user_id", $user->user_id)->first();
 
-        if (is_null($profile))
+        if (is_null($profile)) {
             Profile::create([
                 'full_name' => $bot->storeGet("full_name"),
                 'phone' => $bot->storeGet("phone"),
@@ -172,9 +264,34 @@ class ModelFormConversation
                 'model_school_education' => $bot->storeGet("question_1"),
                 'wish_learn' => $message,
                 'city' => $bot->storeGet("city"),
+                'birth_month' => $bot->storeGet("birth_month"),
+                'birth_day' => $bot->storeGet("birth_day"),
                 "user_id" => $user->user_id
             ]);
-        else {
+
+            $bot->sendMessageToChat(
+                env("LOTUS_BASE_CHANEL_ID"),
+                sprintf("*Новые анкетные данные:*\n"
+                    . "\xF0\x9F\x94\xB9Ф.И.О.: _%s_\n"
+                    . "\xF0\x9F\x94\xB9Номер телефона: _%s_\n"
+                    . "\xF0\x9F\x94\xB9Ваш рост: %s\n"
+                    . "\xF0\x9F\x94\xB9Ваш возраст: %s (%s.%s)\n"
+                    . "\xF0\x9F\x94\xB9Ваш город: %s\n"
+                    . "\xF0\x9F\x94\xB9Ваш пол: %s\n"
+                    . "\xF0\x9F\x94\xB9Обучались ли Вы в модельной школе: %s\n"
+                    . "\xF0\x9F\x94\xB9Желаете обучаться: %s\n",
+                    ($profile->full_name ?? "Без имени"),
+                    ($profile->phone ?? "Не указан"),
+                    ($profile->height ?? "Не указан"),
+                    ($profile->age ?? "Не указан"),
+                    ($profile->birth_day ?? "Не указан"),
+                    ($profile->birth_month ?? "Не указан"),
+                    ($profile->city ?? "Не указан"),
+                    ($profile->sex ?? "Не указан"),
+                    ($profile->model_school_education ?? "Не указан"),
+                    ($profile->wish_learn ?? "Не указан")
+                ));
+        } else {
             $profile->full_name = $bot->storeGet("full_name");
             $profile->phone = $bot->storeGet("phone");
             $profile->height = $bot->storeGet("height");
@@ -183,16 +300,19 @@ class ModelFormConversation
             $profile->model_school_education = $bot->storeGet("question_1");
             $profile->wish_learn = $message;
             $profile->city = $bot->storeGet("city");
+            $profile->birth_month = $bot->storeGet("birth_month");
+            $profile->birth_day = $bot->storeGet("birth_day");
             $profile->save();
         }
         $bot->stopConversation();
 
+
         $keyboard = [
             [
-                ["text"=>"\xF0\x9F\x8E\xB4Моя анкета","callback_data"=>"/current_profile"]
+                ["text" => "\xF0\x9F\x8E\xB4Моя анкета", "callback_data" => "/current_profile"]
             ]
         ];
-        $bot->sendMessage("Вы выбрали: *$message*\xE2\x9C\x85\nСпасибо! Ваши данные приняты в обработку!",$keyboard);
+        $bot->sendMessage("Вы выбрали: *$message*\xE2\x9C\x85\nСпасибо! Ваши данные приняты в обработку!", $keyboard);
         $bot->getMainMenu("Главное меню");
     }
 

@@ -3,17 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5a400384-671b-41fb-82e7-fab36ffb0091" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Clasess/AbstractBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/AbstractBot.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Clasess/tLotusModelBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/tLotusModelBot.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/AdminConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/AdminConversation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Conversations/MainConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/MainConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/ModelFormConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/ModelFormConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Profile.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_27_175512_create_profiles_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_08_27_175512_create_profiles_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/ProductTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/ProductTableSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/laravel/bot_cash_back/scr/models/BotUserInfo.php" beforeDir="false" afterPath="$PROJECT_DIR$/packages/laravel/bot_cash_back/scr/models/BotUserInfo.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/bot.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/bot.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,7 +198,7 @@
       <workItem from="1598686563368" duration="2457000" />
       <workItem from="1598703024651" duration="118874000" />
       <workItem from="1599231845490" duration="20000" />
-      <workItem from="1599314972185" duration="46298000" />
+      <workItem from="1599314972185" duration="48378000" />
     </task>
     <servers />
   </component>

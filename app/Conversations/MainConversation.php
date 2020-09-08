@@ -401,7 +401,7 @@ class MainConversation
 
         $bot->reply($type);
 
-        $channels = [
+       /* $channels = [
             "LMA" => ["link" => env("LMA_CHANNEL_LINK"), "logo" => "http://lotus-model.ru/assets/app/img/lotus%20agency.png"],
             "LKC" => ["link" => env("LKC_CHANNEL_LINK"), "logo" => "http://lotus-model.ru/assets/app/img/lotus%20kids.png"],
             "LD" => ["link" => env("LD_CHANNEL_LINK"), "logo" => "http://lotus-model.ru/assets/app/img/lotus%20agency.png"],
@@ -414,7 +414,7 @@ class MainConversation
                 ["text" => "Перейти в канал $type", "url" => $channels[$type]["link"]]
             ]
         ];
-        $bot->sendPhoto("Ссылка на переход в канал", $channels[$type]["logo"], $keyboard);
+        $bot->sendPhoto("Ссылка на переход в канал", $channels[$type]["logo"], $keyboard);*/
 
 
     }

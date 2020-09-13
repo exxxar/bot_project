@@ -56,7 +56,7 @@ class AnswerQuestionConversation
 
         $bot->sendMessageToChat(
             $chat_id,
-            "Вам ответили:\n_ $message _",
+            "Вам ответили!\nВопрос:\n_ $ticket->message _\nОтвет:\n_ $message _",
             $keyboard
         );
 

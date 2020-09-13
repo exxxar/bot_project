@@ -10,10 +10,11 @@ class ProductTableSeeder extends Seeder
     protected $courses = [
 
         [
+            'position'=>3,
             "title" => "Мужской курс \"LONDОN\"",
-            "price" =>2500,
-            'type'=>ProductTypeEnum::LMACourses,
-            "image" => "https://sun9-38.userapi.com/c850728/v850728456/c8164/0NrWXJh-07o.jpg",
+            "price" => 2500,
+            'type' => ProductTypeEnum::LMACourses,
+            "images" => ["https://sun9-72.userapi.com/QJznH6Jr4F1zMPq8dMvMyRyxA8GsUIJ0EDYEvQ/jMF3rUSoTvU.jpg"],
             "description" =>
                 'курс "LONDОN" для парней от 14 до 25 лет
 -курс длится 3 месяца
@@ -28,10 +29,11 @@ class ProductTableSeeder extends Seeder
 '
         ],
         [
+            'position'=>2,
             "title" => "Курс \"Paris\"",
-            "price" =>4000,
-            'type'=>ProductTypeEnum::LMACourses,
-            "image" => "https://sun9-51.userapi.com/c846322/v846322097/1b3561/ZYbm1mFqf5g.jpg",
+            "price" => 4000,
+            'type' => ProductTypeEnum::LMACourses,
+            "images" => ["https://sun9-60.userapi.com/nJzkX-ZezeQTj9F6P_xLtgbu3gS_DljA4B17PQ/bXrw3YUjxVo.jpg"],
             "description" =>
                 'Курс "Paris" для девушек от 14 до 25 лет
 -курс длится 3 месяца
@@ -46,10 +48,11 @@ class ProductTableSeeder extends Seeder
 '
         ],
         [
-            'type'=>ProductTypeEnum::LMACourses,
+            'position'=>1,
+            'type' => ProductTypeEnum::LMACourses,
             "title" => "Курс \"Moscow\"",
             "price" => 2500,
-            "image" => "https://sun9-43.userapi.com/c846121/v846121097/1ab209/gP6gO_HXELo.jpg",
+            "images" => ["https://sun9-62.userapi.com/7HJiSW98f93yhfUT6v8vhMZ8Mq7lMkM1zWxcWg/kDTimknDhsE.jpg"],
             "description" => 'Курс "Moscow" (базовый курс) для девушек от 14 до 25 лет
 -курс длится 3 месяца
 -занятия проходят 2 раза в неделю
@@ -62,10 +65,10 @@ class ProductTableSeeder extends Seeder
 '
         ],
         [
-            'type'=>ProductTypeEnum::LMACourses,
+            'type' => ProductTypeEnum::LMACourses,
             "title" => "Курс \"INDIVIDUAL\"",
             "price" => 2500,
-            "image" => "https://sun9-30.userapi.com/c850236/v850236097/f7ed4/zFdK31DYVqw.jpg",
+            "images" => ["https://sun9-30.userapi.com/c850236/v850236097/f7ed4/zFdK31DYVqw.jpg"],
             "description" => '-количество занятий на ваш выбор из перечня - не менее 3
 -длительность 1-ого занятия 2 часа
 -на протяжении всего обучения (по желанию) Вас привлекают к участию в различных мероприятиях (в зависимости от требований заказчика)
@@ -75,10 +78,10 @@ class ProductTableSeeder extends Seeder
 '
         ],
         [
-            'type'=>ProductTypeEnum::LMACourses,
+            'type' => ProductTypeEnum::LMACourses,
             "title" => "Курс \"Singapore\"",
             "price" => 3000,
-            "image" => "https://sun9-68.userapi.com/c852128/v852128580/1df45f/n2nVNUq90e4.jpg",
+            "images" => ["https://sun9-45.userapi.com/iw8hVJhukG3UfgyMkKZMxpx98b89bBQbC_OnvA/pZ3XQqD8c3U.jpg"],
             "description" => 'Курс "Singapore" для девушек от 13 до 25 лет
 -курс длится 9 месяцев
 -в курс входят 18 дисциплин
@@ -93,10 +96,10 @@ class ProductTableSeeder extends Seeder
         ],
 
         [
-            'type'=>ProductTypeEnum::LKCCourses,
+            'type' => ProductTypeEnum::LKCCourses,
             "title" => "Курс \"New York\"",
             "price" => 3000,
-            "image" => "https://sun9-64.userapi.com/c850024/v850024936/13cbbf/VqqB5dn_LWQ.jpg",
+            "images" => ["https://sun9-64.userapi.com/c850024/v850024936/13cbbf/VqqB5dn_LWQ.jpg"],
             "description" => '1. Искусство дефиле – один из основных предметов модельной школы. Главное в дефиле – особая техника движения на подиуме или сцене. Модель изучает различные стили дефиле, модельные постановки, точки поворота, разнообразные техники движения в разной одежде: вечерних нарядах, белье, верхней одежде, учатся в совершенстве владеть своим телом.
 2. Ритмопластика – это танцевальная гимнастика с оздоровительной направленностью, основным средством которой являются комплексы гимнастических упражнений, различные по своему характеру, выполняемые под ритмическую музыку, оформленные танцевальными движениями.
 3. Актерское мастерство - важный предмет в программе обучения курса, основными задачами которого являются: раскрытие творческих способностей у обучающихся, развитие воображения, внимания, концентрации, внутреннее раскрепощение, постановка голоса, основы актерского мастерства.
@@ -110,11 +113,11 @@ class ProductTableSeeder extends Seeder
             '
         ],
         [
-            'type'=>ProductTypeEnum::LKCCourses,
+            'type' => ProductTypeEnum::LKCCourses,
             "title" => "Курс \"Milan\"",
             "price" => 3000,
-            "image" => "https://sun9-66.userapi.com/c849332/v849332936/140529/sDaRmUhzEcI.jpg",
-            "description" =>'1. Искусство дефиле – один из основных предметов модельной школы. Главное в дефиле – особая техника движения на подиуме или сцене. Модель изучает различные стили дефиле, модельные постановки, точки поворота, разнообразные техники движения в разной одежде: вечерних нарядах, белье, верхней одежде, учатся в совершенстве владеть своим телом.
+            "images" => ["https://sun9-66.userapi.com/c849332/v849332936/140529/sDaRmUhzEcI.jpg"],
+            "description" => '1. Искусство дефиле – один из основных предметов модельной школы. Главное в дефиле – особая техника движения на подиуме или сцене. Модель изучает различные стили дефиле, модельные постановки, точки поворота, разнообразные техники движения в разной одежде: вечерних нарядах, белье, верхней одежде, учатся в совершенстве владеть своим телом.
 2. Хореография – одно из самых популярных направлений современных молодёжных танцевальных культур. Благодаря занятиям по хип-хопу у детей развивается чувство ритма, общая физическая подготовка, пластика, координация, осанка: одно занятие сравнимо с часом занятий спортом.
 3. Актерское мастерство - важный предмет в программе обучения курса, основными задачами которого являются: раскрытие творческих способностей у обучающихся, развитие воображения, внимания, концентрации, внутреннее раскрепощение, постановка голоса, основы актерского мастерства.
 4. Сценическая речь - навыки сценической речи являются частью ораторского искусства, как и актерское мастерство, сценическая речь помогает в повседневной жизни красиво и понятно излагать, доносить мысль до слушателя.
@@ -129,10 +132,10 @@ class ProductTableSeeder extends Seeder
             '
         ],
         [
-            'type'=>ProductTypeEnum::LKCCourses,
+            'type' => ProductTypeEnum::LKCCourses,
             "title" => "Курс \"Monaco\"",
             "price" => 3000,
-            "image" => "https://sun9-13.userapi.com/c848520/v848520936/13f95c/zJ0QAerNsfc.jpg",
+            "images" => ["https://sun9-13.userapi.com/c848520/v848520936/13f95c/zJ0QAerNsfc.jpg"],
             "description" => '1. Искусство дефиле – один из основных предметов модельной школы. Главное в дефиле – особая техника движения на подиуме или сцене. Модель изучает различные стили дефиле, модельные постановки, точки поворота, разнообразные техники движения в разной одежде: вечерних нарядах, белье, верхней одежде, учатся в совершенстве владеть своим телом.
 2. Хип-хоп – одно из самых популярных направлений современных молодёжных танцевальных культур. Благодаря занятиям по хип-хопу у детей развивается чувство ритма, общая физическая подготовка, пластика, координация, осанка: одно занятие сравнимо с часом занятий спортом.
 3. Актерское мастерство - важный предмет в программе обучения курса, основными задачами которого являются: раскрытие творческих способностей у обучающихся, развитие воображения, внимания, концентрации, внутреннее раскрепощение, постановка голоса, основы актерского мастерства.
@@ -148,10 +151,10 @@ class ProductTableSeeder extends Seeder
             '
         ],
         [
-            'type'=>ProductTypeEnum::LKCCourses,
+            'type' => ProductTypeEnum::LKCCourses,
             "title" => "Курс \"Venice\"",
             "price" => 3500,
-            "image" => "https://sun9-4.userapi.com/c846417/v846417936/1b7854/fe8GrN9m5eg.jpg",
+            "images" => ["https://sun9-4.userapi.com/c846417/v846417936/1b7854/fe8GrN9m5eg.jpg"],
             "description" => '1. Искусство дефиле (11) – один из основных предметов модельной школы. Главное в дефиле – особая техника движения на подиуме или сцене. Модель изучает различные стили дефиле, модельные постановки, точки поворота, разнообразные техники движения в разной одежде: вечерних нарядах, белье, верхней одежде, учатся в совершенстве владеть своим телом.
 2. Хореография (9) – особенностью данного стиля является движения, имитирующие ходьбу моделей по подиуму, позирование для фешн – съемок; к тому же, в нем приветствуется специальная мимика фотомоделей. Занятия по стилю Vogue, прежде всего, тренируют мышцы рук и ног.
 3. Актерское мастерство (6) - важный предмет в программе обучения курса, основными задачами которого являются: раскрытие творческих способностей у обучающихся, развитие воображения, внимания, концентрации, внутреннее раскрепощение, постановка голоса, основы актерского мастерства.
@@ -167,10 +170,10 @@ class ProductTableSeeder extends Seeder
             '
         ],
         [
-            'type'=>ProductTypeEnum::LKCCourses,
+            'type' => ProductTypeEnum::LKCCourses,
             "title" => "Курс \"San Marino\"",
-            "price" =>3500,
-            "image" => "https://sun9-9.userapi.com/c852028/v852028794/d7a14/jUDztQbsYCQ.jpg",
+            "price" => 3500,
+            "images" => ["https://sun9-9.userapi.com/c852028/v852028794/d7a14/jUDztQbsYCQ.jpg"],
             "description" => '1. Искусство дефиле(12) – один из основных предметов модельной школы. Главное в дефиле – особая техника движения на подиуме или сцене. Модель изучает различные стили дефиле, модельные постановки, точки поворота, разнообразные техники движения в разной одежде: вечерних нарядах, белье, верхней одежде, учатся в совершенстве владеть своим телом.
 2. Ритмопластика(10) – это танцевальная гимнастика с оздоровительной направленностью, основным средством которой являются комплексы гимнастических упражнений, различные по своему характеру, выполняемые под ритмическую музыку, оформленные танцевальными движениями.
 3. Актерское мастерство(7) - важный предмет в программе обучения курса, основными задачами которого являются: раскрытие творческих способностей у обучающихся, развитие воображения, внимания, концентрации, внутреннее раскрепощение, постановка голоса, основы актерского мастерства.
@@ -184,15 +187,16 @@ class ProductTableSeeder extends Seeder
             '
         ],
         [
-            'type'=>ProductTypeEnum::LKCCourses,
+            'type' => ProductTypeEnum::LKCCourses,
             "title" => "СЕРТИФИКАТ 3500",
             "price" => 3500,
-            "image" => "https://sun9-71.userapi.com/c841639/v841639509/421b5/21tqEvLrjfo.jpg",
+            "images" => ["https://sun9-71.userapi.com/c841639/v841639509/421b5/21tqEvLrjfo.jpg"],
             "description" => 'Детская школа моделей, сочетает в себе модельную школу и модельное агентство, наша цель – гармоничное развитие личности и реализация потенциала ребенка.
             '
         ],
 
     ];
+
     /**
      * Run the database seeds.
      *
@@ -206,7 +210,7 @@ class ProductTableSeeder extends Seeder
 
         Product::create([
             "title" => "Фирменная ручка",
-            "image" => "https://sun1.48276.userapi.com/FXgEOLXCW9BA981QZ_tcJitlVpXMLgaLlEQ2vg/vgSIYey5sEc.jpg",
+            "images" => json_encode(["https://sun1.48276.userapi.com/FXgEOLXCW9BA981QZ_tcJitlVpXMLgaLlEQ2vg/vgSIYey5sEc.jpg"]),
             "price" => 50.0,
             "position" => 1,
             "description" => "Фирменная ручка от лучшей модельной школы Lotus Kids точно займет место \"любимой вещи\", которую ты с удовольствием будешь использовать каждый день!\n
@@ -218,9 +222,13 @@ class ProductTableSeeder extends Seeder
 
 
         Product::create([
-            "title" => "Фирменная чашка (черная)",
-            "image" => "https://sun9-6.userapi.com/rGCN57LCS5NCfMLz9MctqSfmo9-59e0qTZZX3w/q95Pwcdy4DY.jpg",
-            "price" => 350,
+            "title" => "Фирменная чашка",
+            "images" => json_encode([
+                "https://sun9-6.userapi.com/rGCN57LCS5NCfMLz9MctqSfmo9-59e0qTZZX3w/q95Pwcdy4DY.jpg",
+                "https://sun1.48276.userapi.com/3-jr5spyWfAq9PBosHR-GJRK-u0Al9dn9mtstg/aBn4Rh-wmE8.jpg",
+                "https://sun9-49.userapi.com/GZwr7f7Vu-hfbLIEP788_OEJ6cJzrIWtZw64OA/lQeCO4xGulw.jpg"
+            ]),
+            "price" => 400,
             "position" => 2,
             "description" => "Наша фирменная чашка точно займет место \"любимой вещи\", к которой привыкают и любят, и пользоваться которой ты будешь долго и с удовольствием!\n
 Каждое чаепитие станет намного приятнее и ярче с нашей фирменной именной чашкой и подарит отличное настроение на весь последующий день!\n
@@ -230,22 +238,18 @@ class ProductTableSeeder extends Seeder
             "type" => ProductTypeEnum::Items,
         ]);
 
-        Product::create([
-            "title" => "Фирменная чашка (белая)",
-            "image" => "https://sun1.48276.userapi.com/3-jr5spyWfAq9PBosHR-GJRK-u0Al9dn9mtstg/aBn4Rh-wmE8.jpg",
-            "price" => 350,
-            "position" => 2,
-            "description" => "Наша фирменная чашка точно займет место \"любимой вещи\", к которой привыкают и любят, и пользоваться которой ты будешь долго и с удовольствием!\n
-Каждое чаепитие станет намного приятнее и ярче с нашей фирменной именной чашкой и подарит отличное настроение на весь последующий день!\n
-Стань частью большой и дружной семьи Lotus Kids!\n
-#лучшиеснами
-            ",
-            "type" => ProductTypeEnum::Items,
-        ]);;
+
 
         Product::create([
-            "title" => "Фирменная футболка (белая)",
-            "image" => "https://sun1.48276.userapi.com/ybwamLlL2xJdnQOyiIry-DmrqnB1IIYNv3Th5g/r0VMLUnCOD0.jpg",
+            "title" => "Фирменная футболка",
+            "images" => json_encode([
+                "https://sun1.48276.userapi.com/ybwamLlL2xJdnQOyiIry-DmrqnB1IIYNv3Th5g/r0VMLUnCOD0.jpg",
+            "https://sun2.48276.userapi.com/Mlt1LVmdfuybItAcH6VS_0VFQWBN4uFn7ViCpA/zoJ3dkC1mFE.jpg",
+                "https://sun9-43.userapi.com/rpxzL97NSRUQ3EnIAH3Eyrc3DSJrPJxocLfKbw/UVrGuMdAgRM.jpg",
+                "https://sun2.48276.userapi.com/O2T-t5ahyJhdTStVp4gxxIo21IbTKbhR1nlkSw/e_vtQTCJMws.jpg",
+                "https://sun1.48276.userapi.com/QDN2gymqlmakr_4WKryjjPKqTKdHXTqeJV3ocg/fr8mOfa64Zk.jpg",
+                "https://sun2.48276.userapi.com/xl7Yq8c7HX1MKUbolMrlPjFOuGCjWzUzDFe-8g/lgOnHkZNbrk.jpg"
+            ]),
             "price" => 700,
             "position" => 2,
             "description" => "Спеши заказать фирменную именную футболку от любимой модельной школы Lotus Kids.\n
@@ -259,26 +263,12 @@ class ProductTableSeeder extends Seeder
             "type" => ProductTypeEnum::Items,
         ]);
 
-
-        Product::create([
-            "title" => "Фирменная футболка (черная)",
-            "image" => "https://sun2.48276.userapi.com/Mlt1LVmdfuybItAcH6VS_0VFQWBN4uFn7ViCpA/zoJ3dkC1mFE.jpg",
-            "price" => 700,
-            "position" => 2,
-            "description" => "Спеши заказать фирменную именную футболку от любимой модельной школы Lotus Kids.\n
-Будь самым стильным не только на занятиях, но и в повседневной жизни:\n
-- пошив по индивидуальным параметрам;\n
-- качественный износостойкий материал;\n
-- стильное дополнение к твоему образу.\n
-Стань частью большой и дружной семьи Lotus Kids!\n
-#лучшиеснами
-            ",
-            "type" => ProductTypeEnum::Items,
-        ]);
 
         Product::create([
             "title" => "Аренда фотостудии",
-            "image" => "https://sun1.48276.userapi.com/impg/GBNMOUQTWnfzD-p1QP07OQwx58125K7VfZAm8w/3JIG3oBL-Fs.jpg?size=520x0&quality=90&sign=f77b4f5e53bab423b82be43a2c64f4db",
+            "images" => json_encode([
+                "https://sun1.48276.userapi.com/impg/GBNMOUQTWnfzD-p1QP07OQwx58125K7VfZAm8w/3JIG3oBL-Fs.jpg?size=520x0&quality=90&sign=f77b4f5e53bab423b82be43a2c64f4db",
+            ]),
             "price" => 300,
             "position" => 2,
             "description" => "
@@ -290,7 +280,9 @@ class ProductTableSeeder extends Seeder
 
         Product::create([
             "title" => "Аренда визажной комнаты",
-            "image" => "https://sun1.48276.userapi.com/impg/GBNMOUQTWnfzD-p1QP07OQwx58125K7VfZAm8w/3JIG3oBL-Fs.jpg?size=520x0&quality=90&sign=f77b4f5e53bab423b82be43a2c64f4db",
+            "images" =>json_encode([
+                "https://sun1.48276.userapi.com/impg/GBNMOUQTWnfzD-p1QP07OQwx58125K7VfZAm8w/3JIG3oBL-Fs.jpg?size=520x0&quality=90&sign=f77b4f5e53bab423b82be43a2c64f4db"
+            ]),
             "price" => 150,
             "position" => 2,
             "description" => "
@@ -302,7 +294,7 @@ class ProductTableSeeder extends Seeder
 
         Product::create([
             "title" => "Аренда хореографического зала",
-            "image" => "https://sun1.48276.userapi.com/impg/GBNMOUQTWnfzD-p1QP07OQwx58125K7VfZAm8w/3JIG3oBL-Fs.jpg?size=520x0&quality=90&sign=f77b4f5e53bab423b82be43a2c64f4db",
+            "images" => json_encode(["https://sun1.48276.userapi.com/impg/GBNMOUQTWnfzD-p1QP07OQwx58125K7VfZAm8w/3JIG3oBL-Fs.jpg?size=520x0&quality=90&sign=f77b4f5e53bab423b82be43a2c64f4db"]),
             "price" => 250,
             "position" => 2,
             "description" => "
@@ -314,11 +306,12 @@ class ProductTableSeeder extends Seeder
 
         foreach ($this->courses as $item) {
             Product::create([
-                'title'=>$item["title"],
-                'price'=>$item["price"],
-                'image'=>$item["image"],
-                'description'=>$item["description"],
-                'type'=>$item["type"],
+                'title' => $item["title"],
+                'price' => $item["price"],
+                'images' => json_encode($item["images"]),
+                'description' => $item["description"],
+                'type' => $item["type"],
+                'position' => $item["position"]??99,
             ]);
         }
     }

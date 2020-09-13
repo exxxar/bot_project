@@ -27,6 +27,7 @@ class CreateProfilesTable extends Migration
 
             $table->string('model_school_education')->default('');
             $table->string('wish_learn')->default('');
+            $table->string('wish_photoproject')->default('');
             $table->string('city')->default('');
 
             $table->unsignedInteger("user_id");

@@ -14,9 +14,13 @@ class Product extends Model
         'type' => ProductTypeEnum::class,
     ];
 
+    protected $casts = [
+        "images" => "array"
+    ];
+
     protected $fillable = [
         "title",
-        "image",
+        "images",
         "price",
         "position",
         "description",
@@ -24,7 +28,8 @@ class Product extends Model
         "created_by_id"
     ];
 
-    public function creator(){
-        return $this->hasOne(User::class,'id','created_by_id');
+    public function creator()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by_id');
     }
 }

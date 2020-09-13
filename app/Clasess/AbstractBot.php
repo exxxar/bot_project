@@ -6,13 +6,18 @@ namespace App\Clasess;
 
 use App\Classes\tBotConversation;
 use App\User;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Uri;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Laravel\BotCashBack\Models\BotUserInfo;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Telegram\Bot\Api;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\FileUpload\InputFile;
+use Telegram\Bot\Objects\InputMedia\InputMediaPhoto;
 use Telegram\Bot\Objects\Update;
+use Telegram\Bot\TelegramRequest;
 
 abstract class AbstractBot
 {
@@ -39,9 +44,9 @@ abstract class AbstractBot
         return $this;
     }
 
-    private function ask($name, $func)
+    private function ask($name, $func, $hideKeyboard = true)
     {
-        array_push($this->current_ask, ["name" => $name, "func" => $func]);
+        array_push($this->current_ask, ["name" => $name, "func" => $func, "hide" => $hideKeyboard]);
         return $this;
     }
 
@@ -65,12 +70,13 @@ abstract class AbstractBot
 
 
         } catch (TelegramSDKException $e) {
-            Log::error($e->getMessage() . " " . $e->getLine());
-
+            $this->bot = null;
         }
 
-        include_once base_path('routes/bot.php');
-
+        if (!is_null($this->bot)) {
+            include_once base_path('routes/bot.php');
+            include_once base_path('routes/conversations.php');
+        }
         return $this;
     }
 
@@ -87,6 +93,9 @@ abstract class AbstractBot
     public function handler(Update $data)
     {
         $update = json_decode($data);
+
+        if (isset($update->message->via_bot))
+            return;
 
         if (isset($update->inline_query)) {
             $messageId = $update->inline_query->id;
@@ -110,7 +119,7 @@ abstract class AbstractBot
                     while (strlen($tmp_user_id) < 10)
                         $tmp_user_id = "0" . $tmp_user_id;
 
-                    $code = base64_encode("005" . $tmp_user_id);
+                    $code = base64_encode("001" . $tmp_user_id);
                     $url_link = "https://t.me/" . env("APP_BOT_NAME") . "?start=$code";
 
                     $tmp_button = [
@@ -229,7 +238,9 @@ abstract class AbstractBot
 
                 if ($item["name"] == $object->name) {
                     $item["func"]($this, $this->query);
-                    $this->editReplyKeyboard();
+                    $hide = $item["hide"];
+                    if ($hide)
+                        $this->editReplyKeyboard();
                     $is_conversation_find = true;
                 }
             }
@@ -252,10 +263,9 @@ abstract class AbstractBot
 
             $maxErrorIteration--;
 
+            Log::info("iterations $maxErrorIteration");
             if (is_null($item["path"]))
                 continue;
-
-            $maxErrorIteration = count($this->list);
 
             if (preg_match($item["path"] . "$/i", $this->query, $matches) != false) {
                 foreach ($matches as $match)
@@ -266,6 +276,8 @@ abstract class AbstractBot
                     $item["function"]($this, ... $arguments);
 
                     $find = true;
+
+
                 } catch (\Exception $e) {
                     Log::error($e->getMessage() . " " . $e->getLine());
                 }
@@ -447,7 +459,8 @@ abstract class AbstractBot
 
     }
 
-    public function getMessageId(){
+    public function getMessageId()
+    {
         return $this->message_id;
     }
 
@@ -580,8 +593,32 @@ abstract class AbstractBot
             ]);
         } catch (\Exception $e) {
             $tmp = mb_strlen($message) === 0 ? "Нет текста!" : $message;
-            //$this->sendMessage($tmp, $keyboard, $parseMode);
-            $this->sendPhoto($tmp, base_path() . "/public/img/noimage.jpg", $keyboard, $parseMode);
+            $this->sendMessage($tmp, $keyboard, $parseMode);
+            //$this->sendPhoto($tmp, env("APP_URL") . "/img/noimage.jpg", $keyboard, $parseMode);
+        }
+    }
+
+    public function sendMediaGroup($images, $type = "photo")
+    {
+        if (is_null($this->bot))
+            return;
+
+        $media = [];
+
+        foreach (json_decode($images) as $img)
+            array_push($media, ['media' => "$img", "type" => $type]);
+
+        try {
+            Http::post(sprintf("https://api.telegram.org/bot%s/sendMediaGroup?chat_id=%s",
+                (env('APP_DEBUG') ?
+                    env("TELEGRAM_DEBUG_BOT") :
+                    env("TELEGRAM_PRODUCTION_BOT")),
+                $this->getChatId()
+            ), [
+                "media" => json_encode($media)
+            ]);
+        } catch (\Exception $e) {
+            $this->reply("Хм, ошибка!");
         }
     }
 

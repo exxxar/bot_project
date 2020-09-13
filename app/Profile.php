@@ -18,6 +18,7 @@ class Profile extends Model
         'sex',
         'model_school_education',
         'wish_learn',
+        'wish_photoproject',
         'city',
         "user_id"
     ];

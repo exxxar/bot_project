@@ -56,7 +56,7 @@ class QuestionConversation
 
         $question_type_ids = ["LMC" => 0, "LKC" => 1, "LP" => 2, "LC" => 3, "LD" => 4];
 
-        Ticket::create([
+       $ticket = Ticket::create([
             "chat_id" => $user->chat_id,
             "question_type" => $question_type_ids[$type] ?? 0,
             "name" => $name,
@@ -65,9 +65,24 @@ class QuestionConversation
         ]);
 
 
+        $tmp_id = (string)$ticket->id;
+        while (strlen($tmp_id) < 10)
+            $tmp_id = "0" . $tmp_id;
+
+        $code = base64_encode("002" . $tmp_id);
+        $url_link = "https://t.me/" . env("APP_BOT_NAME") . "?start=$code";
+
+        $keyboard = [
+          [
+              [
+                  "text"=>"Ответит на вопрос","url"=>"$url_link"
+              ]
+          ]
+        ];
         $bot->sendMessageToChat(
             env("LOTUS_BASE_CHANEL_ID"),
-            "*Новый вопрос ($type)*:\nОт:_ $name _\nВопрос: _ $message _\n*Для ответа перейдите в раздел администратора*"
+            "*Новый вопрос ($type)*:\nОт:_ $name _\nВопрос: _ $message _\n",
+            $keyboard
         );
 
 

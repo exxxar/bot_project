@@ -147,6 +147,7 @@ class AdminConversation
         $page = isset($d[1]) ? intval($d[1]) : 0;
 
         $questions = Ticket::whereNull("answered_by_id")
+            ->orderBy("id", "desc")
             ->skip($page * env("PAGINATION_PER_PAGE"))
             ->take(env("PAGINATION_PER_PAGE"))
             ->get();
@@ -206,24 +207,24 @@ class AdminConversation
                 "Сервис"
             ];
 
+            $bot->sendMediaGroup($product->images);
             $bot->sendMessage(
-                sprintf("*#%s:*\nНазвание: %s\nЦена: _%s_ руб.\nОписание: _%s_\nСсылка на изображение: %s\nКатегория товара: %s",
+                sprintf("*#%s:*\nНазвание: %s\nЦена: _%s_ руб.\nОписание: _%s_\nКатегория товара: %s",
                     $product->id,
                     $product->title,
                     $product->price,
                     $product->description,
-                    $product->image,
                     $type_array[ProductTypeEnum::getInstance($product->type)->value]
                 ), $keyboard);
         }
         $bot->pagination("/all_products_list", $products, $page, "Список товаров");
 
         $keyboard = [
-          [
-              ["text"=>"Добавить товар","callback_data"=>"/add_new_product"]
-          ]
+            [
+                ["text" => "Добавить товар", "callback_data" => "/add_new_product"]
+            ]
         ];
-        $bot->sendMessage("Список товаров. Текущая страница " . ($page + 1),$keyboard);
+        $bot->sendMessage("Список товаров. Текущая страница " . ($page + 1), $keyboard);
     }
 
     public static function statistic($bot)

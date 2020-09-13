@@ -18,20 +18,22 @@ class MainConversation
     public static function start($bot)
     {
         $bot->stopConversation();
-        $bot->getMainMenu("Добро пожаловать в модельное агенство Lotus!");
+        $bot->getMainMenu("Добро пожаловать в Lotus Model Agency!");
     }
 
     public static function profile($bot)
     {
         $user = $bot->getUser();
 
+        $profile = Profile::where("user_id", $user->user_id)->first();
+
         $keyboard = [
             [
-                ["text" => "\xF0\x9F\x8E\xB4Моя анкета", "callback_data" => "/current_profile"]
+                ["text" => is_null($profile) ? "\xF0\x9F\x93\x9DСоздать анкету" : "\xF0\x9F\x93\x9DИзменить анкету", "callback_data" => "/edit_current_prof"]
             ]
         ];
 
-     /*   $work_admin_count = BotUserInfo::where("is_admin", true)
+           $work_admin_count = BotUserInfo::where("is_admin", true)
                 ->where("is_working", true)
                 ->get()
                 ->count() ?? 0;
@@ -39,7 +41,7 @@ class MainConversation
         if ($work_admin_count > 0)
             array_push($keyboard, [
                 ['text' => "Запрос Администратора", 'switch_inline_query_current_chat' => ""],
-            ]);*/
+            ]);
 
 
         if ($user->is_admin)
@@ -53,9 +55,37 @@ class MainConversation
 
         $code = base64_encode("001" . $tmp_id);
         $qr_url = env("QR_URL") . "https://t.me/" . env("APP_BOT_NAME") . "?start=$code";
-        $bot->sendPhoto(sprintf("_Покажите QR-код администратору!_\n*Ваш профиль*\nСкидка %s %% за %s фотосъемок!",
-            $user->discount ?? 0, $user->photo_count ?? 0), "$qr_url", $keyboard);
 
+        $keyboard_link = [
+            [
+                ["text" => "Рефферальная ссылка", "url" => "https://t.me/" . env("APP_BOT_NAME") . "?start=$code"]
+            ]
+        ];
+        $bot->sendPhoto("Делись своим QR-кодом", "$qr_url", $keyboard_link);
+
+        $bot->sendMessage(sprintf("*Ваши анкетные данные:*\n"
+            . "\xF0\x9F\x94\xB9Ф.И.О.: _%s_\n"
+            . "\xF0\x9F\x94\xB9Номер телефона: _%s_\n"
+            . "\xF0\x9F\x94\xB9Ваш рост: %s\n"
+            . "\xF0\x9F\x94\xB9Ваш возраст: %s (%s.%s)\n"
+            . "\xF0\x9F\x94\xB9Ваш город: %s\n"
+            . "\xF0\x9F\x94\xB9Ваш пол: %s\n"
+            . "\xF0\x9F\x94\xB9Обучались ли Вы в модельной школе: %s\n"
+            . "\xF0\x9F\x94\xB9Хотели бы вы обучаться фотопроектам: %s\n"
+            . "\xF0\x9F\x94\xB9Желаете обучаться: %s\n",
+            ($profile->full_name ?? "Без имени"),
+            ($profile->phone ?? "Не указан"),
+            ($profile->height ?? "Не указан"),
+            ($profile->age ?? "Не указан"),
+            ($profile->birth_day ?? "01"),
+            ($profile->birth_month ?? "01"),
+            ($profile->city ?? "Не указан"),
+            ($profile->sex ?? "Не указан"),
+            ($profile->model_school_education ?? "Не указан"),
+            ($profile->wish_photoproject ?? "Не указан"),
+            ($profile->wish_learn ?? "Не указан")
+
+        ), $keyboard);
     }
 
     public static function currentProfile($bot)
@@ -80,16 +110,18 @@ class MainConversation
                 . "\xF0\x9F\x94\xB9Ваш город: %s\n"
                 . "\xF0\x9F\x94\xB9Ваш пол: %s\n"
                 . "\xF0\x9F\x94\xB9Обучались ли Вы в модельной школе: %s\n"
+                . "\xF0\x9F\x94\xB9Хотели бы вы обучаться фотопроектам: %s\n"
                 . "\xF0\x9F\x94\xB9Желаете обучаться: %s\n",
                 ($profile->full_name ?? "Без имени"),
                 ($profile->phone ?? "Не указан"),
                 ($profile->height ?? "Не указан"),
                 ($profile->age ?? "Не указан"),
-                ($profile->birth_day ?? "Не указан"),
-                ($profile->birth_month ?? "Не указан"),
+                ($profile->birth_day ?? "01"),
+                ($profile->birth_month ?? "01"),
                 ($profile->city ?? "Не указан"),
                 ($profile->sex ?? "Не указан"),
                 ($profile->model_school_education ?? "Не указан"),
+                ($profile->wish_photoproject ?? "Не указан"),
                 ($profile->wish_learn ?? "Не указан")
 
             ), $keyboard);
@@ -102,9 +134,8 @@ class MainConversation
 
     public function products($bot, $type, $page, $link)
     {
-
-
         $products = Product::where("type", $type)
+            ->orderBy("position", "asc")
             ->take(env("PAGINATION_PER_PAGE"))
             ->skip($page * env("PAGINATION_PER_PAGE"))
             ->get();
@@ -123,10 +154,13 @@ class MainConversation
                     ["text" => "\xF0\x9F\x92\xB3Добавить в корзину ($product->price ₽)", "callback_data" => "/add_to_cart $product->id"]
                 ]
             ];
-            $bot->sendPhoto(sprintf("*%s*\n_%s..._",
+
+            $bot->sendMediaGroup($product->images);
+
+            $bot->sendMessage(sprintf("*%s*\n_%s..._",
                 $product->title,
-                mb_strcut($product->description,0,250)),
-                $product->image, $keyboard);
+                mb_strcut($product->description, 0, 250)),
+                $keyboard);
         }
         $bot->pagination($link, $products, $page, "Наша продукция");
     }
@@ -171,8 +205,8 @@ class MainConversation
                 ["text" => "\xF0\x9F\x92\xB3Добавить в корзину ($product->price ₽)", "callback_data" => "/add_to_cart $product->id"]
             ]
         ];
-       // $bot->sendPhoto($product->title,$product->image,$keyboard);
-        $bot->sendMessage("*$product->title*\n_$product->description _",$keyboard);
+        // $bot->sendPhoto($product->title,$product->image,$keyboard);
+        $bot->sendMessage("*$product->title*\n_$product->description _", $keyboard);
 
     }
 
@@ -227,7 +261,7 @@ class MainConversation
         foreach ($orders as $order) {
             $keyboard = [
                 [
-                    ["text" => "\xF0\x9F\x92\xA1Подробнее", "callback_data" => "/more_info ".$order->product->id]
+                    ["text" => "\xF0\x9F\x92\xA1Подробнее", "callback_data" => "/more_info " . $order->product->id]
                 ],
                 [
                     ["text" => "\xE2\x9D\x8CУдалить товар из корзины", "callback_data" => "/remove_product_from_cart $order->id"]
@@ -236,7 +270,7 @@ class MainConversation
 
             $bot->sendPhoto(sprintf("*%s*\n_%s..._",
                 $order->product->title,
-                mb_strcut($order->product->description,0,255)),
+                mb_strcut($order->product->description, 0, 255)),
                 $order->product->image, $keyboard);
 
 
@@ -401,7 +435,7 @@ class MainConversation
 
         $bot->reply($type);
 
-       /* $channels = [
+        $channels = [
             "LMA" => ["link" => env("LMA_CHANNEL_LINK"), "logo" => "http://lotus-model.ru/assets/app/img/lotus%20agency.png"],
             "LKC" => ["link" => env("LKC_CHANNEL_LINK"), "logo" => "http://lotus-model.ru/assets/app/img/lotus%20kids.png"],
             "LD" => ["link" => env("LD_CHANNEL_LINK"), "logo" => "http://lotus-model.ru/assets/app/img/lotus%20agency.png"],
@@ -414,7 +448,7 @@ class MainConversation
                 ["text" => "Перейти в канал $type", "url" => $channels[$type]["link"]]
             ]
         ];
-        $bot->sendPhoto("Ссылка на переход в канал", $channels[$type]["logo"], $keyboard);*/
+        $bot->sendPhoto("Ссылка на переход в канал", $channels[$type]["logo"], $keyboard);
 
 
     }

@@ -5,6 +5,8 @@ use App\Conversations\AdminConversation;
 use App\Conversations\AnswerQuestionConversation;
 use App\Conversations\ConfirmOrderConversation;
 use App\Conversations\ConfirmPhotoProjectConversation;
+use App\Conversations\FeedbackConversation;
+use App\Conversations\FeedbackPPConversation;
 use App\Conversations\LotusCampOrderConversation;
 use App\Conversations\LotusDanceOrderConversation;
 use App\Conversations\MainConversation;
@@ -12,7 +14,6 @@ use App\Conversations\ModelFormConversation;
 use App\Conversations\PollsFormConversation;
 use App\Conversations\QuestionConversation;
 use App\Conversations\StartDataConversation;
-use Illuminate\Support\Facades\Log;
 
 $this->hears("/start ([0-9a-zA-Z=]+)", StartDataConversation::class . '::start');
 $this->hears("/start|.*Продолжить позже|.*Главное меню|.*Попробовать опять", MainConversation::class . "::start");
@@ -27,6 +28,8 @@ $this->hears("/.Посмотреть мои товары", MainConversation::cla
 $this->hears("/.Фотопроекты на месяц", MainConversation::class . "::monthPhotoprojects");
 $this->hears("/.*Корзина.([0-9]+).", MainConversation::class . "::cart");
 $this->hears("/.*Очистить корзину", MainConversation::class . "::clearCart");
+$this->hears("/.*Оставить анонимный отзыв", FeedbackConversation::class . "::start");
+$this->hears("/.*Оставить отзыв о фотопроекте", FeedbackPPConversation::class . "::start");
 $this->hears("/remove_product_from_cart ([0-9]+)", MainConversation::class . "::removeFromCart");
 $this->hears("/add_poll", PollsFormConversation::class . "::start");
 $this->hears("/remove_poll ([0-9]+)", PollsFormConversation::class . "::remove");
@@ -61,48 +64,3 @@ $this->hears("/user_profile|.*Мой профиль", MainConversation::class . 
 $this->fallback(function ($bot) {
     $bot->reply("Fallback");
 });
-
-
-
-$this->ask("question_name", QuestionConversation::class . "::name");
-$this->ask("question_text", QuestionConversation::class . "::text");
-$this->ask("answer_response", AnswerQuestionConversation::class . "::response");
-$this->ask("confirm_order_name", ConfirmOrderConversation::class . "::name");
-$this->ask("confirm_order_phone", ConfirmOrderConversation::class . "::phone");
-$this->ask("confirm_order_comment", ConfirmOrderConversation::class . "::comment");
-$this->ask("mf_full_name", ModelFormConversation::class . "::name");
-$this->ask("mf_phone", ModelFormConversation::class . "::phone");
-$this->ask("mf_sex", ModelFormConversation::class . "::sex");
-$this->ask("mf_birth_day", ModelFormConversation::class . "::birthDay");
-$this->ask("mf_birth_month", ModelFormConversation::class . "::birthMonth");
-$this->ask("mf_select_city", ModelFormConversation::class . "::selectCity");
-$this->ask("mf_ask_city", ModelFormConversation::class . "::askCity");
-$this->ask("mf_age", ModelFormConversation::class . "::age");
-$this->ask("mf_height", ModelFormConversation::class . "::height");
-$this->ask("mf_question_1", ModelFormConversation::class . "::question1");
-$this->ask("mf_question_2", ModelFormConversation::class . "::question2");
-$this->ask("poll_question", PollsFormConversation::class . "::question");
-$this->ask("poll_is_anonymous", PollsFormConversation::class . "::changeAnonymous");
-$this->ask("poll_allows_multiple_answers", PollsFormConversation::class . "::changeAllowsMultipleAnswers");
-$this->ask("poll_option", PollsFormConversation::class . "::option");
-$this->ask("poll_remove", PollsFormConversation::class . "::removeAccept");
-$this->ask("admin_ask_for_action", StartDataConversation::class . "::askForAction");
-$this->ask("admin_action_handler", StartDataConversation::class . "::actionHandler");
-$this->ask("admin_action_admin_up", StartDataConversation::class . "::adminUp");
-$this->ask("admin_action_admin_down", StartDataConversation::class . "::adminDown");
-$this->ask("admin_action_set_sale", StartDataConversation::class . "::setSale");
-$this->ask("admin_action_set_count_photo", StartDataConversation::class . "::setCountPhoto");
-$this->ask("photo_project_name", ConfirmPhotoProjectConversation::class . "::name");
-$this->ask("photo_project_phone", ConfirmPhotoProjectConversation::class . "::phone");
-$this->ask("photo_project_comment", ConfirmPhotoProjectConversation::class . "::comment");
-$this->ask("lotus_camp_order_type", LotusCampOrderConversation::class . "::type");
-$this->ask("lotus_camp_order_name", LotusCampOrderConversation::class . "::name");
-$this->ask("lotus_camp_order_age", LotusCampOrderConversation::class . "::age");
-$this->ask("lotus_camp_order_phone", LotusCampOrderConversation::class . "::phone");
-$this->ask("lotus_camp_order_comment", LotusCampOrderConversation::class . "::comment");
-$this->ask("lotus_dance_order_type", LotusDanceOrderConversation::class . "::type");
-$this->ask("lotus_dance_order_name", LotusDanceOrderConversation::class . "::name");
-$this->ask("lotus_dance_order_age", LotusDanceOrderConversation::class . "::age");
-$this->ask("lotus_dance_order_phone", LotusDanceOrderConversation::class . "::phone");
-$this->ask("lotus_dance_order_comment", LotusDanceOrderConversation::class . "::comment");
-

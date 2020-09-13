@@ -35,25 +35,25 @@ class LotusCampOrderConversation
         if (LotusCampOrderConversation::fallback($bot, $message))
             return;
 
-        $bot->reply("Вы выбрали: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваше имя:");
-        $bot->next("lotus_camp_order_name", [
+        $bot->reply("Вы выбрали: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите Ф.И.О. ребенка:");
+        $bot->next("lotus_camp_order_child_name", [
             "type" => $message
         ]);
     }
 
-    public static function name($bot, $message)
+    public static function childName($bot, $message)
     {
         if (LotusCampOrderConversation::fallback($bot, $message))
             return;
 
         if (mb_strlen($message) === 0) {
-            $bot->reply("Нужно ввести Ваше имя!");
+            $bot->reply("Нужно ввести Ф.И.О. ребенка!");
             $bot->next("lotus_camp_order_name");
             return;
         }
-        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш возраст:");
+        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите возраст ребенка:");
         $bot->next("lotus_camp_order_age", [
-            "name" => $message
+            "child_name" => $message
         ]);
     }
 
@@ -62,9 +62,21 @@ class LotusCampOrderConversation
         if (LotusCampOrderConversation::fallback($bot, $message))
             return;
 
+        $bot->reply("Вы ввели: *$message* лет\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите Ф.И.О. родителя:");
+        $bot->next("lotus_camp_order_parent_name", [
+            "age" => $message
+        ]);
+    }
+
+
+    public static function parentName($bot, $message)
+    {
+        if (LotusCampOrderConversation::fallback($bot, $message))
+            return;
+
         $bot->reply("Вы ввели: *$message* лет\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш номер телефона:");
         $bot->next("lotus_camp_order_phone", [
-            "age" => $message
+            "parent_name" => $message
         ]);
     }
 
@@ -105,14 +117,15 @@ class LotusCampOrderConversation
 
         $user = $bot->getUser();
 
-        $name = $bot->storeGet("name");
+        $childName = $bot->storeGet("child_name");
+        $parentName = $bot->storeGet("parent_name");
         $phone = $bot->storeGet("phone");
         $type = $bot->storeGet("type");
         $age = $bot->storeGet("age");
 
         $bot->stopConversation();
 
-        $tmp = "Заявка на Lotus Camp:\nТип: *$type*\nОт: *$name*\nВозраст: *$age* лет\nТелефон: _ $phone _\nКомментарий: _ $message _\n";
+        $tmp = "Заявка на Lotus Camp:\nТип: *$type*\nФ.И.О. ребенка: *$childName*\nФ.И.О. родителя: *$parentName*\nВозраст ребенка: *$age* лет\nТелефон: _ $phone _\nКомментарий: _ $message _\n";
 
         $bot->sendMessageToChat(
             env("LOTUS_BASE_CHANEL_ID"),

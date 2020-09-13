@@ -7,7 +7,7 @@ namespace App\Conversations;
 use App\Profile;
 use Illuminate\Support\Facades\Log;
 
-class ModelFormConversation
+class ImageSelectConversation
 {
     public static function start($bot)
     {
@@ -239,25 +239,9 @@ class ModelFormConversation
                 ["text" => "\xE2\x9C\x85Да", "callback_data" => "Да"], ["text" => "\xE2\x9D\x8EНет", "callback_data" => "Нет"],
             ],
         ];
-        $bot->reply("Вы выбрали: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Хотели бы вы принимать участие в фотопроектах?", $keyboard);
-        $bot->next("mf_question_3", [
-            "question_1" => $message
-        ]);
-    }
-
-    public static function question3($bot, $message)
-    {
-        if (ModelFormConversation::fallback($bot, $message))
-            return;
-
-        $keyboard = [
-            [
-                ["text" => "\xE2\x9C\x85Да", "callback_data" => "Да"], ["text" => "\xE2\x9D\x8EНет", "callback_data" => "Нет"],
-            ],
-        ];
         $bot->reply("Вы выбрали: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Желаете обучаться модельному делу?", $keyboard);
         $bot->next("mf_question_2", [
-            "question_3" => $message
+            "question_1" => $message
         ]);
     }
 
@@ -295,7 +279,6 @@ class ModelFormConversation
                     . "\xF0\x9F\x94\xB9Ваш город: %s\n"
                     . "\xF0\x9F\x94\xB9Ваш пол: %s\n"
                     . "\xF0\x9F\x94\xB9Обучались ли Вы в модельной школе: %s\n"
-                    . "\xF0\x9F\x94\xB9Хотели бы вы участвовать в фотопроектах?: %s\n"
                     . "\xF0\x9F\x94\xB9Желаете обучаться: %s\n",
                     ($profile->full_name ?? "Без имени"),
                     ($profile->phone ?? "Не указан"),
@@ -306,7 +289,6 @@ class ModelFormConversation
                     ($profile->city ?? "Не указан"),
                     ($profile->sex ?? "Не указан"),
                     ($profile->model_school_education ?? "Не указан"),
-                    ($profile->wish_photoproject ?? "Не указан"),
                     ($profile->wish_learn ?? "Не указан")
                 ));
         } else {
@@ -317,7 +299,6 @@ class ModelFormConversation
             $profile->sex = $bot->storeGet("sex");
             $profile->model_school_education = $bot->storeGet("question_1");
             $profile->wish_learn = $message;
-            $profile->wish_photoproject = $bot->storeGet("question_3");
             $profile->city = $bot->storeGet("city");
             $profile->birth_month = $bot->storeGet("birth_month");
             $profile->birth_day = $bot->storeGet("birth_day");

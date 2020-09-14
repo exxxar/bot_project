@@ -436,7 +436,7 @@ class MainConversation
                 ["text" => "Перейти на сайте для поиска", "url" =>"http://lotus-model.ru/table-search.php"]
             ]
         ];
-        $bot->sendPhoto("Ссылка на страницу поиска моделей", $keyboard);
+        $bot->sendMessage("Ссылка на страницу поиска моделей", $keyboard);
     }
     public static function goToChannel($bot, ...$d)
     {

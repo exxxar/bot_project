@@ -430,6 +430,14 @@ class MainConversation
         $bot->pagination("/test", $products, $page, "Наша продукция");
     }
 
+    public static function findModel($bot){
+        $keyboard = [
+            [
+                ["text" => "Перейти на сайте для поиска", "url" =>"http://lotus-model.ru/table-search.php"]
+            ]
+        ];
+        $bot->sendPhoto("Ссылка на страницу поиска моделей", $keyboard);
+    }
     public static function goToChannel($bot, ...$d)
     {
         $type = isset($d[1]) ? $d[1] : 'LMA';

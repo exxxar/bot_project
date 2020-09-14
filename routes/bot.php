@@ -57,6 +57,7 @@ $this->hears("/.*Lotus Kids", MainConversation::class . "::lkMenu");
 $this->hears("/.*Combo Photoprojekt", MainConversation::class . "::lcpMenu");
 $this->hears("/ask_question ([a-zA-Z]+)|.*Задать вопрос ([a-zA-Z]+)", QuestionConversation::class . "::start");
 $this->hears("/.*Перейти в канал ([a-zA-Z]+)", MainConversation::class . "::goToChannel");
+$this->hears("/.*Найти модель", MainConversation::class . "::findModel");
 $this->hears("/.*F.A.Q.", MainConversation::class . "::askQuestion");
 $this->hears("/.*Оформить заказ", ConfirmOrderConversation::class . "::start");
 $this->hears("/edit_current_prof|.*Анкета модели", ModelFormConversation::class . "::start");

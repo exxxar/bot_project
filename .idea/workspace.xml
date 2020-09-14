@@ -3,22 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="5a400384-671b-41fb-82e7-fab36ffb0091" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Clasess/tLotusModelBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/tLotusModelBot.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/AdminConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/AdminConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/AnswerQuestionConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/AnswerQuestionConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/ConfirmOrderConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/ConfirmOrderConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/ConfirmPhotoProjectConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/ConfirmPhotoProjectConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/FeedbackConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/FeedbackConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/FeedbackPPConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/FeedbackPPConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/LotusCampOrderConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/LotusCampOrderConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/LotusDanceOrderConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/LotusDanceOrderConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/MainConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/MainConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/ModelFormConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/ModelFormConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/PollsFormConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/PollsFormConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/QuestionConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/QuestionConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/StartDataConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/StartDataConversation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Conversations/WannaFitnessConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/WannaFitnessConversation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/bot.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/bot.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/conversations.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/conversations.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -221,6 +207,7 @@
       <workItem from="1599975827599" duration="9050000" />
       <workItem from="1600017424354" duration="8447000" />
       <workItem from="1600066838665" duration="5312000" />
+      <workItem from="1600087716508" duration="306000" />
     </task>
     <servers />
   </component>

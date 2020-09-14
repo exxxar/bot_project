@@ -12,7 +12,7 @@ class WannaFitnessConversation
 
     public static function start($bot)
     {
-        $bot->getFallbackMenu("Хочу записаться на фитнесc.\n\xF0\x9F\x94\xB8Введите ваше имя:");
+        $bot->getFallbackMenu("Хочу записаться на фитнес.\n\xF0\x9F\x94\xB8Введите ваше имя:");
         $bot->startConversation("wf_name");
     }
 

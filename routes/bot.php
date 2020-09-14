@@ -14,6 +14,7 @@ use App\Conversations\ModelFormConversation;
 use App\Conversations\PollsFormConversation;
 use App\Conversations\QuestionConversation;
 use App\Conversations\StartDataConversation;
+use App\Conversations\WannaFitnessConversation;
 
 $this->hears("/start ([0-9a-zA-Z=]+)", StartDataConversation::class . '::start');
 $this->hears("/start|.*Продолжить позже|.*Главное меню|.*Попробовать опять", MainConversation::class . "::start");
@@ -45,6 +46,7 @@ $this->hears("/answer_this_questions ([0-9]+)", AnswerQuestionConversation::clas
 $this->hears("/i_want_to_photo_project ([0-9]+)", ConfirmPhotoProjectConversation::class . "::start");
 $this->hears("/.*Записаться в Лагерь", LotusCampOrderConversation::class . "::start");
 $this->hears("/.*Хочу танцевать", LotusDanceOrderConversation::class . "::start");
+$this->hears("/.*Хочу на Фитнес для взрослых!", WannaFitnessConversation::class . "::start");
 //$this->hears("/all_profile_list ([0-9]+)", AdminConversation::class."::profilesPerPage");
 $this->hears("/.*Каналы администраторов", AdminConversation::class . "::channels");
 $this->hears("/.*Lotus Model Agency", MainConversation::class . "::lmaMenu");

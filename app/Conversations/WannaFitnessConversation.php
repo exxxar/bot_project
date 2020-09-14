@@ -22,9 +22,26 @@ class WannaFitnessConversation
             return;
 
 
-        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш номер телефона:");
-        $bot->next("wf_phone", [
+        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш возраст:");
+        $bot->next("wf_age", [
             "name" => $message
+        ]);
+    }
+
+    public static function age($bot, $message)
+    {
+        if (WannaFitnessConversation::fallback($bot, $message))
+            return;
+
+        if (!is_numeric($message)){
+            $bot->reply("Ошибочка! Вы ведите свой возраст цифрами!:");
+            $bot->next("wf_age");
+            return;
+        }
+
+        $bot->reply("Вы ввели: *$message* лет\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш номер телефона:");
+        $bot->next("wf_phone", [
+            "age" => $message
         ]);
     }
 
@@ -44,7 +61,7 @@ class WannaFitnessConversation
             return;
         }
 
-        $bot->reply("Ваш номер телефона: *$tmp_phone*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш комментарий к заказу:");
+        $bot->reply("Ваш номер телефона: *$tmp_phone*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Дополнительно к заявке:");
 
         $bot->next("wf_text", [
             "phone" => $tmp_phone

@@ -80,4 +80,5 @@ $this->ask("fb2_question_8", FeedbackPPConversation::class . "::question8");
 
 $this->ask("wf_name", WannaFitnessConversation::class . "::name");
 $this->ask("wf_phone", WannaFitnessConversation::class . "::phone");
+$this->ask("wf_age", WannaFitnessConversation::class . "::age");
 $this->ask("wf_text", WannaFitnessConversation::class . "::text");

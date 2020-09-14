@@ -22,7 +22,7 @@ class WannaFitnessConversation
             return;
 
 
-        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш вопрос:");
+        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш номер телефона:");
         $bot->next("wf_phone", [
             "name" => $message
         ]);

@@ -36,7 +36,13 @@ class AdminConversation
                 ["text" => "\xF0\x9F\x91\x89LC Admin channel", "url" => env("LC_ADMIN_CHANNEL_LINK")]
             ],
             [
+                ["text" => "\xF0\x9F\x91\x89LP Admin channel", "url" => env("LP_ADMIN_CHANNEL_LINK")]
+            ],
+            [
                 ["text" => "\xF0\x9F\x91\x89LD Admin channel", "url" => env("LD_ADMIN_CHANNEL_LINK")]
+            ],
+            [
+                ["text" => "\xF0\x9F\x91\x89LCP Admin channel", "url" => env("LCP_ADMIN_CHANNEL_LINK")]
             ],
 
         ];
@@ -111,12 +117,17 @@ class AdminConversation
             foreach ($tmp_options as $tmp_option)
                 $tmp .= "\xF0\x9F\x94\xB9" . $tmp_option . "\n";
 
+
             $keyboard = [
                 [
-                    ["text" => "LMA", "callback_data" => "/send_poll 0 $poll->id"],
-                    ["text" => "LKC", "callback_data" => "/send_poll 1 $poll->id"],
-                    ["text" => "LC", "callback_data" => "/send_poll 2 $poll->id"],
-                    ["text" => "LD", "callback_data" => "/send_poll 3 $poll->id"]
+                    ["text" => "LMA", "callback_data" => "/send_poll LMA $poll->id"],
+                    ["text" => "LKC", "callback_data" => "/send_poll LKC $poll->id"],
+                    ["text" => "LP", "callback_data" => "/send_poll LP $poll->id"],
+                ],
+                [
+                    ["text" => "LC", "callback_data" => "/send_poll LC $poll->id"],
+                    ["text" => "LD", "callback_data" => "/send_poll LD $poll->id"],
+                    ["text" => "LCP", "callback_data" => "/send_poll LCP $poll->id"]
                 ],
                 [
                     ["text" => "Посмотреть опрос", "callback_data" => "/show_poll $poll->id"],

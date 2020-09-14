@@ -47,10 +47,9 @@ class StartDataConversation
             return;
         }
 
-        if ($code==="002"){
+        if ($code === "002") {
             $ticket = Ticket::find(intval($request_id));
-            if (is_null($ticket))
-            {
+            if (is_null($ticket)) {
                 $bot->reply("Вопрос #$request_id не найден!");
                 return;
             }
@@ -80,10 +79,8 @@ class StartDataConversation
             ],
             [
                 ["text" => "\xF0\x9F\x92\xA1Убрать администратора", "callback_data" => "action_admin_down"],
-            ],
-            [
-                ["text" => "\xF0\x9F\x92\xA1Завершить работу администратора", "callback_data" => "end"]
-            ],
+            ]
+
         ];
 
 
@@ -110,11 +107,9 @@ class StartDataConversation
             case "action_admin_down":
                 StartDataConversation::admin($bot, $message, false);
                 break;
-            case "end":
-                $bot->getMainMenu("Спасибо, что воспользовались админ. панелью!");
-                $bot->stopConversation();
-                break;
         }
+
+        $bot->stopConversation();
     }
 
     public static function admin($bot, $message, $up = true)

@@ -128,7 +128,7 @@ class LotusCampOrderConversation
         $tmp = "Заявка на Lotus Camp:\nТип: *$type*\nФ.И.О. ребенка: *$childName*\nФ.И.О. родителя: *$parentName*\nВозраст ребенка: *$age* лет\nТелефон: _ $phone _\nКомментарий: _ $message _\n";
 
         $bot->sendMessageToChat(
-            env("LOTUS_BASE_CHANEL_ID"),
+            env("LC_ADMIN_CHANNEL_ID"),
             "$tmp"
         );
 

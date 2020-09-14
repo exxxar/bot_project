@@ -54,9 +54,18 @@ class QuestionConversation
         $bot->getMainMenu("Текст вашего вопроса: *$message*\xE2\x9C\x85\nСпасибо! Ваш вопрос принят в обработку.");
         $bot->stopConversation();
 
-        $question_type_ids = ["LMC" => 0, "LKC" => 1, "LP" => 2, "LC" => 3, "LD" => 4];
+        $question_type_ids = ["LMA" => 0, "LKC" => 1, "LP" => 2, "LC" => 3, "LD" => 4, "LCP" => 5];
 
-       $ticket = Ticket::create([
+        $channels = [
+            env("LMA_CHANNEL_ID"),
+            env("LKC_CHANNEL_ID"),
+            env("LP_CHANNEL_ID"),
+            env("LC_CHANNEL_ID"),
+            env("LD_CHANNEL_ID"),
+            env("LCP_CHANNEL_ID"),
+        ];
+
+        $ticket = Ticket::create([
             "chat_id" => $user->chat_id,
             "question_type" => $question_type_ids[$type] ?? 0,
             "name" => $name,
@@ -73,14 +82,14 @@ class QuestionConversation
         $url_link = "https://t.me/" . env("APP_BOT_NAME") . "?start=$code";
 
         $keyboard = [
-          [
-              [
-                  "text"=>"Ответит на вопрос","url"=>"$url_link"
-              ]
-          ]
+            [
+                [
+                    "text" => "Ответит на вопрос", "url" => "$url_link"
+                ]
+            ]
         ];
         $bot->sendMessageToChat(
-            env("LOTUS_BASE_CHANEL_ID"),
+            $channels[($question_type_ids[$type] ?? 0)],
             "*Новый вопрос ($type)*:\nОт:_ $name _\nВопрос: _ $message _\n",
             $keyboard
         );

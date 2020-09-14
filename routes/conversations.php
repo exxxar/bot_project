@@ -14,6 +14,7 @@ use App\Conversations\ModelFormConversation;
 use App\Conversations\PollsFormConversation;
 use App\Conversations\QuestionConversation;
 use App\Conversations\StartDataConversation;
+use App\Conversations\WannaFitnessConversation;
 use Illuminate\Support\Facades\Log;
 
 $this->ask("question_name", QuestionConversation::class . "::name");
@@ -77,3 +78,6 @@ $this->ask("fb2_question_6", FeedbackPPConversation::class . "::question6");
 $this->ask("fb2_question_7", FeedbackPPConversation::class . "::question7");
 $this->ask("fb2_question_8", FeedbackPPConversation::class . "::question8");
 
+$this->ask("wf_name", WannaFitnessConversation::class . "::name");
+$this->ask("wf_phone", WannaFitnessConversation::class . "::phone");
+$this->ask("wf_text", WannaFitnessConversation::class . "::comment");

@@ -286,7 +286,7 @@ class ModelFormConversation
             ]);
 
             $bot->sendMessageToChat(
-                env("LOTUS_BASE_CHANEL_ID"),
+                env("LMA_ADMIN_CHANNEL_ID"),
                 sprintf("*Новые анкетные данные:*\n"
                     . "\xF0\x9F\x94\xB9Ф.И.О.: _%s_\n"
                     . "\xF0\x9F\x94\xB9Номер телефона: _%s_\n"

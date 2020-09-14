@@ -104,7 +104,7 @@ class ConfirmPhotoProjectConversation
         $tmp = "Заявка на фотопроект:\n$tmp_project\nОт: *$name*\nТелефон: _ $phone _\nКомментарий: _ $message _\n";
 
         $bot->sendMessageToChat(
-            env("LOTUS_BASE_CHANEL_ID"),
+            env("LP_ADMIN_CHANNEL_ID"),
             "$tmp"
         );
 

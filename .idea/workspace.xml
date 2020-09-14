@@ -2,24 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a400384-671b-41fb-82e7-fab36ffb0091" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/.htaccess" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Clasess/AbstractBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/AbstractBot.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Clasess/tLotusModelBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/tLotusModelBot.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Conversations/AdminConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/AdminConversation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Conversations/AnswerQuestionConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/AnswerQuestionConversation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Conversations/ConfirmOrderConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/ConfirmOrderConversation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Conversations/ConfirmPhotoProjectConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/ConfirmPhotoProjectConversation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Conversations/FeedbackConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/FeedbackConversation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Conversations/FeedbackPPConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/FeedbackPPConversation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Conversations/LotusCampOrderConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/LotusCampOrderConversation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Conversations/LotusDanceOrderConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/LotusDanceOrderConversation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Conversations/MainConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/MainConversation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Conversations/ModelFormConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/ModelFormConversation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Conversations/PollsFormConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/PollsFormConversation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Conversations/QuestionConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/QuestionConversation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Conversations/StartDataConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/StartDataConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Product.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Profile.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_27_172413_create_products_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_08_27_172413_create_products_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_27_175512_create_profiles_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_08_27_175512_create_profiles_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/ProductTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/ProductTableSeeder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/bot.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/bot.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/conversations.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/conversations.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,15 +159,15 @@
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\projects\BotCashBackPackage\packages\laravel\bot_cash_back\scr" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\projects\BotCashBackPackage\app\Conversations" />
       <recent name="D:\projects\BotCashBackPackage\routes" />
       <recent name="D:\projects\BotCashBackPackage\public\img" />
       <recent name="D:\projects\BotCashBackPackage" />
       <recent name="D:\projects\BotCashBackPackage\app\Clasess" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\projects\BotCashBackPackage\packages\laravel\bot_cash_back\scr" />
     </key>
   </component>
   <component name="RunManager">
@@ -219,7 +218,9 @@
       <workItem from="1599675577577" duration="3651000" />
       <workItem from="1599719023470" duration="17252000" />
       <workItem from="1599919834396" duration="12773000" />
-      <workItem from="1599975827599" duration="7692000" />
+      <workItem from="1599975827599" duration="9050000" />
+      <workItem from="1600017424354" duration="8447000" />
+      <workItem from="1600066838665" duration="5312000" />
     </task>
     <servers />
   </component>
@@ -247,10 +248,10 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="0" y="0" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1599648740137" />
-    <state x="477" y="261" key="com.intellij.ide.util.TipDialog" timestamp="1599975845063">
+    <state x="477" y="261" key="com.intellij.ide.util.TipDialog" timestamp="1600066842588">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="477" y="261" key="com.intellij.ide.util.TipDialog/0.0.1536.864@0.0.1536.864" timestamp="1599975845063" />
+    <state x="477" y="261" key="com.intellij.ide.util.TipDialog/0.0.1536.864@0.0.1536.864" timestamp="1600066842588" />
     <state x="426" y="197" key="run.anything.popup" timestamp="1599822520716">
       <screen x="0" y="0" width="1536" height="864" />
     </state>

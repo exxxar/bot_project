@@ -118,7 +118,7 @@ class LotusDanceOrderConversation
         $tmp = "Заявка в Lotus Dance:\nТип: *$type*\nОт: *$name*\nВозраст: *$age*\nТелефон: _ $phone _\nКомментарий: _ $message _\n";
 
         $bot->sendMessageToChat(
-            env("LOTUS_BASE_CHANEL_ID"),
+            env("LD_ADMIN_CHANNEL_ID"),
             "$tmp"
         );
 

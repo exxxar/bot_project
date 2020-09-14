@@ -34,7 +34,7 @@ $this->hears("/remove_product_from_cart ([0-9]+)", MainConversation::class . "::
 $this->hears("/add_poll", PollsFormConversation::class . "::start");
 $this->hears("/remove_poll ([0-9]+)", PollsFormConversation::class . "::remove");
 $this->hears("/show_poll ([0-9]+)", PollsFormConversation::class . "::show");
-$this->hears("/send_poll ([0-9]+) ([0-9]+)", PollsFormConversation::class . "::sendPoll");
+$this->hears("/send_poll ([a-zA-Z]+) ([0-9]+)", PollsFormConversation::class . "::sendPoll");
 $this->hears("/admin_panel|.*Панель администратора", AdminConversation::class . "::start");
 $this->hears("/all_profile_list ([0-9]+)|.*Управление анкетами", AdminConversation::class . "::profiles");
 $this->hears("/all_polls_list ([0-9]+)|.*Управление опросами", AdminConversation::class . "::polls");
@@ -52,7 +52,7 @@ $this->hears("/.*Lotus Photostudio", MainConversation::class . "::lpMenu");
 $this->hears("/.*Lotus Camp", MainConversation::class . "::lcMenu");
 $this->hears("/.*Lotus Dance", MainConversation::class . "::ldMenu");
 $this->hears("/.*Lotus Kids", MainConversation::class . "::lkMenu");
-$this->hears("/.*Combo Photoprojekt", MainConversation::class . "::cpMenu");
+$this->hears("/.*Combo Photoprojekt", MainConversation::class . "::lcpMenu");
 $this->hears("/ask_question ([a-zA-Z]+)|.*Задать вопрос ([a-zA-Z]+)", QuestionConversation::class . "::start");
 $this->hears("/.*Перейти в канал ([a-zA-Z]+)", MainConversation::class . "::goToChannel");
 $this->hears("/.*F.A.Q.", MainConversation::class . "::askQuestion");

@@ -148,10 +148,10 @@ class PollsFormConversation
 
     public static function sendPoll($bot, ...$d)
     {
-        $type = isset($d[1]) ? intval($d[1]) : 0;
+        $type = isset($d[1]) ? $d[1] : 'LMA';
         $id = isset($d[2]) ? intval($d[2]) : 0;
 
-        Log::info("ID=$id Type=$type");
+
         $poll = Poll::find($id);
 
         if (is_null($id) || is_null($poll)) {
@@ -159,13 +159,14 @@ class PollsFormConversation
             return;
         }
 
-
-        $index = $type >= 0 && $type <= 4 ? $type : 0;
         $channels = [
-            env("LOTUS_BASE_CHANEL_ID"),
-            env("LOTUS_BASE_CHANEL_ID"),
-            env("LOTUS_BASE_CHANEL_ID"),
-            env("LOTUS_BASE_CHANEL_ID")
+            "LMA"=>env("LMA_CHANNEL_ID"),
+            "LKC"=>env("LKC_CHANNEL_ID"),
+            "LP"=>env("LP_CHANNEL_ID"),
+            "LC"=>env("LC_CHANNEL_ID"),
+            "LD"=>env("LD_CHANNEL_ID"),
+            "LCP"=> env("LCP_CHANNEL_ID"),
+
         ];
 
         $bot->sendPoll(
@@ -173,7 +174,7 @@ class PollsFormConversation
             \GuzzleHttp\json_decode($poll->options, true),
             $poll->is_anonymous ? true : false,
             $poll->allows_multiple_answers ? true : false,
-            $channels[$index]
+            $channels[$type]
         );
 
         $bot->reply("Опрос успешно отправлен в канал!");

@@ -176,7 +176,7 @@ class FeedbackPPConversation
         $bot->stopConversation();
 
         $bot->sendMessageToChat(
-            env("LOTUS_BASE_CHANEL_ID"),
+            env("LP_ADMIN_CHANNEL_ID"),
             sprintf("Отзыв пользователя о фотопроекте #%s:\n"
                 ."\xF0\x9F\x94\xB9Понравилось ли работать с фотографом?\n_%s_\n"
                 ."\xF0\x9F\x94\xB9Понравился ли макияж\прическа?\n_%s_\n"

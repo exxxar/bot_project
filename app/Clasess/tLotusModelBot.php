@@ -39,6 +39,12 @@ trait tLotusModelBot
         ["\xF0\x9F\x94\x99Главное меню"],
     ];
 
+    protected $lcp_menu_keyboard = [
+        ["\xF0\x9F\x93\x9DХочу на проект", "\xF0\x9F\x92\xACПерейти в канал LCP"],
+        ["\xF0\x9F\x91\x89Задать вопрос LCP"],
+        ["\xF0\x9F\x94\x99Главное меню"],
+    ];
+
     protected $lp_menu_keyboard = [
         ["\xE2\x9A\xA1Аренда помещений \ оборудования"],
         ["\xE2\x8F\xB3Фотопроекты на месяц","\xF0\x9F\x92\xACПерейти в канал LP"],
@@ -119,10 +125,15 @@ trait tLotusModelBot
     }
 
 
-    public function getLMAMenu($message)
+     public function getLMAMenu($message)
     {
         $tmp_menu = $this->lma_menu_keyboard;
-        $user = $this->getUser();
+        $this->sendMenu($message, $tmp_menu);
+    }
+
+    public function getLCPMenu($message)
+    {
+        $tmp_menu = $this->lcp_menu_keyboard;
         $this->sendMenu($message, $tmp_menu);
     }
 

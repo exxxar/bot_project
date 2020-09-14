@@ -369,9 +369,10 @@ class MainConversation
     }
 
 
-    public static function cpMenu($bot)
+
+    public static function lcpMenu($bot)
     {
-        $bot->reply("Скоро будет доступно!");
+        $bot->getLCPMenu("Lotus Combo Photoprojekt меню!");
     }
 
 
@@ -433,14 +434,13 @@ class MainConversation
     {
         $type = isset($d[1]) ? $d[1] : 'LMA';
 
-        $bot->reply($type);
-
         $channels = [
             "LMA" => ["link" => env("LMA_CHANNEL_LINK"), "logo" => "http://lotus-model.ru/assets/app/img/lotus%20agency.png"],
             "LKC" => ["link" => env("LKC_CHANNEL_LINK"), "logo" => "http://lotus-model.ru/assets/app/img/lotus%20kids.png"],
             "LD" => ["link" => env("LD_CHANNEL_LINK"), "logo" => "http://lotus-model.ru/assets/app/img/lotus%20agency.png"],
             "LC" => ["link" => env("LC_CHANNEL_LINK"), "logo" => "http://lotus-model.ru/assets/app/img/lotus%20camp.jpg"],
-            "LP" => ["link" => env("LP_CHANNEL_LINK"), "logo" => "http://lotus-model.ru/assets/app/img/lotus%20photo.png"]
+            "LP" => ["link" => env("LP_CHANNEL_LINK"), "logo" => "http://lotus-model.ru/assets/app/img/lotus%20photo.png"],
+            "LCP" => ["link" => env("LCP_CHANNEL_LINK"), "logo" => "http://lotus-model.ru/assets/app/img/lotus%20agency.png"]
         ];
 
         $keyboard = [

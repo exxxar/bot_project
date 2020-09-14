@@ -81,6 +81,7 @@ class ConfirmOrderConversation
             ->get();
         $price = 0;
         $tmp = "Имя заказчика: *$name*\nТелефон: _ $phone _\nКомментарий: _ $message _\n";
+
         foreach ($orders as $order) {
             $order->comment = $message;
             $order->is_confirmed = true;
@@ -92,12 +93,14 @@ class ConfirmOrderConversation
                 $order->product->price
             );
             $price +=  $order->product->price;
+
+
         }
 
         $tmp .= "Суммарно к оплате: *$price руб.*";
 
         $bot->sendMessageToChat(
-            env("LOTUS_BASE_CHANEL_ID"),
+            env("LMA_ADMIN_CHANNEL_ID"),
             "$tmp"
         );
 

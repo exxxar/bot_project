@@ -119,7 +119,7 @@ class FeedbackConversation
         $bot->stopConversation();
 
         $bot->sendMessageToChat(
-            env("LOTUS_BASE_CHANEL_ID"),
+            env("LMA_ADMIN_CHANNEL_ID"),
             sprintf("Анонимный отзыв пользователя #%s:\n"
                 ."\xF0\x9F\x94\xB9Какой предмет?\n_%s_\n"
                 ."\xF0\x9F\x94\xB9Было ли занятие полезным?\n_%s_\n"

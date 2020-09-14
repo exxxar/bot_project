@@ -75,6 +75,7 @@ class WannaFitnessConversation
 
         $phone = $bot->storeGet("phone");
         $name = $bot->storeGet("name");
+        $age = $bot->storeGet("age");
         $text = $message;
 
         $bot->getMainMenu("Вы ввели: *$message*\xE2\x9C\x85\nСпасибо! Ваш запрос принят в обработку.");
@@ -83,7 +84,7 @@ class WannaFitnessConversation
 
         $bot->sendMessageToChat(
             env("LD_ADMIN_CHANNEL_ID"),
-            "*Новый запрос на фитнес*:\nОт:_ $name _\nТелефон:_ $phone _\nКомменатрий: _ $text _\n"
+            "*Новый запрос на фитнес*:\nОт:_ $name _\nВозраст:_ $age _\nТелефон:_ $phone _\nКомменатрий: _ $text _\n"
         );
 
 

@@ -22,10 +22,7 @@ class QuestionConversation
 
     public static function name($bot, $message)
     {
-        if (QuestionConversation::fallback($bot, $message))
-            return;
-
-        if (mb_strlen($message) === 0) {
+         if (mb_strlen($message) === 0) {
             $bot->reply("Нужно ввести Ваше имя!");
             $bot->next("question_name");
             return;
@@ -38,9 +35,6 @@ class QuestionConversation
 
     public static function text($bot, $message)
     {
-        if (QuestionConversation::fallback($bot, $message))
-            return;
-
         if (mb_strlen($message) === 0) {
             $bot->reply("Нужно ввести текст Вашего вопроса!");
             $bot->next("question_text");
@@ -104,7 +98,11 @@ class QuestionConversation
             $bot->stopConversation();
             return true;
         } else
+        {
+            $bot->sendMessage("Вы ввели \"*$message*\", но это не корректно! Попробуйте исправить ситуацию:)");
             return false;
+        }
+
     }
 
 

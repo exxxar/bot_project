@@ -11,6 +11,8 @@ trait tBotConversation
 {
     use tBotStorage;
 
+    protected $last_method_id;
+
     public function currentActiveConversation()
     {
         return (object)json_decode($this->getFromStorage("is_conversation_active"));

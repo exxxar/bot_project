@@ -37,6 +37,7 @@ abstract class AbstractBot
 
     protected $message_id;
 
+
     private function hears($path, $func)
     {
         array_push($this->list, ["path" => $path, "function" => $func]);
@@ -44,9 +45,30 @@ abstract class AbstractBot
         return $this;
     }
 
+    private function fall($func)
+    {
+        $this->current_ask[$this->last_method_id - 1]["fallback"] = $func;
+
+        return $this;
+    }
+
+    private function where($pattern)
+    {
+        $this->current_ask[$this->last_method_id - 1]["pattern"] = trim($pattern);
+
+        return $this;
+    }
+
     private function ask($name, $func, $hideKeyboard = true)
     {
-        array_push($this->current_ask, ["name" => $name, "func" => $func, "hide" => $hideKeyboard]);
+        $this->last_method_id = array_push($this->current_ask,
+            [
+                "name" => $name,
+                "func" => $func,
+                "hide" => $hideKeyboard,
+                "pattern" => null,
+                "fallback" => null,
+            ]);
         return $this;
     }
 
@@ -236,8 +258,25 @@ abstract class AbstractBot
                 if (is_null($item["name"]))
                     break;
 
+                $needValidate = $item["pattern"] != null;
+
+                $pattern = $needValidate?preg_match( $item["pattern"] , $this->query, $matches): null;
+
+                $is_valid = $pattern!=null;
+
                 if ($item["name"] == $object->name) {
-                    $item["func"]($this, $this->query);
+                    //Log::info($item["name"]." ".$pattern." ".$item["pattern"]." ".($is_valid?"true":"false"));
+
+                    if ($needValidate && !$is_valid && $item["fallback"] != null)
+                        $item["fallback"]($this, $this->query);
+
+                    if ($needValidate && !$is_valid && $item["fallback"] == null)
+                        $this->sendMessage("Необработанная ошибка");
+
+                    if ($needValidate && $is_valid || !$needValidate)
+                        $item["func"]($this, $this->query);
+
+
                     $hide = $item["hide"];
                     if ($hide)
                         $this->editReplyKeyboard();

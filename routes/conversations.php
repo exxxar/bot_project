@@ -17,8 +17,14 @@ use App\Conversations\StartDataConversation;
 use App\Conversations\WannaFitnessConversation;
 use Illuminate\Support\Facades\Log;
 
-$this->ask("question_name", QuestionConversation::class . "::name");
-$this->ask("question_text", QuestionConversation::class . "::text");
+$this->ask("question_name", QuestionConversation::class . "::name")
+    ->where("/[а-яёА-ЯЁ ]{5,20}/ui")
+    ->fall(QuestionConversation::class . "::fallback");
+
+$this->ask("question_text", QuestionConversation::class . "::text")
+    ->where("/[а-яёА-ЯЁ0-9!? ]{5,255}/ui")
+    ->fall(QuestionConversation::class . "::fallback");
+
 $this->ask("answer_response", AnswerQuestionConversation::class . "::response");
 $this->ask("confirm_order_name", ConfirmOrderConversation::class . "::name");
 $this->ask("confirm_order_phone", ConfirmOrderConversation::class . "::phone");

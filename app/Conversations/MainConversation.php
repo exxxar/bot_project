@@ -461,7 +461,10 @@ class MainConversation
                 ["text" => "\xF0\x9F\x93\x9DВопрос администратору", "callback_data" => "/ask_question LMA"]
             ],
             [
-                ["text" => "\xF0\x9F\x93\x96Частые вопросы", "url" => "https://telegra.ph/Uslugi-01-06"]
+                ["text" => "\xF0\x9F\x93\x96Общие вопросы", "url" => "https://telegra.ph/CHasto-zadavaemye-voprosy-i-otvety-09-19"]
+            ],
+            [
+                ["text" => "\xF0\x9F\x93\x96Часты вопросы по фотосъемке", "url" => "https://telegra.ph/Uslugi-01-06"]
             ]
         ];
 

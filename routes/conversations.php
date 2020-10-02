@@ -30,21 +30,74 @@ $this->ask("question_text", QuestionConversation::class . "::text")
         "Текст вопроса должен быть *на русском* и не меньше *20 символов*!");
 
 $this->ask("answer_response", AnswerQuestionConversation::class . "::response");
-$this->ask("confirm_order_name", ConfirmOrderConversation::class . "::name");
-$this->ask("confirm_order_phone", ConfirmOrderConversation::class . "::phone");
-$this->ask("confirm_order_comment", ConfirmOrderConversation::class . "::comment");
-$this->ask("mf_full_name", ModelFormConversation::class . "::name");
-$this->ask("mf_phone", ModelFormConversation::class . "::phone");
-$this->ask("mf_sex", ModelFormConversation::class . "::sex");
-$this->ask("mf_birth_day", ModelFormConversation::class . "::birthDay");
-$this->ask("mf_birth_month", ModelFormConversation::class . "::birthMonth");
-$this->ask("mf_select_city", ModelFormConversation::class . "::selectCity");
-$this->ask("mf_ask_city", ModelFormConversation::class . "::askCity");
-$this->ask("mf_age", ModelFormConversation::class . "::age");
-$this->ask("mf_height", ModelFormConversation::class . "::height");
-$this->ask("mf_question_1", ModelFormConversation::class . "::question1");
-$this->ask("mf_question_2", ModelFormConversation::class . "::question2");
-$this->ask("mf_question_3", ModelFormConversation::class . "::question3");
+
+$this->ask("confirm_order_name", ConfirmOrderConversation::class . "::name")
+    ->fall(ConfirmOrderConversation::class . "::fallback");
+$this->ask("confirm_order_phone", ConfirmOrderConversation::class . "::phone")
+    ->fall(ConfirmOrderConversation::class . "::fallback");
+$this->ask("confirm_order_comment", ConfirmOrderConversation::class . "::comment")
+    ->fall(ConfirmOrderConversation::class . "::fallback");
+
+$this->ask("mf_full_name", ModelFormConversation::class . "::name")
+    ->where("/[а-яёА-ЯЁ ]{5,20}/ui")
+    ->fall(ModelFormConversation::class . "::fallback",
+        "Имя \"%s\" должно быть *на русском* и *длиной 5* и более символов!");
+
+$this->ask("mf_phone", ModelFormConversation::class . "::phone")
+    ->fall(ModelFormConversation::class . "::fallback");
+
+$this->ask("mf_sex", ModelFormConversation::class . "::sex")
+    ->where("/(Мужской|Женский)/ui")
+    ->fall(ModelFormConversation::class . "::fallback", "Попробуйте определиться кто же вы? *Парень*? Или *девушка*?");
+
+$this->ask("mf_birth_day", ModelFormConversation::class . "::birthDay")
+    ->where("/[0-9]{1,2}/ui")
+    ->fall(ModelFormConversation::class . "::fallback",
+        "Определенно что-то не так введено, хм"
+        );
+
+$this->ask("mf_birth_month", ModelFormConversation::class . "::birthMonth")
+    ->where("/[0-9]{1,2}/ui")
+    ->fall(ModelFormConversation::class . "::fallback",
+        "А *%s* это точно название месяца в русском языке? Может вы путаете?");
+
+$this->ask("mf_select_city", ModelFormConversation::class . "::selectCity")
+    ->where("/[а-яёА-ЯЁ ]{5,20}/ui")
+    ->fall(ModelFormConversation::class . "::fallback",
+        "Город \"%s\" должно быть *на русском*!"
+    );
+
+$this->ask("mf_ask_city", ModelFormConversation::class . "::askCity")
+    ->where("/[а-яёА-ЯЁ ]{5,20}/ui")
+    ->fall(ModelFormConversation::class . "::fallback",
+        "Город \"%s\" должно быть *на русском* и длиной не меньше 5 символов!"
+    );
+
+$this->ask("mf_age", ModelFormConversation::class . "::age")
+    ->where("/[0-9]{1,2}/ui")
+    ->fall(ModelFormConversation::class . "::fallback",
+        "Хм, а %s точно ваш возраст?Введите, например, 18.");
+
+$this->ask("mf_height", ModelFormConversation::class . "::height")
+    ->where("/[0-9]{3}/ui")
+    ->fall(ModelFormConversation::class . "::fallback",
+        "Хм, а %s точно ваш рост?Введите, например, 180."
+        );
+$this->ask("mf_question_1", ModelFormConversation::class . "::question1")
+    ->where("/(Да|Нет)/ui")
+    ->fall(ModelFormConversation::class . "::fallback",
+        "Хм, а %s точно ответ на наш вопрос?");
+
+$this->ask("mf_question_2", ModelFormConversation::class . "::question2")
+    ->where("/(Да|Нет)/ui")
+    ->fall(ModelFormConversation::class . "::fallback",
+        "Хм, а %s точно ответ на наш вопрос?");
+
+$this->ask("mf_question_3", ModelFormConversation::class . "::question3")
+    ->where("/(Да|Нет)/ui")
+    ->fall(ModelFormConversation::class . "::fallback",
+        "Хм, а %s точно ответ на наш вопрос?");
+
 $this->ask("poll_question", PollsFormConversation::class . "::question");
 $this->ask("poll_is_anonymous", PollsFormConversation::class . "::changeAnonymous");
 $this->ask("poll_allows_multiple_answers", PollsFormConversation::class . "::changeAllowsMultipleAnswers");

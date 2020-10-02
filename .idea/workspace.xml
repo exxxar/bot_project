@@ -4,21 +4,9 @@
     <list default="true" id="5a400384-671b-41fb-82e7-fab36ffb0091" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Clasess/AbstractBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/AbstractBot.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Clasess/BaseBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/BaseBot.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Clasess/tLotusModelBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/tLotusModelBot.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/AdminConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/AdminConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/MainConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/MainConversation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Conversations/ConfirmOrderConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/ConfirmOrderConversation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Conversations/ModelFormConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/ModelFormConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/ProductFormConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/ProductFormConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/QuestionConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/QuestionConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/BotController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/BotController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/BotServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/BotServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/laravel/bot_cash_back/scr/models/BotUserInfo.php" beforeDir="false" afterPath="$PROJECT_DIR$/packages/laravel/bot_cash_back/scr/models/BotUserInfo.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/bot.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/bot.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/conversations.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/conversations.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -229,7 +217,7 @@
       <workItem from="1601453939013" duration="36000" />
       <workItem from="1601461378685" duration="13352000" />
       <workItem from="1601540012866" duration="10000" />
-      <workItem from="1601629764856" duration="9453000" />
+      <workItem from="1601629764856" duration="18596000" />
     </task>
     <servers />
   </component>
@@ -275,7 +263,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="php-line-method">
           <url>file://$PROJECT_DIR$/app/Clasess/AbstractBot.php</url>
-          <line>605</line>
+          <line>606</line>
           <properties>
             <option name="className" value="\App\Clasess\AbstractBot" />
             <option name="methodName" value="editReplyKeyboard" />

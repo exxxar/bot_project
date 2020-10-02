@@ -11,28 +11,19 @@ class ModelFormConversation extends Conversation
 {
     public static function start($bot)
     {
-        $bot->getFallbackMenu("Формируем анкету модели.\n\xF0\x9F\x94\xB8Введите ваше Ф.И.О:");
+        $bot->getFallbackMenu("Формируем анкету модели.\n\n\xF0\x9F\x94\xB8Введите ваше Ф.И.О:");
         $bot->startConversation("mf_full_name");
     }
 
     public static function name($bot, $message)
     {
-        if (ModelFormConversation::fallback($bot, $message))
-            return;
-
-        if (mb_strlen($message) <= 3) {
-            $bot->reply("Нужно ввести Ваше полное Ф.И.О!");
-            $bot->next("mf_full_name");
-            return;
-        }
-
         $keyboard = [
             [
-                ["text" => "Парень", "callback_data" => "муж"],
-                ["text" => "Девушка", "callback_data" => "жен"],
+                ["text" => "Парень", "callback_data" => "Мужской"],
+                ["text" => "Девушка", "callback_data" => "Женский"],
             ]
         ];
-        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Выберите ваш пол:", $keyboard);
+        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\n\xF0\x9F\x94\xB8Выберите ваш пол:", $keyboard);
         $bot->next("mf_sex", [
             "full_name" => $message
         ]);
@@ -41,12 +32,9 @@ class ModelFormConversation extends Conversation
 
     public static function sex($bot, $message)
     {
-        if (ModelFormConversation::fallback($bot, $message))
-            return;
 
 
-
-        $bot->getFallbackMenuWithPhone("Вы выбрал: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш номер телефона:");
+        $bot->getFallbackMenuWithPhone("Вы выбрал: *$message*\xE2\x9C\x85\n\n\xF0\x9F\x94\xB8Введите ваш номер телефона:");
         $bot->next("mf_phone", [
             "sex" => $message
         ]);
@@ -54,16 +42,13 @@ class ModelFormConversation extends Conversation
 
     public static function phone($bot, $message)
     {
-        if (ModelFormConversation::fallback($bot, $message))
-            return;
-
         $pattern = "/^\+380\d{3}\d{2}\d{2}\d{2}$/";
         $tmp_phone = str_replace(["(", ")", "-", " "], "", $message);
         $tmp_phone = strpos($tmp_phone, "+38") === false ?
             "+38$tmp_phone" : $tmp_phone;
 
         if (preg_match($pattern, $tmp_phone) == 0) {
-            $bot->reply("Вы неверно ввели телефонный номер! Попробуйте еще раз.");
+            $bot->reply("А разве $message является корректным номером телефона? Попробуйте ввести в формате 071ХХХХХХХ!");
             $bot->next("mf_phone");
             return;
         }
@@ -80,23 +65,17 @@ class ModelFormConversation extends Conversation
             ],
         ];
 
-        $bot->getFallbackMenu("Ваш номер телефона: *$tmp_phone*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Выберите город, в котором вы проживаете:", $keyboard);
 
-        if (is_null($bot->storeGet("phone"))){
-            $bot->setParams([
-                "phone" => $tmp_phone
-            ]);
-        }
-        $bot->next("mf_select_city");
+        $bot->getFallbackMenu("Ваш номер телефона: *$tmp_phone*\xE2\x9C\x85");
+        $bot->reply("\xF0\x9F\x94\xB8Выберите город, в котором вы проживаете:", $keyboard);
+        $bot->next("mf_select_city", [
+            "phone" => $tmp_phone
+        ]);
     }
 
     public static function selectCity($bot, $message)
     {
-        if (ModelFormConversation::fallback($bot, $message))
-            return;
-
         $cities = ["Донецк", "Макеевка", "Ясиноватая", "Харцызск"];
-
 
         if (!in_array($message, $cities)) {
             $bot->reply("Введите свой город:");
@@ -104,7 +83,7 @@ class ModelFormConversation extends Conversation
             return;
         }
 
-        $bot->reply("Вы выбрали: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш возраст:");
+        $bot->reply("Вы выбрали: *$message*\xE2\x9C\x85\n\n\xF0\x9F\x94\xB8Введите ваш возраст:");
         $bot->next("mf_age", [
             "city" => $message
         ]);
@@ -112,10 +91,7 @@ class ModelFormConversation extends Conversation
 
     public static function askCity($bot, $message)
     {
-        if (ModelFormConversation::fallback($bot, $message))
-            return;
-
-        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш возраст:");
+        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\n\xF0\x9F\x94\xB8Введите ваш возраст:");
         $bot->next("mf_age", [
             "city" => $message
         ]);
@@ -123,15 +99,11 @@ class ModelFormConversation extends Conversation
 
     public static function age($bot, $message)
     {
-        if (ModelFormConversation::fallback($bot, $message))
-            return;
-
-        if (!is_numeric($message)) {
-            $bot->reply("Попробуйте ввести возраст числом, например: 18");
+        if (intval($message) < 1 || intval($message) > 99) {
+            $bot->reply("Возможно, ваш возраст нам не подходит.... Введите всё же действительные данные...");
             $bot->next("mf_age");
             return;
         }
-
         $keyboard = [];
         $tmp_keyboard_row = [];
         for ($i = 1; $i <= 31; $i++) {
@@ -144,7 +116,7 @@ class ModelFormConversation extends Conversation
         }
         array_push($keyboard, $tmp_keyboard_row);
 
-        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Выберите день вашего рождения:", $keyboard);
+        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\n\xF0\x9F\x94\xB8Выберите день вашего рождения:", $keyboard);
         $bot->next("mf_birth_day", [
             "age" => $message
         ]);
@@ -152,8 +124,6 @@ class ModelFormConversation extends Conversation
 
     public static function birthDay($bot, $message)
     {
-        if (ModelFormConversation::fallback($bot, $message))
-            return;
 
         if (intval($message) < 1 || intval($message) > 31) {
             $bot->reply("Попробуйте выбрать день из предложенных вариантов");
@@ -189,7 +159,7 @@ class ModelFormConversation extends Conversation
         array_push($keyboard, $tmp_keyboard_row);
 
         $birth_day = mb_strlen($message) === 1 ? "0$message" : $message;
-        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Выберите ваш месяц рождения:", $keyboard);
+        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\n\xF0\x9F\x94\xB8Выберите ваш месяц рождения:", $keyboard);
         $bot->next("mf_birth_month", [
             "birth_day" => $birth_day
         ]);
@@ -197,16 +167,16 @@ class ModelFormConversation extends Conversation
 
     public static function birthMonth($bot, $message)
     {
-        if (ModelFormConversation::fallback($bot, $message))
-            return;
 
         if (intval($message) < 0 || intval($message) > 12) {
             $bot->reply("Попробуйте выбрать месяц из предложенных вариантов");
             $bot->next("mf_birth_day");
             return;
         }
+
+
         $birth_month = mb_strlen($message) === 1 ? "0$message" : $message;
-        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш рост:");
+        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\n\xF0\x9F\x94\xB8Введите ваш рост:");
         $bot->next("mf_height", [
             "birth_month" => $birth_month
         ]);
@@ -214,11 +184,8 @@ class ModelFormConversation extends Conversation
 
     public static function height($bot, $message)
     {
-        if (ModelFormConversation::fallback($bot, $message))
-            return;
-
-        if (!is_numeric($message)) {
-            $bot->reply("Попробуйте ввести рост числом, например: 180");
+        if (intval($message) < 50 || intval($message) > 300) {
+            $bot->reply("Рост, конечно, у вас необычный, но стоит ввести реальный;)");
             $bot->next("mf_height");
             return;
         }
@@ -228,7 +195,7 @@ class ModelFormConversation extends Conversation
                 ["text" => "\xE2\x9C\x85Да", "callback_data" => "Да"], ["text" => "\xE2\x9D\x8EНет", "callback_data" => "Нет"],
             ],
         ];
-        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Обучались ли вы в модельной школе?", $keyboard);
+        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\n\xF0\x9F\x94\xB8Обучались ли вы в модельной школе?", $keyboard);
         $bot->next("mf_question_1", [
             "height" => $message
         ]);
@@ -236,15 +203,13 @@ class ModelFormConversation extends Conversation
 
     public static function question1($bot, $message)
     {
-        if (ModelFormConversation::fallback($bot, $message))
-            return;
 
         $keyboard = [
             [
                 ["text" => "\xE2\x9C\x85Да", "callback_data" => "Да"], ["text" => "\xE2\x9D\x8EНет", "callback_data" => "Нет"],
             ],
         ];
-        $bot->reply("Вы выбрали: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Хотели бы вы принимать участие в фотопроектах?", $keyboard);
+        $bot->reply("Вы выбрали: *$message*\xE2\x9C\x85\n\n\xF0\x9F\x94\xB8Хотели бы вы принимать участие в фотопроектах?", $keyboard);
         $bot->next("mf_question_3", [
             "question_1" => $message
         ]);
@@ -252,8 +217,7 @@ class ModelFormConversation extends Conversation
 
     public static function question3($bot, $message)
     {
-        if (ModelFormConversation::fallback($bot, $message))
-            return;
+
 
         $keyboard = [
             [
@@ -268,8 +232,6 @@ class ModelFormConversation extends Conversation
 
     public static function question2($bot, $message)
     {
-        if (ModelFormConversation::fallback($bot, $message))
-            return;
 
         $user = $bot->getUser();
 
@@ -330,13 +292,12 @@ class ModelFormConversation extends Conversation
         }
         $bot->stopConversation();
 
-
         $keyboard = [
             [
                 ["text" => "\xF0\x9F\x8E\xB4Моя анкета", "callback_data" => "/current_profile"]
             ]
         ];
-        $bot->sendMessage("Вы выбрали: *$message*\xE2\x9C\x85\nСпасибо! Ваши данные приняты в обработку!", $keyboard);
+        $bot->sendMessage("Вы выбрали: *$message*\xE2\x9C\x85\n\nСпасибо! Ваши данные приняты в обработку!", $keyboard);
         $bot->getMainMenu("Главное меню");
     }
 

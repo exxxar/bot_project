@@ -13,21 +13,36 @@ class ConfirmOrderConversation
 
     public static function start($bot)
     {
-        $bot->getFallbackMenu("Диалог оформления заказа.\n\xF0\x9F\x94\xB8Введите ваше имя:");
-        $bot->startConversation("confirm_order_name");
+        $user = $bot->getUser();
+
+        $needName = mb_strlen($user->user_profile->full_name) === 0;
+
+        $bot->getFallbackMenu("Диалог оформления заказа.\n\xF0\x9F\x94\xB8"
+            . ($needName ? "Введите ваше имя:" : "Введите ваш номер телефона(в формате 071XXXXXXX):")
+        );
+
+
+        if ($needName)
+            $bot->startConversation("confirm_order_name");
+        else {
+            $bot->startConversation("confirm_order_phone", [
+                "name" => $user->user_profile->full_name ??
+                    $user->fio ??
+                    $user->account_name ??
+                    $user->chat_id
+            ]);
+        }
     }
 
     public static function name($bot, $message)
     {
-        if (ConfirmOrderConversation::fallback($bot, $message))
-            return;
 
         if (mb_strlen($message) === 0) {
             $bot->reply("Нужно ввести Ваше имя!");
             $bot->next("confirm_order_name");
             return;
         }
-        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш номер телефона:");
+        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш номер телефона(в формате 071XXXXXXX)):");
         $bot->next("confirm_order_phone", [
             "name" => $message
         ]);
@@ -35,8 +50,7 @@ class ConfirmOrderConversation
 
     public static function phone($bot, $message)
     {
-        if (ConfirmOrderConversation::fallback($bot, $message))
-            return;
+
 
         $pattern = "/^\+380\d{3}\d{2}\d{2}\d{2}$/";
         $tmp_phone = str_replace(["(", ")", "-", " "], "", $message);
@@ -44,7 +58,7 @@ class ConfirmOrderConversation
             "+38$tmp_phone" : $tmp_phone;
 
         if (preg_match($pattern, $tmp_phone) == 0) {
-            $bot->reply("Вы неверно ввели телефонный номер! Попробуйте еще раз.");
+            $bot->reply("Вы неверно ввели телефонный номер! Попробуйте ввести в формате 071XXXXXXX.");
             $bot->next("confirm_order_phone");
             return;
         }
@@ -58,8 +72,7 @@ class ConfirmOrderConversation
 
     public static function comment($bot, $message)
     {
-        if (ConfirmOrderConversation::fallback($bot, $message))
-            return;
+
 
         if (mb_strlen($message) === 0) {
             $bot->reply("Нужно ввести текст Вашего комментария!");
@@ -92,7 +105,7 @@ class ConfirmOrderConversation
                 $order->product->title,
                 $order->product->price
             );
-            $price +=  $order->product->price;
+            $price += $order->product->price;
 
 
         }
@@ -104,14 +117,14 @@ class ConfirmOrderConversation
             "$tmp"
         );
 
-        $bot->getMainMenu("Текст вашего комментария: *$message*\xE2\x9C\x85\nСпасибо! Ваш заказ принят в обработку.\n\nБудем благодарны если после получения Вы напишитие всё ли понравилось и подошло!\n\nСпасибо за Ваш заказ!\n\n#лучшиеснами");
+        $bot->getMainMenu("Текст вашего комментария: *$message*\xE2\x9C\x85\n\n_Спасибо! Ваш заказ принят в обработку.\n\nБудем благодарны если после получения Вы напишитие всё ли понравилось и подошло!\n\nСпасибо за Ваш заказ!_\n\n#лучшиеснами");
 
     }
 
-    public static function fallback($bot, $message)
+    public static function fallback($bot, $message, $error= null)
     {
         if ($message === "Продолжить позже") {
-            $bot->getMainMenu("Хорошо! Продолжим позже!");
+            $bot->getBasketMenu("Хорошо! Продолжим позже!");
             $bot->stopConversation();
             return true;
         } else

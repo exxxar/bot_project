@@ -362,26 +362,27 @@ abstract class AbstractBot
             if (is_null($item["name"]))
                 break;
 
-            $needValidate = $item["pattern"] != null;
+            $needValidate = !is_null($item["pattern"]);
 
+            Log::info($needValidate ? "need" : "not need");
             $pattern = $needValidate ? preg_match($item["pattern"], $this->query, $matches) : null;
 
             $is_valid = $pattern != null;
 
-            $message = $contact ?? $this->query;
+            $message = $this->contact ?? $this->query;
 
             if ($item["name"] == $object->name) {
-
+                $go_next = true;
                 $is_active_fallback = false;
                 if ($needValidate && !$is_valid && $item["fallback"] != null) {
                     $item["fallback"]($this, $message, $item["error_message"] ?? null);
-                    $is_active_fallback = true;;
+                    $is_active_fallback = true;
                 }
 
-                $go_next = true;
-
                 if (!$is_active_fallback)
-                    $go_next = !Conversation::fallback($this, $message);
+                    $go_next = is_null($item["pattern"]) && !is_null($item["fallback"]) ?
+                        !$item["fallback"]($this, $message, $item["error_message"] ?? null) :
+                        !Conversation::fallback($this, $message);
 
                 if ($go_next)
                     if ($needValidate && $is_valid || !$needValidate)
@@ -588,7 +589,7 @@ abstract class AbstractBot
 
     public function editMessageText($text = "empty")
     {
-        if (is_null($this->bot)|| is_null($this->updated_message_id))
+        if (is_null($this->bot) || is_null($this->updated_message_id))
             return;
 
         try {
@@ -612,7 +613,7 @@ abstract class AbstractBot
         try {
             $this->bot->editMessageReplyMarkup([
                 'chat_id' => $this->getChatId(),
-                "message_id" => $this->updated_message_id?? $this->message_id,
+                "message_id" => $this->updated_message_id ?? $this->message_id,
                 'reply_markup' => json_encode([
                     'inline_keyboard' => $keyboard,
                 ])

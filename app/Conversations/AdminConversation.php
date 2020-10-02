@@ -13,7 +13,7 @@ use App\Ticket;
 use App\User;
 use Illuminate\Support\Facades\Log;
 
-class AdminConversation
+class AdminConversation extends Conversation
 {
 
     public static function start($bot)

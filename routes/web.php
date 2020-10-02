@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Telegram\Bot\Api;
 use Telegram\Bot\Laravel\Facades\Telegram;
 
 /*
@@ -20,8 +21,18 @@ Route::get('/', function () {
 
 Route::get('/test', 'BotController@test');
 Route::any('/bot', 'BotController@handle');
+Route::any('/bot/{bot}', 'BotController@handle');
+
 
 Route::get("/setw", function () {
-    Telegram::setWebhook(['url' => env("APP_URL") . '/bot']);
-    return "URL=" . env("APP_URL") . '/bot';
+
+    $bots = \App\Bot::all();
+
+    foreach ($bots as $bot) {
+        $telegram = new Api(env("APP_DEBUG") ? $bot->token_dev : $bot->token_prod);
+        $telegram->setWebhook(['url' => env("APP_URL") . '/bot/' . $bot->bot_url]);
+        sleep(3);
+    }
+
+    return "Success";
 });

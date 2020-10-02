@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Bot;
 use App\Clasess\BaseBot;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Telegram\Bot\Laravel\Facades\Telegram;
 
@@ -11,23 +13,15 @@ class BotController extends Controller
 {
     private $bot;
 
-
-    public function test()
+    public function handle(Request $request, $name)
     {
-   //  $this->bot->handler("test");
-    }
-
-    public function __construct(BaseBot $bot)
-    {
-        $this->bot = $bot;
-    }
-
-    //
-    public function handle(Request $request)
-    {
-        Log::info("START HANDLE");
         try {
-            $updates = Telegram::getWebhookUpdates();
+            Log::info("start with name = $name");
+            $local_bot = Bot::where("bot_url", $name)->first();
+            $this->bot = new BaseBot(env("APP_DEBUG") ?
+                $local_bot->token_dev :
+                $local_bot->token_prod);
+            $updates = $this->bot->getWebhookUpdates();
             $this->bot->handler($updates);
         } catch (\Exception $e) {
             $error_message = sprintf("%s %s %s",

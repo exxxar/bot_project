@@ -5,6 +5,7 @@ namespace App\Clasess;
 
 
 use App\Classes\tBotConversation;
+use App\Conversations\Conversation;
 use App\User;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
@@ -37,6 +38,8 @@ abstract class AbstractBot
 
     protected $message_id;
 
+    protected $contact;
+
 
     private function hears($path, $func)
     {
@@ -45,9 +48,10 @@ abstract class AbstractBot
         return $this;
     }
 
-    private function fall($func)
+    private function fall($func, $message = null)
     {
         $this->current_ask[$this->last_method_id - 1]["fallback"] = $func;
+        $this->current_ask[$this->last_method_id - 1]["error_message"] = $message;
 
         return $this;
     }
@@ -78,16 +82,23 @@ abstract class AbstractBot
         return $this;
     }
 
-    public function initBot()
+    public function getWebhookUpdates()
+    {
+        return $this->bot->getWebhookUpdates();
+    }
+
+
+    public function initBot($token = null)
     {
         $this->list = [];
 
         $this->current_ask = [];
 
         try {
-            $this->bot = new Api(config("app.debug") ?
+
+            $this->bot = new Api(is_null($token) ? (config("app.debug") ?
                 env("TELEGRAM_DEBUG_BOT") :
-                env("TELEGRAM_PRODUCTION_BOT")
+                env("TELEGRAM_PRODUCTION_BOT")) : $token
                 , false);
 
 
@@ -115,183 +126,172 @@ abstract class AbstractBot
     public function handler(Update $data)
     {
         $update = json_decode($data);
+        $this->contact = null;
 
         if (isset($update->message->via_bot))
             return;
 
-        if (isset($update->inline_query)) {
-            $messageId = $update->inline_query->id;
+        if (isset($update->message->contact))
+            $this->contact = $update->message->contact->phone_number;
 
-            $this->setTelegramUser($update->inline_query->from);
-
-            $users =
-                BotUserInfo::where("is_admin", true)
-                    ->where("is_working", true)
-                    ->orderBy("id", "DESC")
-                    ->take(8)
-                    ->skip(0)
-                    ->get();
-            $button_list = [];
-
-            $this->reply("Ищем активных администраторов....");
-            if (count($users) > 0) {
-                foreach ($users as $user) {
-
-                    $tmp_user_id = (string)$user->chat_id;
-                    while (strlen($tmp_user_id) < 10)
-                        $tmp_user_id = "0" . $tmp_user_id;
-
-                    $code = base64_encode("001" . $tmp_user_id);
-                    $url_link = "https://t.me/" . env("APP_BOT_NAME") . "?start=$code";
-
-                    $tmp_button = [
-                        'type' => 'article',
-                        'id' => uniqid(),
-                        'title' => "Запрос к Администратору",
-                        'input_message_content' => [
-                            'message_text' => sprintf("Администратор #%s %s (%s)", $user->id, ($user->fio ?? $user->account_name ?? $user->chat_id), ($user->phone ?? 'Без телефона')),
-                        ],
-                        'reply_markup' => [
-                            'inline_keyboard' => [
-                                [
-                                    ['text' => "\xF0\x9F\x91\x89Послать запрос Администратору", "url" => "$url_link"],
-                                ],
-
-                            ]
-                        ],
-                        'thumb_url' => "https://sun2.48276.userapi.com/c848536/v848536665/177130/tzf1fK-6aio.jpg",
-                        'url' => env("APP_URL"),
-                        'description' => sprintf("Администратор #%s %s (%s)", $user->id, ($user->fio ?? $user->account_name ?? $user->chat_id), ($user->phone ?? 'Без телефона')),
-                        'hide_url' => true
-                    ];
-
-                    array_push($button_list, $tmp_button);
-                }
-                $this->sendAnswerInlineQuery($messageId, $button_list);
-            } else
-                $this->reply("К сожалению активных администраторов не найдено...");
-
-            return;
-        }
+        if (isset($update->inline_query))
+            $this->inlineQueryHandler($update->inline_query);
 
         if (isset($update->channel_post))
             return;
 
-
         $this->message_id = $update->message->message_id ?? $update->callback_query->message->message_id ?? null;
 
         if (is_null($this->message_id)) {
-            Log::info("Ошибочка");
             return "Только для запросов бота";
         }
 
         $this->updated_message_id = $update->callback_query->message->message_id ?? null;
+
         $this->setTelegramUser($update->message->from ?? $update->callback_query->from);
+
         $this->query = $update->message->text ?? $update->callback_query->data ?? '';
 
-        if (isset($update->message->photo)) {
-            $photos = $update->message->photo;
+        if (isset($update->message->photo))
+            $this->photoUploaderHandler($update->message->photo);
 
-            if (!$this->isConversationActive()) {
-                $this->sendMessage("В данный момент загрузить фотографии нет возможности!");
-                return;
-            }
-            foreach ($photos as $photo) {
-                $file_id = $photo->file_id;
-
-                $response = Http::get(sprintf("https://api.telegram.org/bot%s/getFile?file_id=%s",
-                    config("app.debug") ?
-                        env("TELEGRAM_DEBUG_BOT") :
-                        env("TELEGRAM_PRODUCTION_BOT"),
-                    $file_id
-                ));
-
-                $images = json_decode($this->storeGet("images", "[]"), true);
-
-                $path = sprintf("https://api.telegram.org/file/bot%s/%s",
-                    config("app.debug") ?
-                        env("TELEGRAM_DEBUG_BOT") :
-                        env("TELEGRAM_PRODUCTION_BOT"),
-                    $response->json()["result"]["file_path"]
-                );
-
-
-                array_push($images, $path);
-
-                $this->setParams([
-                    "images" => json_encode($images)
-                ]);
-            }
-            $this->sendMessage("Фотографии успешно загружены!");
+        if ($this->maintenanceHanlder())
             return;
-        };
-
-
-        if (env("APP_MAINTENANCE_MODE")) {
-            $keyboard = [
-                [
-                    ["text" => "Перейти в канал", "url" => "https://t.me/" . env("LMA_CHANNEL_LINK")]
-                ]
-            ];
-            $this->sendPhoto("",
-                "https://sun9-16.userapi.com/c858232/v858232349/173635/lTlP7wMcZEA.jpg", $keyboard);
-            $this->sendMenu("Сервер находится на техническом обслуживании!", $this->keyboard_fallback_2);
-            return;
-        }
 
         $this->createNewBotUser();
-
 
         if (is_null($this->query))
             return;
 
+        if ($this->conversationHandler())
+            return;
+
+        $this->routeHandler();
+
+        return response()
+            ->json([
+                "message" => "success",
+                "status" => 200
+            ]);
+
+    }
+
+    private function inlineQueryHandler($query)
+    {
+        $messageId = $query->id;
+
+        $this->setTelegramUser($query->from);
+
+        $users =
+            BotUserInfo::where("is_admin", true)
+                ->where("is_working", true)
+                ->orderBy("id", "DESC")
+                ->take(8)
+                ->skip(0)
+                ->get();
+        $button_list = [];
+
+        $this->reply("Ищем активных администраторов....");
+        if (count($users) > 0) {
+            foreach ($users as $user) {
+
+                $tmp_user_id = (string)$user->chat_id;
+                while (strlen($tmp_user_id) < 10)
+                    $tmp_user_id = "0" . $tmp_user_id;
+
+                $code = base64_encode("001" . $tmp_user_id);
+                $url_link = "https://t.me/" . env("APP_BOT_NAME") . "?start=$code";
+
+                $tmp_button = [
+                    'type' => 'article',
+                    'id' => uniqid(),
+                    'title' => "Запрос к Администратору",
+                    'input_message_content' => [
+                        'message_text' => sprintf("Администратор #%s %s (%s)", $user->id, ($user->fio ?? $user->account_name ?? $user->chat_id), ($user->phone ?? 'Без телефона')),
+                    ],
+                    'reply_markup' => [
+                        'inline_keyboard' => [
+                            [
+                                ['text' => "\xF0\x9F\x91\x89Послать запрос Администратору", "url" => "$url_link"],
+                            ],
+
+                        ]
+                    ],
+                    'thumb_url' => "https://sun2.48276.userapi.com/c848536/v848536665/177130/tzf1fK-6aio.jpg",
+                    'url' => env("APP_URL"),
+                    'description' => sprintf("Администратор #%s %s (%s)", $user->id, ($user->fio ?? $user->account_name ?? $user->chat_id), ($user->phone ?? 'Без телефона')),
+                    'hide_url' => true
+                ];
+
+                array_push($button_list, $tmp_button);
+            }
+            $this->sendAnswerInlineQuery($messageId, $button_list);
+        } else
+            $this->reply("К сожалению активных администраторов не найдено...");
+
+        return;
+    }
+
+    private function photoUploaderHandler($photos)
+    {
+
+        if (!$this->isConversationActive()) {
+            $this->sendMessage("В данный момент загрузить фотографии нет возможности!");
+            return;
+        }
+
+        foreach ($photos as $photo) {
+            $file_id = $photo->file_id;
+
+            $response = Http::get(sprintf("https://api.telegram.org/bot%s/getFile?file_id=%s",
+                config("app.debug") ?
+                    env("TELEGRAM_DEBUG_BOT") :
+                    env("TELEGRAM_PRODUCTION_BOT"),
+                $file_id
+            ));
+
+            $images = json_decode($this->storeGet("images", "[]"), true);
+            //todo: fix this for many bots
+            $path = sprintf("https://api.telegram.org/file/bot%s/%s",
+                config("app.debug") ?
+                    env("TELEGRAM_DEBUG_BOT") :
+                    env("TELEGRAM_PRODUCTION_BOT"),
+                $response->json()["result"]["file_path"]
+            );
+
+
+            array_push($images, $path);
+
+            $this->setParams([
+                "images" => json_encode($images)
+            ]);
+        }
+        $this->sendMessage("Фотографии успешно загружены!");
+        return;
+    }
+
+    private function maintenanceHanlder()
+    {
+        if (!env("APP_MAINTENANCE_MODE"))
+            return false;
+
+        $keyboard = [
+            [
+                ["text" => "Перейти в канал", "url" => "https://t.me/" . env("LMA_CHANNEL_LINK")]
+            ]
+        ];
+        $this->sendPhoto("",
+            "https://sun9-16.userapi.com/c858232/v858232349/173635/lTlP7wMcZEA.jpg", $keyboard);
+        $this->sendMenu("Сервер находится на техническом обслуживании!", $this->keyboard_fallback_2);
+        return true;
+    }
+
+    private function routeHandler()
+    {
         $find = false;
 
         $matches = [];
         $arguments = [];
-
-        if ($this->isConversationActive()) {
-            $object = $this->currentActiveConversation();
-            $is_conversation_find = false;
-
-            foreach ($this->current_ask as $item) {
-                if (is_null($item["name"]))
-                    break;
-
-                $needValidate = $item["pattern"] != null;
-
-                $pattern = $needValidate?preg_match( $item["pattern"] , $this->query, $matches): null;
-
-                $is_valid = $pattern!=null;
-
-                if ($item["name"] == $object->name) {
-                    //Log::info($item["name"]." ".$pattern." ".$item["pattern"]." ".($is_valid?"true":"false"));
-
-                    if ($needValidate && !$is_valid && $item["fallback"] != null)
-                        $item["fallback"]($this, $this->query);
-
-                    if ($needValidate && !$is_valid && $item["fallback"] == null)
-                        $this->sendMessage("Необработанная ошибка");
-
-                    if ($needValidate && $is_valid || !$needValidate)
-                        $item["func"]($this, $this->query);
-
-
-                    $hide = $item["hide"];
-                    if ($hide)
-                        $this->editReplyKeyboard();
-                    $is_conversation_find = true;
-                }
-            }
-
-            if ($is_conversation_find)
-                return;
-
-
-            if (!$is_conversation_find)
-                $this->stopConversation();
-        }
-
 
         $maxErrorIteration = count($this->list);
 
@@ -302,7 +302,6 @@ abstract class AbstractBot
 
             $maxErrorIteration--;
 
-            Log::info("iterations $maxErrorIteration");
             if (is_null($item["path"]))
                 continue;
 
@@ -342,14 +341,68 @@ abstract class AbstractBot
             }
 
         }
+    }
 
+    private function conversationHandler()
+    {
+        if (!$this->isConversationActive())
+            return;
 
-        return response()
-            ->json([
-                "message" => "success",
-                "status" => 200
+        $matches = [];
+
+        $object = $this->currentActiveConversation();
+        $is_conversation_find = false;
+
+        if (!is_null($this->contact))
+            $this->setParams([
+                "phone" => $this->contact
             ]);
 
+        foreach ($this->current_ask as $item) {
+            if (is_null($item["name"]))
+                break;
+
+            $needValidate = $item["pattern"] != null;
+
+            $pattern = $needValidate ? preg_match($item["pattern"], $this->query, $matches) : null;
+
+            $is_valid = $pattern != null;
+
+            $message = $contact ?? $this->query;
+
+            if ($item["name"] == $object->name) {
+
+                $is_active_fallback = false;
+                if ($needValidate && !$is_valid && $item["fallback"] != null) {
+                    $item["fallback"]($this, $message, $item["error_message"] ?? null);
+                    $is_active_fallback = true;;
+                }
+
+                $go_next = true;
+
+                if (!$is_active_fallback)
+                    $go_next = !Conversation::fallback($this, $message);
+
+                if ($go_next)
+                    if ($needValidate && $is_valid || !$needValidate)
+                        $item["func"]($this, $message);
+
+
+                $hide = $item["hide"];
+                if ($hide)
+                    $this->editReplyKeyboard();
+                $is_conversation_find = true;
+            }
+        }
+
+        if ($is_conversation_find)
+            return true;
+
+
+        if (!$is_conversation_find)
+            $this->stopConversation();
+
+        return false;
     }
 
     public function getUser(array $params = [])
@@ -450,7 +503,6 @@ abstract class AbstractBot
 
     }
 
-
     public function sendMessage($message, $keyboard = [], $parseMode = 'Markdown')
     {
 
@@ -534,20 +586,20 @@ abstract class AbstractBot
         }
     }
 
-
     public function editMessageText($text = "empty")
     {
-        if (is_null($this->bot))
+        if (is_null($this->bot)|| is_null($this->updated_message_id))
             return;
 
         try {
             $this->bot->editMessageText([
                 'text' => $text,
                 'chat_id' => $this->getChatId(),
-                "message_id" => $this->message_id
+                'parse_mode' => 'Markdown',
+                "message_id" => $this->updated_message_id ?? $this->message_id
             ]);
         } catch (\Exception $e) {
-
+            Log::info("Ошибочка editMessageText");
         }
     }
 
@@ -560,13 +612,13 @@ abstract class AbstractBot
         try {
             $this->bot->editMessageReplyMarkup([
                 'chat_id' => $this->getChatId(),
-                "message_id" => $this->updated_message_id,
+                "message_id" => $this->updated_message_id?? $this->message_id,
                 'reply_markup' => json_encode([
                     'inline_keyboard' => $keyboard,
                 ])
             ]);
         } catch (\Exception $e) {
-
+            Log::info("Ошибочка editReplyKeyboard");
         }
 
     }
@@ -591,7 +643,6 @@ abstract class AbstractBot
             ])
         ]);
     }
-
 
     public function sendPoll($question, $options, $is_anonymous = ture, $allows_multiple_answers = false, $chatId = null, $keyboard = [], $parseMode = 'Markdown')
     {
@@ -637,15 +688,20 @@ abstract class AbstractBot
         }
     }
 
-    public function sendMediaGroup($images, $type = "photo")
+    public function sendMediaGroup($images, $type = "photo", $captions = null)
     {
         if (is_null($this->bot))
             return;
 
         $media = [];
 
-        foreach (json_decode($images) as $img)
+        foreach (json_decode($images) as $key => $img) {
             array_push($media, ['media' => "$img", "type" => $type]);
+            if (!is_null($captions)) {
+                $media[$key]["caption"] = $captions[$key];
+            }
+        }
+
 
         try {
             Http::post(sprintf("https://api.telegram.org/bot%s/sendMediaGroup?chat_id=%s",
@@ -655,6 +711,26 @@ abstract class AbstractBot
                 $this->getChatId()
             ), [
                 "media" => json_encode($media)
+            ]);
+        } catch (\Exception $e) {
+            $this->reply("Хм, ошибка!");
+        }
+    }
+
+    public function sendMediaGroupWithCaption($images)
+    {
+        if (is_null($this->bot))
+            return;
+
+
+        try {
+            Http::post(sprintf("https://api.telegram.org/bot%s/sendMediaGroup?chat_id=%s",
+                (env('APP_DEBUG') ?
+                    env("TELEGRAM_DEBUG_BOT") :
+                    env("TELEGRAM_PRODUCTION_BOT")),
+                $this->getChatId()
+            ), [
+                "media" => json_encode($images)
             ]);
         } catch (\Exception $e) {
             $this->reply("Хм, ошибка!");
@@ -672,11 +748,9 @@ abstract class AbstractBot
         ]);
     }
 
-
     public function sendLocation($latitude, $longitude, array $keyboard = [])
     {
         // TODO: Implement sendLocation() method.
     }
-
 
 }

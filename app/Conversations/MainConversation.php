@@ -33,7 +33,7 @@ class MainConversation
             ]
         ];
 
-           $work_admin_count = BotUserInfo::where("is_admin", true)
+        $work_admin_count = BotUserInfo::where("is_admin", true)
                 ->where("is_working", true)
                 ->get()
                 ->count() ?? 0;
@@ -134,6 +134,8 @@ class MainConversation
 
     public function products($bot, $type, $page, $link)
     {
+
+        $user = $bot->getUser();
         $products = Product::where("type", $type)
             ->orderBy("position", "asc")
             ->take(env("PAGINATION_PER_PAGE"))
@@ -146,14 +148,31 @@ class MainConversation
         }
 
         foreach ($products as $product) {
-            $keyboard = [
-                [
-                    ["text" => "\xF0\x9F\x92\xA1Подробнее", "callback_data" => "/more_info $product->id"]
-                ],
-                [
-                    ["text" => "\xF0\x9F\x92\xB3Добавить в корзину ($product->price ₽)", "callback_data" => "/add_to_cart $product->id"]
-                ]
-            ];
+
+            $in_cart = !is_null($order = Order::where("product_id", $product->id)
+                ->where("user_id", $user->user_id)
+                ->where("is_confirmed", false)
+                ->first());
+            if (!$in_cart)
+                $keyboard = [
+                    [
+                        ["text" => "\xF0\x9F\x92\xA1Подробнее", "callback_data" => "/more_info $product->id"]
+                    ],
+                    [
+                        ["text" => "\xF0\x9F\x92\xB3Добавить в корзину ($product->price ₽)", "callback_data" => "/add_to_cart $product->id"]
+                    ]
+                ];
+            else
+                $keyboard = [
+                    [
+                        ["text" => "\xF0\x9F\x92\xA1Подробнее", "callback_data" => "/more_info " . $order->product_id]
+                    ],
+                    [
+                        ["text" => "Убрать из корзины", "callback_data" => "/remove_product_from_cart $order->id"],
+                        ["text" => "Перейти в корзину", "callback_data" => "/show_cart"]
+                    ],
+
+                ];
 
             $bot->sendMediaGroup($product->images);
 
@@ -200,13 +219,32 @@ class MainConversation
             $bot->reply("Товар не найден!");
             return;
         }
+
+        $order = Order::with(["product"])
+            ->where("user_id", $user->user_id)
+            ->where("product_id", $product->id)
+            ->where("is_confirmed", false)
+            ->first();
+
+
         $keyboard = [
             [
                 ["text" => "\xF0\x9F\x92\xB3Добавить в корзину ($product->price ₽)", "callback_data" => "/add_to_cart $product->id"]
             ]
         ];
+
+        if (!is_null($order))
+            $keyboard = [
+                [
+                    ["text" => "Убрать из корзины", "callback_data" => "/remove_product_from_cart $order->id"],
+                    ["text" => "Перейти в корзину", "callback_data" => "/show_cart"]
+                ],
+
+            ];
+
         // $bot->sendPhoto($product->title,$product->image,$keyboard);
-        $bot->sendMessage("*$product->title*\n_$product->description _", $keyboard);
+        $bot->editMessageText("*$product->title*\n_$product->description _");
+        $bot->editReplyKeyboard($keyboard);
 
     }
 
@@ -223,24 +261,50 @@ class MainConversation
             return;
         }
 
-        $productInOrder = Order::where("user_id", $user->user_id)
+        $tmp_order = Order::where("user_id", $user->user_id)
             ->where("product_id", $product->id)
             ->where("is_confirmed", false)
-            ->count() === 0 ? false : true;
+            ->first();
+
+        $productInOrder = !is_null($tmp_order);
+
 
         if ($productInOrder) {
-            $bot->reply("Продукт уже в корзине!");
+            $keyboard = [
+                [
+                    ["text" => "\xF0\x9F\x92\xA1Подробнее", "callback_data" => "/more_info " . $tmp_order->product->id]
+                ],
+                [
+                    ["text" => "Убрать из корзины", "callback_data" => "/remove_product_from_cart $tmp_order->id"],
+                    ["text" => "Перейти в корзину", "callback_data" => "/show_cart"]
+                ],
+
+            ];
+
+            //$bot->editMessageText("*Товар уже в корзине!*");
+            $bot->editReplyKeyboard($keyboard);
             return;
         }
 
-        Order::create([
+        $order = Order::create([
             "user_id" => $user->user_id,
             "product_id" => $product->id,
             "comment" => "",
             "is_confirmed" => false,
         ]);
-        $bot->deleteMessage();
-        $bot->getMainMenu("Ваш товар успешно добавлен в корзину!");
+
+        $keyboard = [
+            [
+                ["text" => "\xF0\x9F\x92\xA1Подробнее", "callback_data" => "/more_info " . $product->id]
+            ],
+            [
+                ["text" => "Убрать из корзины", "callback_data" => "/remove_product_from_cart $order->id"],
+                ["text" => "Перейти в корзину", "callback_data" => "/show_cart"]
+            ],
+
+        ];
+        $bot->editReplyKeyboard($keyboard);
+        $bot->getMainMenu("Ваш товар успешно добавлен в корзину! Спасибо что используете наш сервис!");
 
     }
 
@@ -337,9 +401,24 @@ class MainConversation
             $bot->reply("Данный заказ не найден!");
             return;
         }
-        $bot->deleteMessage();
+
         $order->delete();
-        $bot->reply("Данный заказ успешно удален!");
+
+        $tmp_product_id = $order->product->id;
+        $tmp_product_price = $order->product->price;
+
+        $keyboard = [
+            [
+                ["text" => "\xF0\x9F\x92\xA1Подробнее", "callback_data" => "/more_info $tmp_product_id"]
+            ],
+            [
+                ["text" => "\xF0\x9F\x92\xB3Добавить в корзину ($tmp_product_price ₽)", "callback_data" => "/add_to_cart $tmp_product_id"]
+            ]
+        ];
+        //$bot->editMessageText("*Данный заказ успешно удален!*");
+        $bot->editReplyKeyboard($keyboard);
+        $bot->getMainMenu("Ваш товар успешно убран из корзины! Спасибо что используете наш сервис!");
+
 
     }
 
@@ -367,7 +446,6 @@ class MainConversation
     {
         $bot->getLKCMenu("Lotus Kids меню!");
     }
-
 
 
     public static function lcpMenu($bot)
@@ -430,14 +508,21 @@ class MainConversation
         $bot->pagination("/test", $products, $page, "Наша продукция");
     }
 
-    public static function findModel($bot){
+    public static function findModel($bot)
+    {
         $keyboard = [
             [
-                ["text" => "Перейти на сайте для поиска", "url" =>"http://lotus-model.ru/table-search.php"]
+                ["text" => "Перейти на сайте для поиска", "url" => "http://lotus-model.ru/test-search.php"],
+
+            ],
+            [
+                ["text" => "Найти через БОТа", "callback_data" => "/search_model_in_bot"]
             ]
         ];
         $bot->sendMessage("Ссылка на страницу поиска моделей", $keyboard);
     }
+
+
     public static function goToChannel($bot, ...$d)
     {
         $type = isset($d[1]) ? $d[1] : 'LMA';

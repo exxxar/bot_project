@@ -12,7 +12,7 @@ trait tLotusModelBot
         ["\xE2\xAD\x90Мой профиль", "\xF0\x9F\x91\x9BКорзина(%s)"],
         ["\xF0\x9F\x91\xB8Lotus Model Agency"],
         ["\xF0\x9F\x93\xB7Lotus Photostudio", "\xF0\x9F\x8C\x9FLotus Kids"],
-        ["\xF0\x9F\x8E\xAALotus Camp", "\xF0\x9F\x93\xB9Combo Photoprojekt"],
+        ["\xF0\x9F\x8E\xAALotus Camp", "\xF0\x9F\x93\xB9Combo Photoproject"],
         ["\xF0\x9F\x92\x83Lotus Dance", "\xF0\x9F\x91\x95Фирменная продукция"],
 
         ["\xF0\x9F\x91\x89F.A.Q."],
@@ -47,7 +47,7 @@ trait tLotusModelBot
 
     protected $lp_menu_keyboard = [
         ["\xE2\x9A\xA1Аренда помещений \ оборудования"],
-        ["\xE2\x8F\xB3Фотопроекты на месяц","\xF0\x9F\x92\xACПерейти в канал LP"],
+        ["\xE2\x8F\xB3Фотопроекты на месяц", "\xF0\x9F\x92\xACПерейти в канал LP"],
         ["\xF0\x9F\x93\x83Оставить отзыв о фотопроекте"],
         ["\xF0\x9F\x91\x89Задать вопрос LP"],
         ["\xF0\x9F\x94\x99Главное меню"],
@@ -66,7 +66,7 @@ trait tLotusModelBot
         ["\xF0\x9F\x94\xB8Управление фотопроектами"],
         ["\xF0\x9F\x94\xB8Статистика по боту"],
         ["\xF0\x9F\x93\xA3Каналы администраторов"],
- /*       ["\xF0\x9F\x93\xA9СМС Рассылки"],*/
+        /*       ["\xF0\x9F\x93\xA9СМС Рассылки"],*/
         ["\xF0\x9F\x94\x99Главное меню"],
     ];
 
@@ -89,8 +89,19 @@ trait tLotusModelBot
         ],
     ];
 
+    protected $keyboard_fallback_3 = [
+        [
+            "Продолжить позже"
+        ],
+        [
+            ["text" => "Отправить мой номер",
+            "request_contact" => true]
+        ]
+    ];
+
+
     protected $keyboard_basket = [
-        ["\xF0\x9F\x93\xA6Посмотреть мои товары","\xF0\x9F\x92\xB3Оформить заказ"],
+        ["\xF0\x9F\x93\xA6Посмотреть мои товары", "\xF0\x9F\x92\xB3Оформить заказ"],
         ["\xE2\x9D\x8CОчистить корзину"],
         ["\xF0\x9F\x91\x95Фирменная продукция"],
         ["\xF0\x9F\x94\x99Главное меню"],
@@ -125,7 +136,7 @@ trait tLotusModelBot
     }
 
 
-     public function getLMAMenu($message)
+    public function getLMAMenu($message)
     {
         $tmp_menu = $this->lma_menu_keyboard;
         $this->sendMenu($message, $tmp_menu);
@@ -164,6 +175,11 @@ trait tLotusModelBot
     public function getFallbackMenu($message)
     {
         $this->sendMenu($message, $this->keyboard_fallback);
+    }
+
+    public function getFallbackMenuWithPhone($message)
+    {
+        $this->sendMenu($message, $this->keyboard_fallback_3);
     }
 
 }

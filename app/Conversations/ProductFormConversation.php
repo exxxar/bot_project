@@ -9,7 +9,7 @@ use App\Poll;
 use App\Ticket;
 use Illuminate\Support\Facades\Log;
 
-class ProductFormConversation
+class ProductFormConversation extends Conversation
 {
 
     public static function start($bot)
@@ -150,15 +150,7 @@ class ProductFormConversation
 
     }
 
-    public static function fallback($bot, $message)
-    {
-        if ($message === "Продолжить позже") {
-            $bot->getAdminMenu("Хорошо! Продолжим позже!");
-            $bot->stopConversation();
-            return true;
-        } else
-            return false;
-    }
+
 
     public static function show($bot, ...$d)
     {

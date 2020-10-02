@@ -7,7 +7,7 @@ namespace App\Conversations;
 use App\Profile;
 use Illuminate\Support\Facades\Log;
 
-class ModelFormConversation
+class ModelFormConversation extends Conversation
 {
     public static function start($bot)
     {
@@ -44,7 +44,9 @@ class ModelFormConversation
         if (ModelFormConversation::fallback($bot, $message))
             return;
 
-        $bot->reply("Вы выбрал: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш номер телефона:");
+
+
+        $bot->getFallbackMenuWithPhone("Вы выбрал: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш номер телефона:");
         $bot->next("mf_phone", [
             "sex" => $message
         ]);
@@ -78,11 +80,14 @@ class ModelFormConversation
             ],
         ];
 
-        $bot->reply("Ваш номер телефона: *$tmp_phone*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Выберите город, в котором вы проживаете:", $keyboard);
+        $bot->getFallbackMenu("Ваш номер телефона: *$tmp_phone*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Выберите город, в котором вы проживаете:", $keyboard);
 
-        $bot->next("mf_select_city", [
-            "phone" => $tmp_phone
-        ]);
+        if (is_null($bot->storeGet("phone"))){
+            $bot->setParams([
+                "phone" => $tmp_phone
+            ]);
+        }
+        $bot->next("mf_select_city");
     }
 
     public static function selectCity($bot, $message)
@@ -335,13 +340,4 @@ class ModelFormConversation
         $bot->getMainMenu("Главное меню");
     }
 
-    public static function fallback($bot, $message)
-    {
-        if ($message === "Продолжить позже") {
-            $bot->getMainMenu("Хорошо! Продолжим позже!");
-            $bot->stopConversation();
-            return true;
-        } else
-            return false;
-    }
 }

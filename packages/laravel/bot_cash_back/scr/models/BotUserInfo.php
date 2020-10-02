@@ -2,6 +2,7 @@
 
 namespace Laravel\BotCashBack\Models;
 
+use App\Profile;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -28,9 +29,12 @@ class BotUserInfo extends Model
     ];
 
     protected $appends = [
-        'discount', 'photo_count'
+        'discount', 'photo_count','user_profile'
     ];
 
+    public function getUserProfileAttribute(){
+        return $this->profile()->first();
+    }
     public function getPhotoCountAttribute()
     {
         return $this->user()->first()->ps_photo_count ?? 0;
@@ -40,6 +44,12 @@ class BotUserInfo extends Model
     {
         return $this->user()->first()->ps_discount ?? 0;
     }
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class, 'user_id', 'user_id');
+    }
+
 
     public function user()
     {

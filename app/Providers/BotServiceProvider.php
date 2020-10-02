@@ -16,9 +16,9 @@ class BotServiceProvider extends ServiceProvider
     public function register()
     {
         //
-        App::singleton(BaseBot::class, function() {
+       /* App::singleton(BaseBot::class, function() {
             return new BaseBot();
-        });
+        });*/
     }
 
     /**

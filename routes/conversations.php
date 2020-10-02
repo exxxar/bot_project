@@ -5,6 +5,7 @@ use App\Conversations\AdminConversation;
 use App\Conversations\AnswerQuestionConversation;
 use App\Conversations\ConfirmOrderConversation;
 use App\Conversations\ConfirmPhotoProjectConversation;
+use App\Conversations\Conversation;
 use App\Conversations\FeedbackConversation;
 use App\Conversations\FeedbackPPConversation;
 use App\Conversations\LotusCampOrderConversation;
@@ -13,17 +14,20 @@ use App\Conversations\MainConversation;
 use App\Conversations\ModelFormConversation;
 use App\Conversations\PollsFormConversation;
 use App\Conversations\QuestionConversation;
+use App\Conversations\SearchModelConversation;
 use App\Conversations\StartDataConversation;
 use App\Conversations\WannaFitnessConversation;
 use Illuminate\Support\Facades\Log;
 
 $this->ask("question_name", QuestionConversation::class . "::name")
     ->where("/[а-яёА-ЯЁ ]{5,20}/ui")
-    ->fall(QuestionConversation::class . "::fallback");
+    ->fall(QuestionConversation::class . "::fallback",
+        "Имя \"%s\" должно быть *на русском* и *длиной 5* и более символов!");
 
 $this->ask("question_text", QuestionConversation::class . "::text")
-    ->where("/[а-яёА-ЯЁ0-9!? ]{5,255}/ui")
-    ->fall(QuestionConversation::class . "::fallback");
+    ->where("/[а-яёА-ЯЁ0-9!? ]{20,255}/ui")
+    ->fall(QuestionConversation::class . "::fallback",
+        "Текст вопроса должен быть *на русском* и не меньше *20 символов*!");
 
 $this->ask("answer_response", AnswerQuestionConversation::class . "::response");
 $this->ask("confirm_order_name", ConfirmOrderConversation::class . "::name");
@@ -88,3 +92,6 @@ $this->ask("wf_name", WannaFitnessConversation::class . "::name");
 $this->ask("wf_phone", WannaFitnessConversation::class . "::phone");
 $this->ask("wf_age", WannaFitnessConversation::class . "::age");
 $this->ask("wf_text", WannaFitnessConversation::class . "::text");
+
+
+$this->ask("search_text", SearchModelConversation::class . "::text");

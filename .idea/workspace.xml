@@ -4,10 +4,21 @@
     <list default="true" id="5a400384-671b-41fb-82e7-fab36ffb0091" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Clasess/AbstractBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/AbstractBot.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Clasess/tBotConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/tBotConversation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Clasess/BaseBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/BaseBot.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Clasess/tLotusModelBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/tLotusModelBot.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Conversations/AdminConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/AdminConversation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Conversations/MainConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/MainConversation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Conversations/ModelFormConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/ModelFormConversation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Conversations/ProductFormConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/ProductFormConversation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Conversations/QuestionConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/QuestionConversation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/BotController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/BotController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/BotServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/BotServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/laravel/bot_cash_back/scr/models/BotUserInfo.php" beforeDir="false" afterPath="$PROJECT_DIR$/packages/laravel/bot_cash_back/scr/models/BotUserInfo.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/bot.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/bot.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/conversations.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/conversations.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,7 +222,14 @@
       <workItem from="1600017424354" duration="8447000" />
       <workItem from="1600066838665" duration="5312000" />
       <workItem from="1600087716508" duration="2733000" />
-      <workItem from="1601133441652" duration="13361000" />
+      <workItem from="1601133441652" duration="14146000" />
+      <workItem from="1601189739934" duration="134000" />
+      <workItem from="1601197346605" duration="19752000" />
+      <workItem from="1601289450306" duration="778000" />
+      <workItem from="1601453939013" duration="36000" />
+      <workItem from="1601461378685" duration="13352000" />
+      <workItem from="1601540012866" duration="10000" />
+      <workItem from="1601629764856" duration="9453000" />
     </task>
     <servers />
   </component>
@@ -219,18 +237,18 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="499" y="191" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1599658773016">
+    <state x="499" y="191" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1601462737088">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="499" y="191" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.864@0.0.1536.864" timestamp="1599658773016" />
+    <state x="499" y="191" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.864@0.0.1536.864" timestamp="1601462737088" />
     <state x="549" y="191" key="FileChooserDialogImpl" timestamp="1599830795867">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="549" y="191" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1599830795867" />
-    <state x="558" y="267" key="NewPhpClassDialog" timestamp="1598371592315">
+    <state x="558" y="267" key="NewPhpClassDialog" timestamp="1601462717289">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="558" y="267" key="NewPhpClassDialog/0.0.1536.864@0.0.1536.864" timestamp="1598371592315" />
+    <state x="558" y="267" key="NewPhpClassDialog/0.0.1536.864@0.0.1536.864" timestamp="1601462717289" />
     <state x="604" y="364" key="NewPhpFileDialog" timestamp="1594473193566">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -239,17 +257,32 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="0" y="0" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1599648740137" />
-    <state x="477" y="261" key="com.intellij.ide.util.TipDialog" timestamp="1600066842588">
+    <state x="477" y="261" key="com.intellij.ide.util.TipDialog" timestamp="1601540013190">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="477" y="261" key="com.intellij.ide.util.TipDialog/0.0.1536.864@0.0.1536.864" timestamp="1600066842588" />
-    <state x="426" y="197" key="run.anything.popup" timestamp="1599822520716">
+    <state x="477" y="261" key="com.intellij.ide.util.TipDialog/0.0.1536.864@0.0.1536.864" timestamp="1601540013190" />
+    <state x="426" y="197" key="run.anything.popup" timestamp="1601644307913">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="426" y="197" key="run.anything.popup/0.0.1536.864@0.0.1536.864" timestamp="1599822520716" />
+    <state x="426" y="197" key="run.anything.popup/0.0.1536.864@0.0.1536.864" timestamp="1601644307913" />
     <state x="431" y="181" width="672" height="678" key="search.everywhere.popup" timestamp="1599512692665">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="431" y="181" width="672" height="678" key="search.everywhere.popup/0.0.1536.864@0.0.1536.864" timestamp="1599512692665" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php-line-method">
+          <url>file://$PROJECT_DIR$/app/Clasess/AbstractBot.php</url>
+          <line>605</line>
+          <properties>
+            <option name="className" value="\App\Clasess\AbstractBot" />
+            <option name="methodName" value="editReplyKeyboard" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -17,14 +17,14 @@ class WannaComboPPConversation extends Conversation
 
         $needName = mb_strlen($user->user_profile->full_name) === 0;
 
-        $bot->getFallbackMenu("Хочу записаться на фитнес.\n\xF0\x9F\x94\xB8"
+        $bot->getFallbackMenu("Хочу записаться на проект.\n\xF0\x9F\x94\xB8"
             . ($needName ? "Введите ваше имя:" : "Введите ваш возраст:")
         );
 
         if ($needName)
             $bot->startConversation("wcpp_name");
         else {
-            $bot->startConversation("wcpp_name", [
+            $bot->startConversation("wcpp_age", [
                 "name" => $user->user_profile->full_name ??
                     $user->fio ??
                     $user->account_name ??

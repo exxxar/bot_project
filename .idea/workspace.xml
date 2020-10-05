@@ -2,19 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a400384-671b-41fb-82e7-fab36ffb0091" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/AnswerQuestionConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/AnswerQuestionConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/ConfirmOrderConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/ConfirmOrderConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/ConfirmPhotoProjectConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/ConfirmPhotoProjectConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/FeedbackConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/FeedbackConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/FeedbackPPConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/FeedbackPPConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/LotusCampOrderConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/LotusCampOrderConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/LotusDanceOrderConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/LotusDanceOrderConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Conversations/WannaFitnessConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/WannaFitnessConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/ProductTableSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/ProductTableSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/bot.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/bot.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/conversations.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/conversations.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Conversations/WannaComboPPConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Conversations/WannaComboPPConversation.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -227,7 +215,7 @@
       <workItem from="1601540012866" duration="10000" />
       <workItem from="1601629764856" duration="19110000" />
       <workItem from="1601711239905" duration="471000" />
-      <workItem from="1601887118927" duration="13548000" />
+      <workItem from="1601887118927" duration="13678000" />
     </task>
     <servers />
   </component>

@@ -88,8 +88,8 @@ class WannaComboPPConversation extends Conversation
 
 
         $bot->sendMessageToChat(
-            env("LD_ADMIN_CHANNEL_ID"),
-            "*Новый запрос на фитнес*:\nОт:_ $name _\nВозраст:_ $age _\nТелефон:_ $phone _\nКомменатрий: _ $text _\n"
+            env("LP_ADMIN_CHANNEL_ID"),
+            "*Новый запрос на Combo Photoproject*:\nОт:_ $name _\nВозраст:_ $age _\nТелефон:_ $phone _\nКомменатрий: _ $text _\n"
         );
 
 

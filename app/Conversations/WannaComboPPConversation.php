@@ -7,7 +7,7 @@ namespace App\Conversations;
 use App\Ticket;
 use Illuminate\Support\Facades\Log;
 
-class WannaFitnessConversation extends Conversation
+class WannaComboPPConversation extends Conversation
 {
 
     public static function start($bot)
@@ -22,9 +22,9 @@ class WannaFitnessConversation extends Conversation
         );
 
         if ($needName)
-            $bot->startConversation("wf_name");
+            $bot->startConversation("wcpp_name");
         else {
-            $bot->startConversation("wf_name", [
+            $bot->startConversation("wcpp_name", [
                 "name" => $user->user_profile->full_name ??
                     $user->fio ??
                     $user->account_name ??
@@ -37,7 +37,7 @@ class WannaFitnessConversation extends Conversation
     {
 
         $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\n\xF0\x9F\x94\xB8Введите ваш возраст:");
-        $bot->next("wf_age", [
+        $bot->next("wcpp_age", [
             "name" => $message
         ]);
     }
@@ -46,12 +46,12 @@ class WannaFitnessConversation extends Conversation
     {
 
         if (intval($message)<8 || intval($message)>50){
-            $bot->next("wf_age");
+            $bot->next("wcpp_age");
             $bot->reply("Возраст не совсем подходящий...");
             return;
         }
         $bot->getFallbackMenuWithPhone("Вы ввели: *$message* лет\xE2\x9C\x85\n\n\xF0\x9F\x94\xB8Введите ваш номер телефона:");
-        $bot->next("wf_phone", [
+        $bot->next("wcpp_phone", [
             "age" => $message
         ]);
     }
@@ -65,13 +65,13 @@ class WannaFitnessConversation extends Conversation
 
         if (preg_match($pattern, $tmp_phone) == 0) {
             $bot->reply("Вы неверно ввели телефонный номер! Попробуйте еще раз.");
-            $bot->next("wf_phone");
+            $bot->next("wcpp_phone");
             return;
         }
 
         $bot->getFallbackMenu("Ваш номер телефона: *$tmp_phone*\xE2\x9C\x85\n\n\xF0\x9F\x94\xB8Дополнительно к заявке:");
 
-        $bot->next("wf_text", [
+        $bot->next("wcpp_text", [
             "phone" => $tmp_phone
         ]);
     }

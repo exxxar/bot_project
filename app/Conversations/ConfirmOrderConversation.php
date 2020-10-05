@@ -8,7 +8,7 @@ use App\Order;
 use App\Ticket;
 use Illuminate\Support\Facades\Log;
 
-class ConfirmOrderConversation
+class ConfirmOrderConversation extends Conversation
 {
 
     public static function start($bot)
@@ -17,14 +17,12 @@ class ConfirmOrderConversation
 
         $needName = mb_strlen($user->user_profile->full_name) === 0;
 
-        $bot->getFallbackMenu("Диалог оформления заказа.\n\xF0\x9F\x94\xB8"
-            . ($needName ? "Введите ваше имя:" : "Введите ваш номер телефона(в формате 071XXXXXXX):")
-        );
-
-
-        if ($needName)
+        if ($needName){
+            $bot->getFallbackMenu("Диалог оформления заказа.\n\xF0\x9F\x94\xB8Введите ваше имя:");
             $bot->startConversation("confirm_order_name");
+        }
         else {
+            $bot->getFallbackMenuWithPhone("Диалог оформления заказа.\n\xF0\x9F\x94\xB8Введите ваш номер телефона(в формате 071XXXXXXX):");
             $bot->startConversation("confirm_order_phone", [
                 "name" => $user->user_profile->full_name ??
                     $user->fio ??
@@ -36,13 +34,7 @@ class ConfirmOrderConversation
 
     public static function name($bot, $message)
     {
-
-        if (mb_strlen($message) === 0) {
-            $bot->reply("Нужно ввести Ваше имя!");
-            $bot->next("confirm_order_name");
-            return;
-        }
-        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш номер телефона(в формате 071XXXXXXX)):");
+        $bot->getFallbackMenuWithPhone("Вы ввели: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш номер телефона(в формате 071XXXXXXX)):");
         $bot->next("confirm_order_phone", [
             "name" => $message
         ]);
@@ -50,8 +42,6 @@ class ConfirmOrderConversation
 
     public static function phone($bot, $message)
     {
-
-
         $pattern = "/^\+380\d{3}\d{2}\d{2}\d{2}$/";
         $tmp_phone = str_replace(["(", ")", "-", " "], "", $message);
         $tmp_phone = strpos($tmp_phone, "+38") === false ?
@@ -63,7 +53,7 @@ class ConfirmOrderConversation
             return;
         }
 
-        $bot->reply("Ваш номер телефона: *$tmp_phone*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш комментарий к заказу:");
+        $bot->getFallbackMenu("Ваш номер телефона: *$tmp_phone*\xE2\x9C\x85\n\n\xF0\x9F\x94\xB8Введите ваш комментарий к заказу:");
 
         $bot->next("confirm_order_comment", [
             "phone" => $tmp_phone
@@ -73,14 +63,7 @@ class ConfirmOrderConversation
     public static function comment($bot, $message)
     {
 
-
-        if (mb_strlen($message) === 0) {
-            $bot->reply("Нужно ввести текст Вашего комментария!");
-            $bot->next("confirm_order_comment");
-            return;
-        }
-
-        $user = $bot->getUser();
+         $user = $bot->getUser();
 
         $name = $bot->storeGet("name");
         $phone = $bot->storeGet("phone");
@@ -106,8 +89,6 @@ class ConfirmOrderConversation
                 $order->product->price
             );
             $price += $order->product->price;
-
-
         }
 
         $tmp .= "Суммарно к оплате: *$price руб.*";
@@ -121,15 +102,7 @@ class ConfirmOrderConversation
 
     }
 
-    public static function fallback($bot, $message, $error= null)
-    {
-        if ($message === "Продолжить позже") {
-            $bot->getBasketMenu("Хорошо! Продолжим позже!");
-            $bot->stopConversation();
-            return true;
-        } else
-            return false;
-    }
+
 
 
 }

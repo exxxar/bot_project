@@ -7,7 +7,7 @@ namespace App\Conversations;
 use App\Ticket;
 use Illuminate\Support\Facades\Log;
 
-class AnswerQuestionConversation
+class AnswerQuestionConversation extends Conversation
 {
 
     public static function start($bot, ...$d)
@@ -15,7 +15,6 @@ class AnswerQuestionConversation
         $id = isset($d[1]) ? intval($d[1]) : 0;
 
         $ticket = Ticket::find($id);
-
         $bot->getFallbackMenu("Ответ на вопрос пользователя:\n_ $ticket->message _\n\xF0\x9F\x94\xB8Введите ответ:");
         $bot->startConversation("answer_response", [
             "chat_id" => $ticket->chat_id,
@@ -25,16 +24,8 @@ class AnswerQuestionConversation
 
     public static function response($bot, $message)
     {
-        if (AnswerQuestionConversation::fallback($bot, $message))
-            return;
 
-        if (mb_strlen($message) === 0) {
-            $bot->reply("Нужно ввести текст Вашего ответа!");
-            $bot->next("answer_response");
-            return;
-        }
-
-        $user = $bot->getUser();
+         $user = $bot->getUser();
 
         $ticket_id = $bot->storeGet("ticket_id");
         $chat_id = $bot->storeGet("chat_id");
@@ -61,16 +52,6 @@ class AnswerQuestionConversation
         );
 
 
-    }
-
-    public static function fallback($bot, $message)
-    {
-        if ($message === "Продолжить позже") {
-            $bot->getMainMenu("Хорошо! Продолжим позже!");
-            $bot->stopConversation();
-            return true;
-        } else
-            return false;
     }
 
 

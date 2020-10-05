@@ -9,7 +9,7 @@ use App\PhotoProject;
 use App\Ticket;
 use Illuminate\Support\Facades\Log;
 
-class LotusDanceOrderConversation
+class LotusDanceOrderConversation extends Conversation
 {
 
     public static function start($bot)
@@ -35,9 +35,6 @@ class LotusDanceOrderConversation
 
     public static function type($bot, $message)
     {
-        if (LotusDanceOrderConversation::fallback($bot, $message))
-            return;
-
         $bot->reply("Вы выбрали: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваше имя:");
         $bot->next("lotus_dance_order_name", [
             "type" => $message
@@ -46,14 +43,6 @@ class LotusDanceOrderConversation
 
     public static function name($bot, $message)
     {
-        if (LotusDanceOrderConversation::fallback($bot, $message))
-            return;
-
-        if (mb_strlen($message) === 0) {
-            $bot->reply("Нужно ввести Ваше имя!");
-            $bot->next("lotus_dance_order_name");
-            return;
-        }
         $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш возраст:");
         $bot->next("lotus_dance_order_age", [
             "name" => $message
@@ -62,9 +51,11 @@ class LotusDanceOrderConversation
 
     public static function age($bot, $message)
     {
-        if (LotusDanceOrderConversation::fallback($bot, $message))
+        if (intval($message)<8||intval($message)>50){
+            $bot->reply("К сожалению, мы не формируем танцевальные группы с указанным вами возрастом!");
+            $bot->next("lotus_dance_order_age");
             return;
-
+        }
         $bot->reply("Вы ввели: *$message* лет\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш номер телефона:");
         $bot->next("lotus_dance_order_phone", [
             "age" => $message
@@ -74,8 +65,6 @@ class LotusDanceOrderConversation
 
     public static function phone($bot, $message)
     {
-        if (LotusDanceOrderConversation::fallback($bot, $message))
-            return;
 
         $pattern = "/^\+380\d{3}\d{2}\d{2}\d{2}$/";
         $tmp_phone = str_replace(["(", ")", "-", " "], "", $message);
@@ -97,17 +86,6 @@ class LotusDanceOrderConversation
 
     public static function comment($bot, $message)
     {
-        if (LotusDanceOrderConversation::fallback($bot, $message))
-            return;
-
-        if (mb_strlen($message) === 0) {
-            $bot->reply("Нужно ввести текст Вашего комментария!");
-            $bot->next("photo_project_comment");
-            return;
-        }
-
-        $user = $bot->getUser();
-
         $name = $bot->storeGet("name");
         $phone = $bot->storeGet("phone");
         $age = $bot->storeGet("age");
@@ -126,16 +104,6 @@ class LotusDanceOrderConversation
 
     }
 
-
-    public static function fallback($bot, $message)
-    {
-        if ($message === "Продолжить позже") {
-            $bot->getMainMenu("Хорошо! Продолжим позже!");
-            $bot->stopConversation();
-            return true;
-        } else
-            return false;
-    }
 
 
 }

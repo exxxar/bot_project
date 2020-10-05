@@ -15,6 +15,7 @@ use App\Conversations\PollsFormConversation;
 use App\Conversations\QuestionConversation;
 use App\Conversations\SearchModelConversation;
 use App\Conversations\StartDataConversation;
+use App\Conversations\WannaComboPPConversation;
 use App\Conversations\WannaFitnessConversation;
 use Illuminate\Support\Facades\Log;
 
@@ -48,6 +49,7 @@ $this->hears("/answer_this_questions ([0-9]+)", AnswerQuestionConversation::clas
 $this->hears("/i_want_to_photo_project ([0-9]+)", ConfirmPhotoProjectConversation::class . "::start");
 $this->hears("/.*Записаться в Лагерь", LotusCampOrderConversation::class . "::start");
 $this->hears("/.*Хочу танцевать", LotusDanceOrderConversation::class . "::start");
+$this->hears("/.*Хочу на проект", WannaComboPPConversation::class . "::start");
 $this->hears("/.*Хочу на Фитнес для взрослых!", WannaFitnessConversation::class . "::start");
 //$this->hears("/all_profile_list ([0-9]+)", AdminConversation::class."::profilesPerPage");
 $this->hears("/.*Каналы администраторов", AdminConversation::class . "::channels");

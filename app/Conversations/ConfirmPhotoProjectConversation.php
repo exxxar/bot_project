@@ -9,7 +9,7 @@ use App\PhotoProject;
 use App\Ticket;
 use Illuminate\Support\Facades\Log;
 
-class ConfirmPhotoProjectConversation
+class ConfirmPhotoProjectConversation extends Conversation
 {
 
     public static function start($bot, ...$d)
@@ -24,23 +24,31 @@ class ConfirmPhotoProjectConversation
         }
 
         $tmp = "#$project->id *$project->title* $project->date в $project->time";
-        $bot->getFallbackMenu("Заявка на фотопроект:\n$tmp\n\xF0\x9F\x94\xB8Введите ваше имя:");
-        $bot->startConversation("photo_project_name", [
-            "id" => $project->id
-        ]);
+
+        $user = $bot->getUser();
+
+        $needName = mb_strlen($user->user_profile->full_name) === 0;
+
+
+        if ($needName) {
+            $bot->getFallbackMenu("Заявка на фотопроект:\n\xF0\x9F\x94\xB8$tmp\nВведите ваше имя:");
+            $bot->startConversation("photo_project_name");
+        }
+        else {
+            $bot->getFallbackMenuWithPhone("Заявка на фотопроект:\n\xF0\x9F\x94\xB8$tmp\nВведите ваш номер телефона(в формате 071XXXXXXX):");
+            $bot->startConversation("photo_project_phone", [
+                "name" => $user->user_profile->full_name ??
+                    $user->fio ??
+                    $user->account_name ??
+                    $user->chat_id
+            ]);
+        }
     }
 
     public static function name($bot, $message)
     {
-        if (ConfirmPhotoProjectConversation::fallback($bot, $message))
-            return;
 
-        if (mb_strlen($message) === 0) {
-            $bot->reply("Нужно ввести Ваше имя!");
-            $bot->next("photo_project_name");
-            return;
-        }
-        $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш номер телефона:");
+        $bot->getFallbackMenuWithPhone("Вы ввели: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш номер телефона:");
         $bot->next("photo_project_phone", [
             "name" => $message
         ]);
@@ -48,8 +56,6 @@ class ConfirmPhotoProjectConversation
 
     public static function phone($bot, $message)
     {
-        if (ConfirmPhotoProjectConversation::fallback($bot, $message))
-            return;
 
         $pattern = "/^\+380\d{3}\d{2}\d{2}\d{2}$/";
         $tmp_phone = str_replace(["(", ")", "-", " "], "", $message);
@@ -62,7 +68,7 @@ class ConfirmPhotoProjectConversation
             return;
         }
 
-        $bot->reply("Ваш номер телефона: *$tmp_phone*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш комментарий к заказу:");
+        $bot->getFallbackMenu("Ваш номер телефона: *$tmp_phone*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш комментарий к заказу:");
 
         $bot->next("photo_project_comment", [
             "phone" => $tmp_phone
@@ -71,16 +77,6 @@ class ConfirmPhotoProjectConversation
 
     public static function comment($bot, $message)
     {
-        if (ConfirmPhotoProjectConversation::fallback($bot, $message))
-            return;
-
-        if (mb_strlen($message) === 0) {
-            $bot->reply("Нужно ввести текст Вашего комментария!");
-            $bot->next("photo_project_comment");
-            return;
-        }
-
-        $user = $bot->getUser();
 
         $name = $bot->storeGet("name");
         $phone = $bot->storeGet("phone");
@@ -112,15 +108,7 @@ class ConfirmPhotoProjectConversation
 
     }
 
-    public static function fallback($bot, $message)
-    {
-        if ($message === "Продолжить позже") {
-            $bot->getMainMenu("Хорошо! Продолжим позже!");
-            $bot->stopConversation();
-            return true;
-        } else
-            return false;
-    }
+
 
 
 }

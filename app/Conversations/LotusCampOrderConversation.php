@@ -9,7 +9,7 @@ use App\PhotoProject;
 use App\Ticket;
 use Illuminate\Support\Facades\Log;
 
-class LotusCampOrderConversation
+class LotusCampOrderConversation extends Conversation
 {
 
     public static function start($bot)
@@ -32,8 +32,6 @@ class LotusCampOrderConversation
 
     public static function type($bot, $message)
     {
-        if (LotusCampOrderConversation::fallback($bot, $message))
-            return;
 
         $bot->reply("Вы выбрали: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите Ф.И.О. ребенка:");
         $bot->next("lotus_camp_order_child_name", [
@@ -43,14 +41,6 @@ class LotusCampOrderConversation
 
     public static function childName($bot, $message)
     {
-        if (LotusCampOrderConversation::fallback($bot, $message))
-            return;
-
-        if (mb_strlen($message) === 0) {
-            $bot->reply("Нужно ввести Ф.И.О. ребенка!");
-            $bot->next("lotus_camp_order_name");
-            return;
-        }
         $bot->reply("Вы ввели: *$message*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите возраст ребенка:");
         $bot->next("lotus_camp_order_age", [
             "child_name" => $message
@@ -59,8 +49,12 @@ class LotusCampOrderConversation
 
     public static function age($bot, $message)
     {
-        if (LotusCampOrderConversation::fallback($bot, $message))
+
+        if (intval($message)<8||intval($message)>=18){
+            $bot->reply("Ваш ребенок не подходит по возрасту! Lotus Camp для детей от 8 до 17 лет.");
+            $bot->next("lotus_camp_order_age");
             return;
+        }
 
         $bot->reply("Вы ввели: *$message* лет\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите Ф.И.О. родителя:");
         $bot->next("lotus_camp_order_parent_name", [
@@ -68,13 +62,9 @@ class LotusCampOrderConversation
         ]);
     }
 
-
     public static function parentName($bot, $message)
     {
-        if (LotusCampOrderConversation::fallback($bot, $message))
-            return;
-
-        $bot->reply("Вы ввели: *$message* лет\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш номер телефона:");
+        $bot->getFallbackMenuWithPhone("Вы ввели: *$message* лет\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш номер телефона:");
         $bot->next("lotus_camp_order_phone", [
             "parent_name" => $message
         ]);
@@ -83,8 +73,6 @@ class LotusCampOrderConversation
 
     public static function phone($bot, $message)
     {
-        if (LotusCampOrderConversation::fallback($bot, $message))
-            return;
 
         $pattern = "/^\+380\d{3}\d{2}\d{2}\d{2}$/";
         $tmp_phone = str_replace(["(", ")", "-", " "], "", $message);
@@ -97,7 +85,7 @@ class LotusCampOrderConversation
             return;
         }
 
-        $bot->reply("Ваш номер телефона: *$tmp_phone*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш комментарий к заказу:");
+        $bot->getFallbackMenu("Ваш номер телефона: *$tmp_phone*\xE2\x9C\x85\n\xF0\x9F\x94\xB8Введите ваш комментарий к заказу:");
 
         $bot->next("lotus_camp_order_comment", [
             "phone" => $tmp_phone
@@ -106,16 +94,6 @@ class LotusCampOrderConversation
 
     public static function comment($bot, $message)
     {
-        if (LotusCampOrderConversation::fallback($bot, $message))
-            return;
-
-        if (mb_strlen($message) === 0) {
-            $bot->reply("Нужно ввести текст Вашего комментария!");
-            $bot->next("photo_project_comment");
-            return;
-        }
-
-        $user = $bot->getUser();
 
         $childName = $bot->storeGet("child_name");
         $parentName = $bot->storeGet("parent_name");
@@ -134,17 +112,6 @@ class LotusCampOrderConversation
 
         $bot->getMainMenu("Текст вашего комментария: *$message*\xE2\x9C\x85\nСпасибо! Ваша заявка принята в обработку.");
 
-    }
-
-
-    public static function fallback($bot, $message)
-    {
-        if ($message === "Продолжить позже") {
-            $bot->getMainMenu("Хорошо! Продолжим позже!");
-            $bot->stopConversation();
-            return true;
-        } else
-            return false;
     }
 
 

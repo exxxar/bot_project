@@ -16,6 +16,7 @@ use App\Conversations\PollsFormConversation;
 use App\Conversations\QuestionConversation;
 use App\Conversations\SearchModelConversation;
 use App\Conversations\StartDataConversation;
+use App\Conversations\WannaComboPPConversation;
 use App\Conversations\WannaFitnessConversation;
 use Illuminate\Support\Facades\Log;
 
@@ -54,7 +55,7 @@ $this->ask("mf_birth_day", ModelFormConversation::class . "::birthDay")
     ->where("/[0-9]{1,2}/ui")
     ->fall(ModelFormConversation::class . "::fallback",
         "Определенно что-то не так введено, хм"
-        );
+    );
 
 $this->ask("mf_birth_month", ModelFormConversation::class . "::birthMonth")
     ->where("/[0-9]{1,2}/ui")
@@ -82,7 +83,7 @@ $this->ask("mf_height", ModelFormConversation::class . "::height")
     ->where("/[0-9]{3}/ui")
     ->fall(ModelFormConversation::class . "::fallback",
         "Хм, а %s точно ваш рост?Введите, например, 180."
-        );
+    );
 $this->ask("mf_question_1", ModelFormConversation::class . "::question1")
     ->where("/(Да|Нет)/ui")
     ->fall(ModelFormConversation::class . "::fallback",
@@ -112,39 +113,169 @@ $this->ask("admin_action_set_count_photo", StartDataConversation::class . "::set
 $this->ask("photo_project_name", ConfirmPhotoProjectConversation::class . "::name");
 $this->ask("photo_project_phone", ConfirmPhotoProjectConversation::class . "::phone");
 $this->ask("photo_project_comment", ConfirmPhotoProjectConversation::class . "::comment");
-$this->ask("lotus_camp_order_type", LotusCampOrderConversation::class . "::type");
-$this->ask("lotus_camp_order_child_name", LotusCampOrderConversation::class . "::childName");
-$this->ask("lotus_camp_order_parent_name", LotusCampOrderConversation::class . "::parentName");
-$this->ask("lotus_camp_order_age", LotusCampOrderConversation::class . "::age");
-$this->ask("lotus_camp_order_phone", LotusCampOrderConversation::class . "::phone");
-$this->ask("lotus_camp_order_comment", LotusCampOrderConversation::class . "::comment");
-$this->ask("lotus_dance_order_type", LotusDanceOrderConversation::class . "::type");
-$this->ask("lotus_dance_order_name", LotusDanceOrderConversation::class . "::name");
-$this->ask("lotus_dance_order_age", LotusDanceOrderConversation::class . "::age");
-$this->ask("lotus_dance_order_phone", LotusDanceOrderConversation::class . "::phone");
-$this->ask("lotus_dance_order_comment", LotusDanceOrderConversation::class . "::comment");
 
-$this->ask("fb1_question_1", FeedbackConversation::class . "::question1");
-$this->ask("fb1_question_2", FeedbackConversation::class . "::question2");
-$this->ask("fb1_question_3", FeedbackConversation::class . "::question3");
-$this->ask("fb1_question_4", FeedbackConversation::class . "::question4");
-$this->ask("fb1_question_5", FeedbackConversation::class . "::question5");
-$this->ask("fb1_question_6", FeedbackConversation::class . "::question6");
-$this->ask("fb1_question_7", FeedbackConversation::class . "::question7");
 
-$this->ask("fb2_question_1", FeedbackPPConversation::class . "::question1");
-$this->ask("fb2_question_2", FeedbackPPConversation::class . "::question2");
-$this->ask("fb2_question_3", FeedbackPPConversation::class . "::question3");
-$this->ask("fb2_question_4", FeedbackPPConversation::class . "::question4");
-$this->ask("fb2_question_5", FeedbackPPConversation::class . "::question5");
-$this->ask("fb2_question_6", FeedbackPPConversation::class . "::question6");
-$this->ask("fb2_question_7", FeedbackPPConversation::class . "::question7");
-$this->ask("fb2_question_8", FeedbackPPConversation::class . "::question8");
+$this->ask("lotus_camp_order_type", LotusCampOrderConversation::class . "::type")
+    ->where("/(10 дней|5 дней|1 день)/ui")
+    ->fall(ModelFormConversation::class . "::fallback",
+        "Хм, а %s точно ответ на наш вопрос?");
 
-$this->ask("wf_name", WannaFitnessConversation::class . "::name");
-$this->ask("wf_phone", WannaFitnessConversation::class . "::phone");
-$this->ask("wf_age", WannaFitnessConversation::class . "::age");
-$this->ask("wf_text", WannaFitnessConversation::class . "::text");
+$this->ask("lotus_camp_order_child_name", LotusCampOrderConversation::class . "::childName")
+    ->where("/[а-яёА-ЯЁ ]{5,40}/ui")
+    ->fall(LotusCampOrderConversation::class . "::fallback",
+        "Ф.И.О. \"%s\" должно быть *на русском* и *длиной 5* и более символов!");
 
+$this->ask("lotus_camp_order_parent_name", LotusCampOrderConversation::class . "::parentName")
+    ->where("/[а-яёА-ЯЁ ]{5,40}/ui")
+    ->fall(LotusCampOrderConversation::class . "::fallback",
+        "Ф.И.О. \"%s\" должно быть *на русском* и *длиной 5* и более символов!");
+
+$this->ask("lotus_camp_order_age", LotusCampOrderConversation::class . "::age")
+    ->where("/[0-9]{1,2}/ui")
+    ->fall(LotusCampOrderConversation::class . "::fallback",
+        "Хм, а %s точно ваш возраст?Введите, например, 18.");
+
+$this->ask("lotus_camp_order_phone", LotusCampOrderConversation::class . "::phone")
+    ->fall(LotusCampOrderConversation::class . "::fallback");
+
+$this->ask("lotus_camp_order_comment", LotusCampOrderConversation::class . "::comment")
+    ->where("/[а-яёА-ЯЁ ]{1,255}/ui")
+    ->fall(LotusCampOrderConversation::class . "::fallback",
+        "Текст комментария \"%s\" должно быть *на русском* !");
+
+$this->ask("lotus_dance_order_type", LotusDanceOrderConversation::class . "::type")
+    ->where("/[а-яёА-ЯЁ ]{1,255}/ui")
+    ->fall(LotusDanceOrderConversation::class . "::fallback",
+        "Ответ \"%s\" должно быть *на русском* !");
+
+$this->ask("lotus_dance_order_name", LotusDanceOrderConversation::class . "::name")
+    ->where("/[а-яёА-ЯЁ ]{3,20}/ui")
+    ->fall(LotusDanceOrderConversation::class . "::fallback",
+        "Имя \"%s\" должно быть *на русском* и *длиной 3* и более символов!");
+
+$this->ask("lotus_dance_order_age", LotusDanceOrderConversation::class . "::age")
+    ->where("/[0-9]{1,2}/ui")
+    ->fall(LotusCampOrderConversation::class . "::fallback",
+        "Хм, а %s точно ваш возраст?Введите, например, 18.");
+
+$this->ask("lotus_dance_order_phone", LotusDanceOrderConversation::class . "::phone")
+    ->fall(LotusDanceOrderConversation::class . "::fallback");
+
+$this->ask("lotus_dance_order_comment", LotusDanceOrderConversation::class . "::comment")
+    ->where("/[а-яёА-ЯЁ ]{1,255}/ui")
+    ->fall(LotusDanceOrderConversation::class . "::fallback",
+        "Текст комментария \"%s\" должно быть *на русском* !");
+
+$this->ask("fb1_question_1", FeedbackConversation::class . "::question1")
+    ->where("/(Да|Нет)/ui")
+    ->fall(FeedbackConversation::class . "::fallback",
+        "Хм, а %s точно ответ на наш вопрос?");
+
+$this->ask("fb1_question_2", FeedbackConversation::class . "::question2")
+    ->where("/[а-яёА-ЯЁ ]{3,40}/ui")
+    ->fall(FeedbackConversation::class . "::fallback",
+        "Имя \"%s\" должно быть *на русском* и *длиной 5* и более символов!");
+
+$this->ask("fb1_question_3", FeedbackConversation::class . "::question3")
+    ->where("/[а-яёА-ЯЁ ]{3,200}/ui")
+    ->fall(FeedbackConversation::class . "::fallback",
+        "Ответ \"%s\" должен быть *на русском* и *длиной 5* и более символов!");
+
+$this->ask("fb1_question_4", FeedbackConversation::class . "::question4")
+    ->where("/[а-яёА-ЯЁ ]{3,200}/ui")
+    ->fall(FeedbackConversation::class . "::fallback",
+        "Ответ \"%s\" должен быть *на русском* и *длиной 5* и более символов!");
+
+$this->ask("fb1_question_5", FeedbackConversation::class . "::question5")
+    ->where("/[а-яёА-ЯЁ ]{3,200}/ui")
+    ->fall(FeedbackConversation::class . "::fallback",
+        "Ответ \"%s\" должен быть *на русском* и *длиной 5* и более символов!");
+
+$this->ask("fb1_question_6", FeedbackConversation::class . "::question6")
+    ->where("/[а-яёА-ЯЁ ]{3,200}/ui")
+    ->fall(FeedbackConversation::class . "::fallback",
+        "Ответ \"%s\" должен быть *на русском* и *длиной 5* и более символов!");
+
+$this->ask("fb1_question_7", FeedbackConversation::class . "::question7")
+    ->where("/[а-яёА-ЯЁ ]{3,200}/ui")
+    ->fall(FeedbackConversation::class . "::fallback",
+        "Ответ \"%s\" должен быть *на русском* и *длиной 5* и более символов!");
+
+$this->ask("fb2_question_1", FeedbackPPConversation::class . "::question1")
+    ->where("/(Да|Нет)/ui")
+    ->fall(FeedbackPPConversation::class . "::fallback",
+        "Хм, а %s точно ответ на наш вопрос?");
+
+$this->ask("fb2_question_2", FeedbackPPConversation::class . "::question2")
+    ->where("/(Да|Нет)/ui")
+    ->fall(FeedbackPPConversation::class . "::fallback",
+        "Хм, а %s точно ответ на наш вопрос?");
+
+$this->ask("fb2_question_3", FeedbackPPConversation::class . "::question3")
+    ->where("/(Да|Нет)/ui")
+    ->fall(FeedbackPPConversation::class . "::fallback",
+        "Хм, а %s точно ответ на наш вопрос?");
+
+$this->ask("fb2_question_4", FeedbackPPConversation::class . "::question4")
+    ->where("/[0-5]{1}/ui")
+    ->fall(FeedbackPPConversation::class . "::fallback",
+        "Хм, а %s точно ответ на наш вопрос?");
+
+$this->ask("fb2_question_5", FeedbackPPConversation::class . "::question5")
+    ->where("/(Да|Нет)/ui")
+    ->fall(FeedbackPPConversation::class . "::fallback",
+        "Хм, а %s точно ответ на наш вопрос?");
+
+$this->ask("fb2_question_6", FeedbackPPConversation::class . "::question6")
+    ->where("/(Да|Нет)/ui")
+    ->fall(FeedbackPPConversation::class . "::fallback",
+        "Хм, а %s точно ответ на наш вопрос?");
+
+$this->ask("fb2_question_7", FeedbackPPConversation::class . "::question7")
+    ->where("/[0-5]{1}/ui")
+    ->fall(FeedbackPPConversation::class . "::fallback",
+        "Хм, а %s точно ответ на наш вопрос?");
+
+$this->ask("fb2_question_8", FeedbackPPConversation::class . "::question8")
+    ->where("/[а-яёА-ЯЁ ]{3,200}/ui")
+    ->fall(FeedbackPPConversation::class . "::fallback",
+        "Ответ \"%s\" должен быть *на русском* и *длиной 5* и более символов!");
+
+$this->ask("wf_name", WannaFitnessConversation::class . "::name")
+    ->where("/[а-яёА-ЯЁ ]{3,200}/ui")
+    ->fall(WannaFitnessConversation::class . "::fallback",
+        "Ответ \"%s\" должен быть *на русском* и *длиной 5* и более символов!");
+
+$this->ask("wf_phone", WannaFitnessConversation::class . "::phone")
+    ->fall(WannaFitnessConversation::class . "::fallback");
+
+$this->ask("wf_age", WannaFitnessConversation::class . "::age")
+    ->where("/[0-9]{1,2}/ui")
+    ->fall(WannaFitnessConversation::class . "::fallback",
+        "Хм, а %s точно ваш возраст?Введите, например, 18.");
+
+$this->ask("wf_text", WannaFitnessConversation::class . "::text")
+    ->where("/[а-яёА-ЯЁ ]{1,200}/ui")
+    ->fall(WannaFitnessConversation::class . "::fallback",
+        "Комментарий \"%s\" должен быть *на русском* и не больше 200 символов!");
 
 $this->ask("search_text", SearchModelConversation::class . "::text");
+
+
+$this->ask("wcpp_name", WannaComboPPConversation::class . "::name")
+    ->where("/[а-яёА-ЯЁ ]{3,200}/ui")
+    ->fall(WannaComboPPConversation::class . "::fallback",
+        "Ответ \"%s\" должен быть *на русском* и *длиной 5* и более символов!");
+
+$this->ask("wcpp_phone", WannaComboPPConversation::class . "::phone")
+    ->fall(WannaComboPPConversation::class . "::fallback");
+
+$this->ask("wcpp_age", WannaComboPPConversation::class . "::age")
+    ->where("/[0-9]{1,2}/ui")
+    ->fall(WannaComboPPConversation::class . "::fallback",
+        "Хм, а %s точно ваш возраст?Введите, например, 18.");
+
+$this->ask("wcpp_text", WannaComboPPConversation::class . "::text")
+    ->where("/[а-яёА-ЯЁ ]{1,200}/ui")
+    ->fall(WannaComboPPConversation::class . "::fallback",
+        "Комментарий \"%s\" должен быть *на русском* и не больше 200 символов!");

@@ -10,33 +10,33 @@ use Illuminate\Support\Facades\Log;
 trait tBotStorage
 {
 
-    public function clearStorage()
+    public function clearStorage($prefix = null)
     {
-        Cache::forget($this->getChatId());
+        Cache::forget((is_null($prefix) ? '' : $prefix) . $this->getChatId());
     }
 
-    public function addToStorage($key, $value)
+    public function addToStorage($key, $value, $prefix = null)
     {
-        $tmp = json_decode(Cache::get($this->getChatId(), "[]"), true);
+        $tmp_id = (is_null($prefix) ? '' : $prefix) . $this->getChatId();
+        $tmp = json_decode(Cache::get($tmp_id, "[]"), true);
         $tmp[$key] = $value;
-        Cache::forget($this->getChatId());
-        Cache::add($this->getChatId(), json_encode($tmp));
+        Cache::forget($tmp_id);
+        Cache::add($tmp_id, json_encode($tmp));
 
     }
 
-
-    public function hasInStorage($key)
+    public function hasInStorage($key, $prefix = null)
     {
-        $tmp = json_decode(Cache::get($this->getChatId(), "[]"), true);
+        $tmp_id = (is_null($prefix) ? '' : $prefix) . $this->getChatId();
+        $tmp = json_decode(Cache::get($tmp_id, "[]"), true);
 
-        return array_key_exists($key,$tmp);
+        return array_key_exists($key, $tmp);
     }
 
-    public function getFromStorage($key, $default = null)
+    public function getFromStorage($key, $default = null, $prefix = null)
     {
-        $tmp = json_decode(Cache::get($this->getChatId(), "[]"), true);
-
-
+        $tmp_id = (is_null($prefix) ? '' : $prefix) . $this->getChatId();
+        $tmp = json_decode(Cache::get($tmp_id, "[]"), true);
         return count($tmp) > 0 ? $tmp[$key] : $default;
     }
 }

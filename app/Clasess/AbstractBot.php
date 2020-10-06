@@ -5,6 +5,7 @@ namespace App\Clasess;
 
 
 use App\Classes\tBotConversation;
+use App\Classes\tBotStorage;
 use App\Conversations\Conversation;
 use App\User;
 use GuzzleHttp\Psr7\Request;
@@ -22,7 +23,7 @@ use Telegram\Bot\TelegramRequest;
 
 abstract class AbstractBot
 {
-    use tBotConversation, tLotusModelBot;
+    use tBotConversation, tLotusModelBot, tBotWebStorage, tBotStorage;
 
     protected $bot;
 
@@ -123,13 +124,15 @@ abstract class AbstractBot
         ];
     }
 
-    public function handler(Update $data)
+    public function handler($data)
     {
         $update = json_decode($data);
         $this->contact = null;
 
+
         if (isset($update->message->via_bot))
             return;
+
 
         if (isset($update->message->contact))
             $this->contact = $update->message->contact->phone_number;
@@ -152,6 +155,8 @@ abstract class AbstractBot
 
         $this->query = $update->message->text ?? $update->callback_query->data ?? '';
 
+        $this->stopWebDialog();
+        $this->startWebDialog('web_dialog');
         if (isset($update->message->photo))
             $this->photoUploaderHandler($update->message->photo);
 
@@ -163,16 +168,29 @@ abstract class AbstractBot
         if (is_null($this->query))
             return;
 
-        if ($this->conversationHandler())
-            return;
+        if ($this->conversationHandler()) {
+            $webResult = $this->getForWeb("result");
+            $this->stopWebDialog();
+            return [
+                "message" => "success",
+                "driver" => "web",
+                "result" => $webResult,
+                "status" => 200
+            ];
+        }
+
 
         $this->routeHandler();
 
-        return response()
-            ->json([
-                "message" => "success",
-                "status" => 200
-            ]);
+        $webResult = $this->getForWeb("result");
+        $this->stopWebDialog();
+
+        return [
+            "message" => "success",
+            "driver" => "web",
+            "result" => $webResult,
+            "status" => 200
+        ];
 
     }
 
@@ -486,14 +504,23 @@ abstract class AbstractBot
         if (is_null($this->bot))
             return;
         try {
-            $this->bot->sendMessage([
+
+            $message = [
                 "chat_id" => $chatId,
                 "text" => $message,
                 'parse_mode' => $parseMode,
                 'reply_markup' => json_encode([
                     'inline_keyboard' => $keyboard
                 ])
+            ];
+
+            $this->setForWeb([
+                "result" => $message
             ]);
+
+            $this->bot->sendMessage($message);
+
+
         } catch (\Exception $e) {
             Log::info(sprintf("%s %s %s",
                 $e->getMessage(),
@@ -511,14 +538,22 @@ abstract class AbstractBot
             return;
 
         try {
-            $this->bot->sendMessage([
+            $message = [
                 "chat_id" => $this->telegram_user->id,
                 "text" => $message,
                 'parse_mode' => $parseMode,
                 'reply_markup' => json_encode([
                     'inline_keyboard' => $keyboard
                 ])
+            ];
+
+            $this->setForWeb([
+                "result" => $message
             ]);
+
+            $this->bot->sendMessage($message);
+
+
         } catch (\Exception $e) {
             Log::info(sprintf("%s %s %s",
                 $e->getMessage(),
@@ -526,6 +561,7 @@ abstract class AbstractBot
                 $e->getLine()
             ));
         }
+
 
     }
 

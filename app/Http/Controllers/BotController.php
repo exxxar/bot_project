@@ -15,6 +15,7 @@ class BotController extends Controller
 
     public function handle(Request $request, $name)
     {
+        $tmp_result = "success";
         try {
             Log::info("start with name = $name");
             $local_bot = Bot::where("bot_url", $name)->first();
@@ -22,7 +23,7 @@ class BotController extends Controller
                 $local_bot->token_dev :
                 $local_bot->token_prod);
             $updates = $this->bot->getWebhookUpdates();
-            $this->bot->handler($updates);
+            $tmp_result = $this->bot->handler($updates);
         } catch (\Exception $e) {
             $error_message = sprintf("%s %s %s",
                 $e->getFile(),
@@ -36,9 +37,7 @@ class BotController extends Controller
                 "message" => $error_message
             ]);
         }
-        return response()->json([
-            "message" => "Success!"
-        ]);
+        return response()->json($tmp_result);
 
     }
 }

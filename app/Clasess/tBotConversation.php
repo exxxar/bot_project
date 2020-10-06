@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Log;
 
 trait tBotConversation
 {
-    use tBotStorage;
+
 
     protected $last_method_id;
 

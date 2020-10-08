@@ -169,7 +169,8 @@ abstract class AbstractBot
             return;
 
         if ($this->conversationHandler()) {
-            $webResult = $this->getForWeb("result");
+
+            $webResult = $this->getForWebAll();
             $this->stopWebDialog();
             return [
                 "message" => "success",
@@ -179,12 +180,10 @@ abstract class AbstractBot
             ];
         }
 
-
         $this->routeHandler();
 
-        $webResult = $this->getForWeb("result");
+        $webResult = $this->getForWebAll();
         $this->stopWebDialog();
-
         return [
             "message" => "success",
             "driver" => "web",
@@ -442,7 +441,8 @@ abstract class AbstractBot
         if (is_null($this->bot))
             return;
         try {
-            $this->bot->sendMessage([
+
+            $message = [
                 "chat_id" => $this->telegram_user->id,
                 "text" => $message,
                 'parse_mode' => 'Markdown',
@@ -451,7 +451,13 @@ abstract class AbstractBot
                     'one_time_keyboard' => false,
                     'resize_keyboard' => true
                 ])
+            ];
+
+            $this->setForWeb([
+                "result" => $message
             ]);
+
+            $this->bot->sendMessage($message);
 
         } catch (\Exception $e) {
             Log::info(sprintf("%s %s %s",
@@ -708,16 +714,25 @@ abstract class AbstractBot
             return;
 
         try {
-            $this->bot->sendPhoto([
+
+            $message = [
                 'chat_id' => $this->telegram_user->id,
                 'parse_mode' => $parseMode,
                 'caption' => $message,
                 'photo' => InputFile::create($photoUrl),
                 'disable_notification' => 'true',
                 'reply_markup' => json_encode([
-                    'inline_keyboard' => $keyboard
-                ])
+                        'inline_keyboard' => $keyboard
+                    ]
+                )
+            ];
+            $this->setForWeb([
+                "result" => $message
             ]);
+
+
+            $this->bot->sendPhoto($message);
+
         } catch (\Exception $e) {
             $tmp = mb_strlen($message) === 0 ? "Нет текста!" : $message;
             $this->sendMessage($tmp, $keyboard, $parseMode);

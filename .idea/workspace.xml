@@ -2,14 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a400384-671b-41fb-82e7-fab36ffb0091" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/BotCashBackPackage.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/BotCashBackPackage.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Clasess/AbstractBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/AbstractBot.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Clasess/tBotConversation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/tBotConversation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Clasess/tBotStorage.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/tBotStorage.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/BotController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/BotController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/framework/cache/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/framework/cache/data/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Clasess/tBotWebStorage.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Clasess/tBotWebStorage.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/bootstrap.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,6 +136,7 @@
       <path value="$PROJECT_DIR$/vendor/laminas/laminas-code" />
       <path value="$PROJECT_DIR$/vendor/bensampo/laravel-enum" />
       <path value="$PROJECT_DIR$/vendor/hanneskod/classtools" />
+      <path value="$PROJECT_DIR$/vendor/laravel/ui" />
     </include_path>
   </component>
   <component name="ProjectId" id="1eV0ydwGGaFDHbXhWodDUvmdJdh" />
@@ -145,7 +150,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Conversations" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../admin_u_life_v1" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
@@ -224,7 +229,11 @@
       <workItem from="1601711239905" duration="471000" />
       <workItem from="1601887118927" duration="14633000" />
       <workItem from="1601958426410" duration="2549000" />
-      <workItem from="1601974514111" duration="11394000" />
+      <workItem from="1601974514111" duration="11503000" />
+      <workItem from="1602003227555" duration="17137000" />
+      <workItem from="1602072938081" duration="21858000" />
+      <workItem from="1602136954360" duration="4241000" />
+      <workItem from="1602148856672" duration="1790000" />
     </task>
     <servers />
   </component>
@@ -236,10 +245,10 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="499" y="191" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.864@0.0.1536.864" timestamp="1601986354055" />
-    <state x="549" y="191" key="FileChooserDialogImpl" timestamp="1599830795867">
+    <state x="549" y="191" key="FileChooserDialogImpl" timestamp="1602089239800">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="549" y="191" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1599830795867" />
+    <state x="549" y="191" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1602089239800" />
     <state x="558" y="267" key="NewPhpClassDialog" timestamp="1601985595108">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -252,10 +261,10 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="0" y="0" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1599648740137" />
-    <state x="477" y="261" key="com.intellij.ide.util.TipDialog" timestamp="1601974568745">
+    <state x="477" y="261" key="com.intellij.ide.util.TipDialog" timestamp="1602148855694">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="477" y="261" key="com.intellij.ide.util.TipDialog/0.0.1536.864@0.0.1536.864" timestamp="1601974568745" />
+    <state x="477" y="261" key="com.intellij.ide.util.TipDialog/0.0.1536.864@0.0.1536.864" timestamp="1602148855694" />
     <state x="426" y="197" key="run.anything.popup" timestamp="1601986291779">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -270,7 +279,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="php-line-method">
           <url>file://$PROJECT_DIR$/app/Clasess/AbstractBot.php</url>
-          <line>642</line>
+          <line>648</line>
           <properties>
             <option name="className" value="\App\Clasess\AbstractBot" />
             <option name="methodName" value="editReplyKeyboard" />
